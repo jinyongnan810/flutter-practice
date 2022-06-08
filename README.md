@@ -63,3 +63,23 @@ class PlaySoundDemo extends StatelessWidget implements DemoWidget {
 ### SafeArea
 
 - Wrap widgets with SafeArea will automatically add paddings to avoid platform-specific ui clash
+
+## Day 3
+
+### Play audio
+
+Uses [audioplayers](https://pub.dev/packages/audioplayers)
+
+- To play local assets, we need to use the AudioCache
+
+```dart
+// create a player to monitor playing status
+final _sfxPlayer = AudioPlayer(playerId: 'sfxPlayer',mode: PlayerMode.LOW_LATENCY))
+// create a cache to load and play assets
+final _sfxCache = AudioCache(
+      fixedPlayer: _sfxPlayer,
+      prefix: 'assets/sfx/',
+    );
+// preload the assets to play immediately
+await _sfxCache.loadAll(filenames)
+```
