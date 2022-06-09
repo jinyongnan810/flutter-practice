@@ -29,3 +29,12 @@ List<String> getStrings(String type) {
 // gets [a1, a2, a3, b1, b2, a1, a2, a3, d1, d2, d3, d4]
 print(['a', 'b', 'a', 'eee'].expand(getStrings).toList());
 ```
+
+### Make a long string
+
+```dart
+// makes abcdefghij
+String str = 'abc'
+      'def'
+      'ghij';
+```

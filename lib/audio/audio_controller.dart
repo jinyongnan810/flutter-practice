@@ -7,12 +7,14 @@ import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart' hide Logger;
 import 'package:flutter/widgets.dart';
+import 'package:logging/logging.dart';
 
 import 'songs.dart';
 import 'sounds.dart';
 
 /// Allows playing music and sound. A facade to `package:audioplayers`.
 class AudioController {
+  final _logger = Logger('AudioController');
   late AudioCache _musicCache;
 
   late AudioCache _sfxCache;
@@ -89,6 +91,7 @@ class AudioController {
     final options = soundTypeToFilename(type);
     final filename = options[_random.nextInt(options.length)];
     _sfxCache.play(filename, volume: soundTypeToVolume(type));
+    _logger.info('playing sfx:$filename');
     _currentSfxPlayer = (_currentSfxPlayer + 1) % _sfxPlayers.length;
     _sfxCache.fixedPlayer = _sfxPlayers[_currentSfxPlayer];
   }
@@ -132,6 +135,7 @@ class AudioController {
 
   void startMusic() {
     _musicCache.play(_playlist.first.filename);
+    _logger.info('music started');
   }
 
   void _stopAllSound() {
@@ -146,6 +150,7 @@ class AudioController {
   void stopMusic() {
     if (_musicPlayer.state == PlayerState.PLAYING) {
       _musicPlayer.pause();
+      _logger.info('music stoped');
     }
   }
 }

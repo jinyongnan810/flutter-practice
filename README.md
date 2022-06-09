@@ -83,3 +83,29 @@ final _sfxCache = AudioCache(
 // preload the assets to play immediately
 await _sfxCache.loadAll(filenames)
 ```
+
+## Day 4
+
+### Logging
+
+Uses [logging package](https://pub.dev/packages/logging)
+
+- Decide the root logging level & the logging format in main
+
+```dart
+// in main.dart
+if (kReleaseMode) {
+    // Don't log anything below warnings in production.
+    Logger.root.level = Level.WARNING;
+  }
+  Logger.root.onRecord.listen((record) {
+    debugPrint('${record.level.name}: ${record.time}: '
+        '${record.loggerName}: '
+        '${record.message}');
+  });
+// then create an instance in the class
+final _logger = Logger('AudioController');
+// then do the logging
+_logger.info('playing sfx:$filename');
+// gets INFO: 2022-06-10 07:21:58.949: AudioController: playing sfx:p2.mp3
+```
