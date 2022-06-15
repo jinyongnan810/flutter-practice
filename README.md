@@ -9,6 +9,145 @@
 
 # Daily Practice
 
+## Day 5
+
+### Using go-router
+
+```dart
+// 1. create a nested router
+static final _router = GoRouter(routes: [
+    GoRoute(
+        path: '/',
+        builder: (context, state) => const MemoListPage(),
+        routes: [
+          GoRoute(
+              path: 'memos/:id',
+              builder: (context, state) {
+                final id = state.params['id']!;
+                return MemoDetailPage(id: id);
+              })
+        ])
+  ]);
+// 2. create MeterialApp with .router, and set the routes
+MaterialApp.router(
+          title: "Kin's Page",
+          scaffoldMessengerKey: scaffoldMessengerKey,
+          theme: ThemeData.dark(),
+          routeInformationParser: _router.routeInformationParser,
+          routerDelegate: _router.routerDelegate,
+          debugShowCheckedModeBanner: false,
+          // after changing to .router, need change navigatorKey to scaffoldMessengerKey
+          // navigatorKey: NavigationService.navigatorKey,
+        ));
+// 3.go to pages
+ GoRouter.of(context).go('/memos/${memo.id}')
+```
+
+### Display snackbar anywhere
+
+```dart
+// 1st method: using NavigatorKey (works with normal MaterialApp)
+static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+ScaffoldMessenger.of(
+                      NavigationService.navigatorKey.currentContext!)
+                  .showSnackBar(const SnackBar(
+                content: Text('Code copied.'),
+                duration: Duration(seconds: 5),
+              ));
+// in the main.dart
+navigatorKey: NavigationService.navigatorKey
+
+
+// 2nd method: using ScaffoldMessengerKey (works with MaterialApp.router)
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+    GlobalKey(debugLabel: 'scaffoldMessengerKey');
+void showSnackBar(String message) {
+  final messenger = scaffoldMessengerKey.currentState;
+  messenger?.showSnackBar(
+    SnackBar(content: Text(message)),
+  );
+}
+// in the main.dart
+scaffoldMessengerKey: scaffoldMessengerKey
+```
+
+### Simple loading widget
+
+```dart
+import 'package:flutter/material.dart';
+
+class Loading extends StatelessWidget {
+  const Loading({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        CircularProgressIndicator(
+          color: Colors.white,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Text(
+          'Loading',
+          style: TextStyle(fontSize: 26),
+        )
+      ],
+    ));
+  }
+}
+
+```
+
+## Day 4
+
+### Logging
+
+Uses [logging package](https://pub.dev/packages/logging)
+
+- Decide the root logging level & the logging format in main
+
+```dart
+// in main.dart
+if (kReleaseMode) {
+    // Don't log anything below warnings in production.
+    Logger.root.level = Level.WARNING;
+  }
+  Logger.root.onRecord.listen((record) {
+    debugPrint('${record.level.name}: ${record.time}: '
+        '${record.loggerName}: '
+        '${record.message}');
+  });
+// then create an instance in the class
+final _logger = Logger('AudioController');
+// then do the logging
+_logger.info('playing sfx:$filename');
+// gets INFO: 2022-06-10 07:21:58.949: AudioController: playing sfx:p2.mp3
+```
+
+## Day 3
+
+### Play audio
+
+Uses [audioplayers](https://pub.dev/packages/audioplayers)
+
+- To play local assets, we need to use the AudioCache
+
+```dart
+// create a player to monitor playing status
+final _sfxPlayer = AudioPlayer(playerId: 'sfxPlayer',mode: PlayerMode.LOW_LATENCY))
+// create a cache to load and play assets
+final _sfxCache = AudioCache(
+      fixedPlayer: _sfxPlayer,
+      prefix: 'assets/sfx/',
+    );
+// preload the assets to play immediately
+await _sfxCache.loadAll(filenames)
+```
+
 ## Day 1
 
 ### 2 ways of building routes
@@ -63,49 +202,3 @@ class PlaySoundDemo extends StatelessWidget implements DemoWidget {
 ### SafeArea
 
 - Wrap widgets with SafeArea will automatically add paddings to avoid platform-specific ui clash
-
-## Day 3
-
-### Play audio
-
-Uses [audioplayers](https://pub.dev/packages/audioplayers)
-
-- To play local assets, we need to use the AudioCache
-
-```dart
-// create a player to monitor playing status
-final _sfxPlayer = AudioPlayer(playerId: 'sfxPlayer',mode: PlayerMode.LOW_LATENCY))
-// create a cache to load and play assets
-final _sfxCache = AudioCache(
-      fixedPlayer: _sfxPlayer,
-      prefix: 'assets/sfx/',
-    );
-// preload the assets to play immediately
-await _sfxCache.loadAll(filenames)
-```
-
-## Day 4
-
-### Logging
-
-Uses [logging package](https://pub.dev/packages/logging)
-
-- Decide the root logging level & the logging format in main
-
-```dart
-// in main.dart
-if (kReleaseMode) {
-    // Don't log anything below warnings in production.
-    Logger.root.level = Level.WARNING;
-  }
-  Logger.root.onRecord.listen((record) {
-    debugPrint('${record.level.name}: ${record.time}: '
-        '${record.loggerName}: '
-        '${record.message}');
-  });
-// then create an instance in the class
-final _logger = Logger('AudioController');
-// then do the logging
-_logger.info('playing sfx:$filename');
-// gets INFO: 2022-06-10 07:21:58.949: AudioController: playing sfx:p2.mp3
-```
