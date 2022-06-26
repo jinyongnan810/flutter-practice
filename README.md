@@ -1,18 +1,93 @@
 [Ref Repo](https://github.com/jinyongnan810/flutter-samples-study)
 [Practice Repo](https://github.com/jinyongnan810/flutter-practice)
-
 # Purpose
-
 - Learn the basics
 - Learn how to build ui
 - Learn how other peaple code
 
-# Daily Practice
+# Practices
+## Creating a search bar
+```dart 
+// 1. create a search button(in app bar)
+IconButton(
+                  onPressed: () {
+                    showSearch(
+                        context: context, delegate: MemoListSearchDelegate());
+                  },
+                  icon: const Icon(Icons.search))
+// 2. create a search delegate
+class MemoListSearchDelegate extends SearchDelegate {
+  // create action button(like in app bar)
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+          onPressed: () {
+            if (query.isEmpty) {
+              close(context, null);
+            } else {
+              query = '';
+            }
+          },
+          icon: const Icon(Icons.close))
+    ];
+  }
+  // create a leading(like in app bar)
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          close(context, null);
+        },
+        icon: const Icon(Icons.arrow_back));
+  }
+  // do search when return pressed
+  @override
+  Widget buildResults(BuildContext context) {
+    return FutureBuilder(
+        future: Memos.queryItems(query),
+        builder: (ctx, AsyncSnapshot<List<Memo>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Loading();
+          } else {
+            if (snapshot.error != null) {
+              return Center(
+                child: Text('error:${snapshot.error}'),
+              );
+            }
+            List<Memo> data = snapshot.data!;
+            if (data.isEmpty) {
+              return const Center(
+                child: Text('No memo found'),
+              );
+            }
 
-## Day 5
+            return ListView.builder(
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(data[index].title),
+                    onTap: () {
+                      GoRouter.of(context).go('/memos/${data[index].id}');
+                      close(context, null);
+                    },
+                  );
+                });
+          }
+        });
+  }
+  // build some suggestions
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // not necessary
+    // bu we can build a ListView that contains some options
+    // when option is clicked, run showResults() to go to result
+    return Container();
+  }
+}
+```
 
-### Using go-router
-
+## Using go-router
 ```dart
 // 1. create a nested router
 static final _router = GoRouter(routes: [
@@ -42,9 +117,7 @@ MaterialApp.router(
 // 3.go to pages
  GoRouter.of(context).go('/memos/${memo.id}')
 ```
-
-### Display snackbar anywhere
-
+## Display snackbar anywhere
 ```dart
 // 1st method: using NavigatorKey (works with normal MaterialApp)
 static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -70,9 +143,7 @@ void showSnackBar(String message) {
 // in the main.dart
 scaffoldMessengerKey: scaffoldMessengerKey
 ```
-
-### Simple loading widget
-
+## Simple loading widget
 ```dart
 import 'package:flutter/material.dart';
 
@@ -101,15 +172,10 @@ class Loading extends StatelessWidget {
 }
 
 ```
-
-## Day 4
-
-### Logging
-
+## Logging
 Uses [logging package](https://pub.dev/packages/logging)
 
 - Decide the root logging level & the logging format in main
-
 ```dart
 // in main.dart
 if (kReleaseMode) {
@@ -127,15 +193,10 @@ final _logger = Logger('AudioController');
 _logger.info('playing sfx:$filename');
 // gets INFO: 2022-06-10 07:21:58.949: AudioController: playing sfx:p2.mp3
 ```
-
-## Day 3
-
-### Play audio
-
+## Play audio
 Uses [audioplayers](https://pub.dev/packages/audioplayers)
 
 - To play local assets, we need to use the AudioCache
-
 ```dart
 // create a player to monitor playing status
 final _sfxPlayer = AudioPlayer(playerId: 'sfxPlayer',mode: PlayerMode.LOW_LATENCY))
@@ -147,11 +208,7 @@ final _sfxCache = AudioCache(
 // preload the assets to play immediately
 await _sfxCache.loadAll(filenames)
 ```
-
-## Day 1
-
-### 2 ways of building routes
-
+## 2 ways of building routes
 ```dart
 // 1. using onGenerateRoute
 onGenerateRoute: (RouteSettings settings) {
@@ -169,9 +226,7 @@ routes: {
             '/detail': (ctx) => const MemoDetailPage()
           },
 ```
-
-### Restrict widgets to has certain fields
-
+## Restrict widgets to has certain fields
 ```dart
 // first create an abstract class
 abstract class DemoWidget extends Widget {
@@ -198,7 +253,12 @@ class PlaySoundDemo extends StatelessWidget implements DemoWidget {
   }
 }
 ```
-
-### SafeArea
-
+## SafeArea
 - Wrap widgets with SafeArea will automatically add paddings to avoid platform-specific ui clash
+
+
+
+
+
+
+
