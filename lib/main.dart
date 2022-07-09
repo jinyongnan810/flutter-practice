@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/audio/audio_controller.dart';
+import 'package:flutter_practice/models/user.dart';
 import 'package:flutter_practice/screen/demo_screen.dart';
 import 'package:flutter_practice/screen/home_screen.dart';
 import 'package:flutter_practice/shared/demo-widget.dart';
@@ -17,6 +18,11 @@ void main() {
         '${record.loggerName}: '
         '${record.message}');
   });
+  const user = User(
+      id: 'abc', name: 'name123', email: 'email@email.com', phone: '123-4456');
+  print(user);
+  print(user.toJson());
+  print(user.copyWith(name: 'new name', email: 'new email'));
   runApp(const MyApp());
 }
 
