@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/audio/audio_controller.dart';
@@ -23,6 +24,9 @@ void main() {
   print(user);
   print(user.toJson());
   print(user.copyWith(name: 'new name', email: 'new email'));
+  Dio().get('https://randomuser.me/api/').then((response) {
+    print(response.data);
+  });
   runApp(const MyApp());
 }
 

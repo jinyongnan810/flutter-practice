@@ -38,6 +38,7 @@ dependencies:
   logging: ^1.0.2
   freezed_annotation: ^2.0.3
   json_annotation: ^4.6.0
+  dio: ^4.0.6
 
 dev_dependencies:
   flutter_test:
