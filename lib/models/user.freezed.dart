@@ -20,8 +20,8 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  UserId get id => throw _privateConstructorUsedError;
+  UserName get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
 
@@ -34,7 +34,10 @@ mixin _$User {
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
-  $Res call({String id, String name, String email, String phone});
+  $Res call({UserId id, UserName name, String email, String phone});
+
+  $UserIdCopyWith<$Res> get id;
+  $UserNameCopyWith<$Res> get name;
 }
 
 /// @nodoc
@@ -56,11 +59,11 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as UserId,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as UserName,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -71,6 +74,20 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
               as String,
     ));
   }
+
+  @override
+  $UserIdCopyWith<$Res> get id {
+    return $UserIdCopyWith<$Res>(_value.id, (value) {
+      return _then(_value.copyWith(id: value));
+    });
+  }
+
+  @override
+  $UserNameCopyWith<$Res> get name {
+    return $UserNameCopyWith<$Res>(_value.name, (value) {
+      return _then(_value.copyWith(name: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -78,7 +95,12 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$$_UserCopyWith(_$_User value, $Res Function(_$_User) then) =
       __$$_UserCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name, String email, String phone});
+  $Res call({UserId id, UserName name, String email, String phone});
+
+  @override
+  $UserIdCopyWith<$Res> get id;
+  @override
+  $UserNameCopyWith<$Res> get name;
 }
 
 /// @nodoc
@@ -101,11 +123,11 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as UserId,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as UserName,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -130,9 +152,9 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
   @override
-  final String id;
+  final UserId id;
   @override
-  final String name;
+  final UserName name;
   @override
   final String email;
   @override
@@ -187,17 +209,17 @@ class _$_User with DiagnosticableTreeMixin implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required final String id,
-      required final String name,
+      {required final UserId id,
+      required final UserName name,
       required final String email,
       required final String phone}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
-  String get id;
+  UserId get id;
   @override
-  String get name;
+  UserName get name;
   @override
   String get email;
   @override

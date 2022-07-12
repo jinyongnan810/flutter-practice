@@ -19,13 +19,10 @@ void main() {
         '${record.loggerName}: '
         '${record.message}');
   });
-  const user = User(
-      id: 'abc', name: 'name123', email: 'email@email.com', phone: '123-4456');
-  print(user);
-  print(user.toJson());
-  print(user.copyWith(name: 'new name', email: 'new email'));
   Dio().get('https://randomuser.me/api/').then((response) {
     print(response.data);
+    final user = User.fromJson(response.data['results'][0]);
+    print(user);
   });
   runApp(const MyApp());
 }
