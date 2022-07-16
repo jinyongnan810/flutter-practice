@@ -1,19 +1,35 @@
 [Ref Repo](https://github.com/jinyongnan810/flutter-samples-study)
 [Practice Repo](https://github.com/jinyongnan810/flutter-practice)
-
 # Purpose
-
 - Learn the basics
 - Learn how to build ui
 - Learn how other peaple code
 
 # Practices
+## Using l10n
+### [Official Doc](https://docs.flutter.dev/development/accessibility-and-localization/internationalization)
+### [Basic Installment](https://github.com/jinyongnan810/mymemo-with-flutterfire/compare/d8b7e15285e4e251f39441307761153dbf6ef1aa...bd8c0e37ce5aec54c5105fa61ee2266837a38696)
+### Using locale
+```dart
+// 1. define in each arbs
+"loggedInHint": "{email}でログインしています。",
+"@loggedInHint": {
+        "placeholders": {
+            "email": {
+                "type": "String"
+            }
+        }
+    }
+// 2. generate code
+flutter gen-l10n
+// 3. use
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+K.of(context)!.loggedInHint(auth.myProfile.email)
 
+```
 ## Using Freezed
-
-- [freezed](https://pub.dev/packages/freezed)
+### [freezed](https://pub.dev/packages/freezed)
 - install
-
 ```bash
 flutter pub add freezed_annotation
 flutter pub add --dev build_runner
@@ -21,9 +37,7 @@ flutter pub add --dev freezed
 flutter pub add json_annotation
 flutter pub add --dev json_serializable
 ```
-
 - create model
-
 ```dart
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
@@ -41,17 +55,13 @@ class User with _$User {
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
 }
 ```
-
 - generate code
-
 ```bash
 flutter pub run build_runner build
 # or
 flutter pub run build_runner watch
 ```
-
 - basic usages
-
 ```dart
 const user = User(
       id: 'abc', name: 'name123', email: 'email@email.com', phone: '123-4456');
@@ -61,11 +71,12 @@ const user = User(
 ```
 
 - sample of parsing nested json
-  - [sample](https://github.com/jinyongnan810/flutter-practice/commit/4a91a303a48230dd6db4ae5eff347c5d07b84bee)
+    - [sample](https://github.com/jinyongnan810/flutter-practice/commit/4a91a303a48230dd6db4ae5eff347c5d07b84bee)
+
+
 
 ## Creating a search bar
-
-```dart
+```dart 
 // 1. create a search button(in app bar)
 IconButton(
                   onPressed: () {
@@ -146,7 +157,6 @@ class MemoListSearchDelegate extends SearchDelegate {
 ```
 
 ## Using go-router
-
 ```dart
 // 1. create a nested router
 static final _router = GoRouter(routes: [
@@ -176,9 +186,7 @@ MaterialApp.router(
 // 3.go to pages
  GoRouter.of(context).go('/memos/${memo.id}')
 ```
-
 ## Display snackbar anywhere
-
 ```dart
 // 1st method: using NavigatorKey (works with normal MaterialApp)
 static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -204,9 +212,7 @@ void showSnackBar(String message) {
 // in the main.dart
 scaffoldMessengerKey: scaffoldMessengerKey
 ```
-
 ## Simple loading widget
-
 ```dart
 import 'package:flutter/material.dart';
 
@@ -235,13 +241,10 @@ class Loading extends StatelessWidget {
 }
 
 ```
-
 ## Logging
-
 Uses [logging package](https://pub.dev/packages/logging)
 
 - Decide the root logging level & the logging format in main
-
 ```dart
 // in main.dart
 if (kReleaseMode) {
@@ -259,13 +262,10 @@ final _logger = Logger('AudioController');
 _logger.info('playing sfx:$filename');
 // gets INFO: 2022-06-10 07:21:58.949: AudioController: playing sfx:p2.mp3
 ```
-
 ## Play audio
-
 Uses [audioplayers](https://pub.dev/packages/audioplayers)
 
 - To play local assets, we need to use the AudioCache
-
 ```dart
 // create a player to monitor playing status
 final _sfxPlayer = AudioPlayer(playerId: 'sfxPlayer',mode: PlayerMode.LOW_LATENCY))
@@ -277,9 +277,7 @@ final _sfxCache = AudioCache(
 // preload the assets to play immediately
 await _sfxCache.loadAll(filenames)
 ```
-
 ## 2 ways of building routes
-
 ```dart
 // 1. using onGenerateRoute
 onGenerateRoute: (RouteSettings settings) {
@@ -297,9 +295,7 @@ routes: {
             '/detail': (ctx) => const MemoDetailPage()
           },
 ```
-
 ## Restrict widgets to has certain fields
-
 ```dart
 // first create an abstract class
 abstract class DemoWidget extends Widget {
@@ -326,7 +322,12 @@ class PlaySoundDemo extends StatelessWidget implements DemoWidget {
   }
 }
 ```
-
 ## SafeArea
-
 - Wrap widgets with SafeArea will automatically add paddings to avoid platform-specific ui clash
+
+
+
+
+
+
+
