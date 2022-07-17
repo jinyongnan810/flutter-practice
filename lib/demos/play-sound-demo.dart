@@ -17,6 +17,9 @@ class PlaySoundDemo extends StatefulWidget implements DemoWidget {
 
   @override
   String get description => PlaySoundDemo._description;
+
+  @override
+  Icon get icon => const Icon(Icons.music_note);
 }
 
 class _PlaySoundDemoState extends State<PlaySoundDemo> {

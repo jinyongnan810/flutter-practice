@@ -4,4 +4,5 @@ abstract class DemoWidget extends Widget {
   const DemoWidget({Key? key}) : super(key: key);
   String get title;
   String get description;
+  Icon get icon;
 }

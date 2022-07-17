@@ -19,11 +19,11 @@ void main() {
         '${record.loggerName}: '
         '${record.message}');
   });
-  Dio().get('https://randomuser.me/api/').then((response) {
-    print(response.data);
-    final user = User.fromJson(response.data['results'][0]);
-    print(user);
-  });
+  // Dio().get('https://randomuser.me/api/').then((response) {
+  //   print(response.data);
+  //   final user = User.fromJson(response.data['results'][0]);
+  //   print(user);
+  // });
   runApp(const MyApp());
 }
 
