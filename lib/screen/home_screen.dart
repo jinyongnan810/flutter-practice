@@ -12,10 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<DemoWidget> _demos = [
-    const PlaySoundDemo(),
-    const TestWidgetsDemo()
-  ];
+  final List<DemoWidget> _demos = [const PlaySoundDemo(), TestWidgetsDemo()];
   int _selectedIndex = 0;
 
   @override
