@@ -3,12 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo-widget.dart';
 
-class TestWidgetsDemo extends StatelessWidget implements DemoWidget {
+class TestWidgetsDemo extends StatefulWidget implements DemoWidget {
   TestWidgetsDemo({Key? key})
       : msgs = [],
         super(key: key);
   static const String _title = 'Test Widgets Demo';
   static const String _description = 'Test some of the widgets.';
+  final List<String> msgs;
   @override
   String get title => TestWidgetsDemo._title;
 
@@ -18,7 +19,20 @@ class TestWidgetsDemo extends StatelessWidget implements DemoWidget {
   @override
   Icon get icon => const Icon(Icons.ramen_dining);
 
-  final List<String> msgs;
+  @override
+  State<TestWidgetsDemo> createState() => _TestWidgetsDemoState();
+}
+
+class _TestWidgetsDemoState extends State<TestWidgetsDemo>
+    with TickerProviderStateMixin {
+  late AnimationController animationController;
+  @override
+  void initState() {
+    animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 5000));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -29,13 +43,14 @@ class TestWidgetsDemo extends StatelessWidget implements DemoWidget {
             onPressed: () {
               final newMsg = 'hello ${DateTime.now()}';
               Timer timer = Timer(const Duration(seconds: 5), () {
-                if (msgs.contains(newMsg)) {
-                  msgs.remove(newMsg);
+                if (widget.msgs.contains(newMsg)) {
+                  widget.msgs.remove(newMsg);
                 }
               });
-              msgs.add(newMsg);
-              msgs.length > 3 ? msgs.removeAt(0) : null;
-              ScaffoldMessenger.of(context).clearSnackBars();
+              widget.msgs.add(newMsg);
+              widget.msgs.length > 3 ? widget.msgs.removeAt(0) : null;
+              // ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 // these two make transparent background
                 backgroundColor: Colors.transparent,
@@ -43,14 +58,36 @@ class TestWidgetsDemo extends StatelessWidget implements DemoWidget {
 
                 behavior: SnackBarBehavior.floating,
 
+                // width: 280.0,
+                // padding:
+                //     const EdgeInsets.symmetric(vertical: 20.0, horizontal: 8),
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(10.0),
+                // ),
+
+                animation: CurvedAnimation(
+                    parent: animationController,
+                    curve: Curves.easeIn,
+                    reverseCurve: Curves.easeOut),
+
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: msgs
-                      .map((e) => Text(
-                            e,
-                            style: const TextStyle(color: Colors.black),
-                          ))
+                  children: widget.msgs
+                      .map(
+                        (e) => Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 10),
+                            margin: EdgeInsets.only(top: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade400,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              e,
+                              style: const TextStyle(color: Colors.black),
+                            )),
+                      )
                       .toList(),
                 ),
                 dismissDirection: DismissDirection.startToEnd,
