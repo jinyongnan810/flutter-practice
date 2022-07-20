@@ -1,13 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/audio/audio_controller.dart';
 import 'package:flutter_practice/models/user.dart';
 import 'package:flutter_practice/screen/demo_screen.dart';
 import 'package:flutter_practice/screen/home_screen.dart';
 import 'package:flutter_practice/shared/demo-widget.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   if (kReleaseMode) {
@@ -24,7 +23,7 @@ void main() {
   //   final user = User.fromJson(response.data['results'][0]);
   //   print(user);
   // });
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -33,12 +32,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<AudioController>(
-            create: ((context) => AudioController()..initialize()))
-      ],
-      child: MaterialApp(
+    return MaterialApp(
         title: 'Flutter Practices',
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -51,8 +45,6 @@ class MyApp extends StatelessWidget {
               child: settings.arguments as DemoWidget,
             ),
           );
-        },
-      ),
-    );
+        });
   }
 }
