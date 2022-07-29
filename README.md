@@ -9,6 +9,58 @@
 
 # Practices
 
+## MiniPlayer
+
+- https://pub.dev/packages/miniplayer
+
+![image](https://firebasestorage.googleapis.com/v0/b/mymemo-98f76.appspot.com/o/uploads%2FSIvHI3wJfEPSACxfj6WH1l53vZx1%2Fd30c8626-3388-456d-a53d-6eb6e724d9c1.gif?alt=media&token=0e54b6bb-8b72-4231-b0c3-3bada85f5ad2)
+
+```dart
+// 1. attach Miniplayer (wrapped with OffStage) to the stack
+Miniplayer(
+      controller: miniplayerController,
+      minHeight: _playerMinHeight, // about 60
+      maxHeight: MediaQuery.of(context).size.height,
+      builder: (height, percentage) {
+         if (selectedVideo == null) {
+             return const SizedBox.shrink(); // disappears
+         }
+         if (height > _playerMinHeight + 50) { // display full screen
+              return const VideoScreen();
+         }
+
+         return const SmallVideoScreen(); // display mini screen
+      }
+)
+// 2. add close button to the mini screen
+// 3. add downward arrow button to the full screen
+IconButton(
+      onPressed: () {
+          miniplayerController.animateToHeight(
+               state: PanelState.MIN);
+      },
+      icon: const Icon(Icons.keyboard_arrow_down)
+)
+// 4. wrap the full screen with GestureDetector to prevent minify on tap
+
+```
+
+## Offstage
+
+- Change Tabs without re-rendering
+
+```dart
+Stack(children: _screens.asMap()
+     .map((index, screen) => MapEntry(
+         index,
+         Offstage(
+            offstage: index != _currentIndex,
+            child: screen,
+         )))
+         .values
+         .toList()
+```
+
 ## Riverpod
 
 ### [Riverpod](https://pub.dev/packages/flutter_riverpod)
