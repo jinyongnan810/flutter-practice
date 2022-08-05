@@ -9,6 +9,70 @@
 
 # Practices
 
+## Text Overflow
+
+![image](https://firebasestorage.googleapis.com/v0/b/mymemo-98f76.appspot.com/o/uploads%2FSIvHI3wJfEPSACxfj6WH1l53vZx1%2F566043fc-89db-4208-9ae5-179585b0b315.png?alt=media&token=c0be7047-cc9c-40e5-8c97-a0dd6b302197)
+
+```dart
+// show ... when run out space
+Text(title, overflow: TextOverflow.ellipsis,);
+```
+
+## DataTable
+
+![image](https://firebasestorage.googleapis.com/v0/b/mymemo-98f76.appspot.com/o/uploads%2FSIvHI3wJfEPSACxfj6WH1l53vZx1%2Fc4619a76-7d36-4866-bbef-470f89d34a8a.gif?alt=media&token=a51c9651-f52b-4707-809c-0f78f5bba9f2)
+
+```dart
+    // controll selected status
+    final seletectedSong = ref.watch(selectedSongProvider);
+    return DataTable(
+        // not to show the checkbox
+        showCheckboxColumn: false,
+        // set columns
+        columns: const [
+          DataColumn(label: Text('Title')),
+          DataColumn(label: Text('Artist')),
+          DataColumn(label: Text('Album')),
+          DataColumn(label: Icon(Icons.access_time)),
+        ],
+        // set data rows
+        rows: tracks.map((e) {
+          final selected = seletectedSong?.id == e.id;
+          final textStyle = TextStyle(
+              color: selected
+                  ? Theme.of(context).colorScheme.secondary
+                  : Theme.of(context).iconTheme.color);
+          return DataRow(
+              key: ValueKey(e.id),
+              // a row is only selectable when these two are set
+              selected: selected,
+              onSelectChanged: (selected) {
+                if (selected == true) {
+                  final notifier = ref.read(selectedSongProvider.notifier);
+                  notifier.state = e;
+                }
+              },
+              cells: [
+                DataCell(Text(
+                  e.title,
+                  style: textStyle,
+                )),
+                DataCell(Text(
+                  e.artist,
+                  style: textStyle,
+                )),
+                DataCell(Text(
+                  e.album,
+                  style: textStyle,
+                )),
+                DataCell(Text(
+                  e.duration,
+                  style: textStyle,
+                )),
+              ]);
+        }).toList());
+```
+
 ## MiniPlayer
 
 - https://pub.dev/packages/miniplayer
