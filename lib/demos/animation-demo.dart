@@ -30,8 +30,8 @@ class _AnimationDemoState extends State<AnimationDemo>
     super.initState();
     _edgeBallAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
-      reverseDuration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 1000),
+      reverseDuration: const Duration(milliseconds: 1000),
     );
   }
 
@@ -60,11 +60,11 @@ class _AnimationDemoState extends State<AnimationDemo>
               // Positioned(left: 0, top: 0, child: edgeBall)
               _AnimatedWidget(
                   controller: _edgeBallAnimationController,
-                  origin: Offset.zero,
-                  position: Offset.zero.translate(
-                      constraint.maxWidth - ballSize,
+                  from: Offset.zero,
+                  to: Offset.zero.translate(constraint.maxWidth - ballSize,
                       constraint.maxHeight - ballSize),
-                  size: ballSize,
+                  forwardingCurve: Curves.easeInToLinear,
+                  reversingCurve: Curves.linearToEaseOut,
                   child: edgeBall)
               : Container(),
           Center(
@@ -103,41 +103,45 @@ class _AnimationDemoState extends State<AnimationDemo>
 class _AnimatedWidget extends StatelessWidget {
   const _AnimatedWidget({
     required this.controller,
-    required this.origin,
-    required this.position,
-    required this.size,
+    required this.from,
+    required this.to,
+    required this.forwardingCurve,
+    required this.reversingCurve,
     required this.child,
   });
 
   final AnimationController controller;
-  final Offset origin;
-  final Offset position;
-  final double size;
+  final Offset from;
+  final Offset to;
+  final Curve forwardingCurve;
+  final Curve reversingCurve;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     final animation = CurvedAnimation(
       parent: controller,
-      curve: Curves.linear,
-      reverseCurve: Curves.easeIn,
+      // https://api.flutter.dev/flutter/animation/Curves-class.html
+      curve: forwardingCurve,
+      reverseCurve: reversingCurve,
     );
     return AnimatedBuilder(
       animation: animation,
       builder: (context, child) {
-        return Positioned(
-          top: lerpDouble(
-            origin.dy - size / 2,
-            position.dy,
-            animation.value,
-          ),
-          left: lerpDouble(
-            origin.dx - size / 2,
-            position.dx,
-            animation.value,
-          ),
+        return Transform.translate(
+          offset: Offset(
+              lerpDouble(
+                from.dx,
+                to.dx,
+                animation.value,
+              )!,
+              lerpDouble(
+                from.dy,
+                to.dy,
+                animation.value,
+              )!),
           child: Transform.scale(
-            scale: animation.value,
+            scale: 1,
             child: Opacity(
               opacity: clampDouble(animation.value, 0, 1),
               child: child,
