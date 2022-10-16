@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/components/demo_card.dart';
 import 'package:flutter_practice/demos/play-sound-demo.dart';
 import 'package:flutter_practice/demos/test-widgets-demo.dart';
+import 'package:flutter_practice/demos/animation-demo.dart';
 import 'package:flutter_practice/shared/demo-widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,7 +13,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<DemoWidget> _demos = [const PlaySoundDemo(), TestWidgetsDemo()];
+  final List<DemoWidget> _demos = [
+    const PlaySoundDemo(),
+    TestWidgetsDemo(),
+    const AnimationDemo()
+  ];
   int _selectedIndex = 0;
 
   @override
