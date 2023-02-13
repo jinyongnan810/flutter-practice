@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/components/demo_card.dart';
 import 'package:flutter_practice/demos/animation-demo2.dart';
+import 'package:flutter_practice/demos/chained-animation-demo.dart';
 import 'package:flutter_practice/demos/play-sound-demo.dart';
 import 'package:flutter_practice/demos/test-widgets-demo.dart';
 import 'package:flutter_practice/demos/animation-demo.dart';
@@ -18,7 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const PlaySoundDemo(),
     TestWidgetsDemo(),
     const AnimationDemo(),
-    const AnimationDemo2()
+    const AnimationDemo2(),
+    const ChainedAnimationDemo(),
   ];
   int _selectedIndex = 0;
 
