@@ -23,7 +23,45 @@ class ChainedAnimationDemo extends StatefulWidget implements DemoWidget {
 enum CircleSide { left, right }
 
 extension CirclePath on CircleSide {
-  Path toPath(Size size) {}
+  Path toPath(Size size) {
+    final path = Path();
+    late Offset offset;
+    late bool clockwise;
+    switch (this) {
+      case CircleSide.left:
+        path.moveTo(size.width, 0);
+        offset = Offset(size.width, size.height);
+        clockwise = false;
+        break;
+      case CircleSide.right:
+        path.moveTo(0, 0);
+        offset = Offset(0, size.height);
+        clockwise = true;
+        break;
+    }
+    path.arcToPoint(
+      offset,
+      radius: Radius.elliptical(size.width / 2, size.height / 2),
+      clockwise: clockwise,
+    );
+    path.close();
+    return path;
+  }
+}
+
+class HalfCircleClipper extends CustomClipper<Path> {
+  final CircleSide side;
+  HalfCircleClipper({required this.side});
+
+  @override
+  Path getClip(Size size) {
+    return side.toPath(size);
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
+  }
 }
 
 class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
@@ -53,15 +91,21 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
         child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          color: Colors.blue,
-          width: 200,
-          height: 200,
+        ClipPath(
+          clipper: HalfCircleClipper(side: CircleSide.left),
+          child: Container(
+            color: Colors.blue,
+            width: 200,
+            height: 200,
+          ),
         ),
-        Container(
-          color: Colors.amber,
-          width: 200,
-          height: 200,
+        ClipPath(
+          clipper: HalfCircleClipper(side: CircleSide.right),
+          child: Container(
+            color: Colors.amber,
+            width: 200,
+            height: 200,
+          ),
         ),
       ],
     ));
