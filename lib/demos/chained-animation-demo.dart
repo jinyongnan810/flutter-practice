@@ -66,29 +66,32 @@ class HalfCircleClipper extends CustomClipper<Path> {
 
 class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
     with TickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _animation;
+  late final AnimationController _counterClockWiseController;
+  late final Animation<double> _counterClockWiseAnimation;
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+    _counterClockWiseController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 1),
     );
-    _animation = Tween<double>(begin: 0, end: pi * 2).animate(_controller);
-    _controller.repeat();
+    _counterClockWiseAnimation =
+        Tween<double>(begin: 0, end: -pi / 2).animate(CurvedAnimation(
+      parent: _counterClockWiseController,
+      curve: Curves.bounceOut,
+    ));
+    _counterClockWiseController.repeat();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _counterClockWiseController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Row(
+    final circle = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ClipPath(
@@ -108,6 +111,18 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
           ),
         ),
       ],
+    );
+    return Center(
+        child: AnimatedBuilder(
+      animation: _counterClockWiseController,
+      builder: (context, child) {
+        return Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.identity()
+            ..rotateZ(_counterClockWiseAnimation.value),
+          child: circle,
+        );
+      },
     ));
   }
 }
