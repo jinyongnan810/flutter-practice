@@ -68,6 +68,8 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
     with TickerProviderStateMixin {
   late final AnimationController _counterClockWiseController;
   late final Animation<double> _counterClockWiseAnimation;
+  late final AnimationController _flipController;
+  late final Animation<double> _flipAnimation;
   @override
   void initState() {
     super.initState();
@@ -80,12 +82,33 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
       parent: _counterClockWiseController,
       curve: Curves.bounceOut,
     ));
-    _counterClockWiseController.repeat();
+    _flipController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    _flipAnimation = Tween<double>(begin: 0, end: pi).animate(CurvedAnimation(
+      parent: _flipController,
+      curve: Curves.bounceOut,
+    ));
+    _counterClockWiseAnimation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _flipAnimation = Tween<double>(
+                begin: _flipAnimation.value, end: _flipAnimation.value + pi)
+            .animate(CurvedAnimation(
+          parent: _flipController,
+          curve: Curves.bounceOut,
+        ));
+        _flipController
+          ..reset()
+          ..forward();
+      }
+    });
   }
 
   @override
   void dispose() {
     _counterClockWiseController.dispose();
+    _flipController.dispose();
     super.dispose();
   }
 
