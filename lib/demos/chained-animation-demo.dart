@@ -67,9 +67,9 @@ class HalfCircleClipper extends CustomClipper<Path> {
 class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
     with TickerProviderStateMixin {
   late final AnimationController _counterClockWiseController;
-  late final Animation<double> _counterClockWiseAnimation;
+  late Animation<double> _counterClockWiseAnimation;
   late final AnimationController _flipController;
-  late final Animation<double> _flipAnimation;
+  late Animation<double> _flipAnimation;
   @override
   void initState() {
     super.initState();
@@ -90,7 +90,7 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
       parent: _flipController,
       curve: Curves.bounceOut,
     ));
-    _counterClockWiseAnimation.addStatusListener((status) {
+    _counterClockWiseController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _flipAnimation = Tween<double>(
                 begin: _flipAnimation.value, end: _flipAnimation.value + pi)
@@ -99,6 +99,20 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
           curve: Curves.bounceOut,
         ));
         _flipController
+          ..reset()
+          ..forward();
+      }
+    });
+    _flipController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _counterClockWiseAnimation = Tween<double>(
+                begin: _counterClockWiseAnimation.value,
+                end: _counterClockWiseAnimation.value - pi / 2)
+            .animate(CurvedAnimation(
+          parent: _counterClockWiseController,
+          curve: Curves.bounceOut,
+        ));
+        _counterClockWiseController
           ..reset()
           ..forward();
       }
@@ -114,6 +128,8 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
 
   @override
   Widget build(BuildContext context) {
+    _counterClockWiseController.reset();
+    _counterClockWiseController.forward();
     final circle = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -141,9 +157,19 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
       builder: (context, child) {
         return Transform(
           alignment: Alignment.center,
+          // rotate with z axis also rotates the canvas, so the y axis also rotates
           transform: Matrix4.identity()
             ..rotateZ(_counterClockWiseAnimation.value),
-          child: circle,
+          child: AnimatedBuilder(
+            animation: _flipController,
+            builder: (context, child) {
+              return Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()..rotateY(_flipAnimation.value),
+                child: circle,
+              );
+            },
+          ),
         );
       },
     ));
