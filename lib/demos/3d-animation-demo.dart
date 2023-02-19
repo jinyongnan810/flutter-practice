@@ -23,37 +23,66 @@ class ThreeDAnimationDemo extends StatefulWidget implements DemoWidget {
 
 class _ThreeDAnimationDemoState extends State<ThreeDAnimationDemo>
     with TickerProviderStateMixin {
-  late final AnimationController _controller;
-  late Animation<double> _animation;
+  late final AnimationController _xController;
+  late final AnimationController _yController;
+  late final AnimationController _zController;
+  late Tween<double> _animation;
+  static const double size = 200;
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+    _xController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 20),
     );
-    _animation = Tween<double>(begin: 0, end: -pi / 2).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.bounceOut,
-    ));
+    _yController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 30),
+    );
+    _zController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 40),
+    );
+    _animation = Tween<double>(begin: 0, end: pi * 2);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _xController.dispose();
+    _yController.dispose();
+    _zController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    _xController
+      ..reset()
+      ..repeat();
+    _yController
+      ..reset()
+      ..repeat();
+    _zController
+      ..reset()
+      ..repeat();
     return Center(
         child: AnimatedBuilder(
-      animation: _controller,
+      animation: Listenable.merge([_xController, _yController, _zController]),
       builder: (context, child) {
         return Transform(
           alignment: Alignment.center,
-          // rotate with z axis also rotates the canvas, so the y axis also rotates
-          transform: Matrix4.identity()..rotateZ(_animation.value),
+          // bind one tween to multiple controllers
+          transform: Matrix4.identity()
+            ..rotateX(_animation.evaluate(_xController))
+            ..rotateY(_animation.evaluate(_yController))
+            ..rotateZ(_animation.evaluate(_zController)),
+          child: Stack(children: [
+            Container(
+              color: Colors.amber,
+              width: size,
+              height: size,
+            )
+          ]),
         );
       },
     ));
