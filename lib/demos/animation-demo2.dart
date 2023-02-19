@@ -17,7 +17,7 @@ class AnimationDemo2 extends StatefulWidget implements DemoWidget {
   String get description => AnimationDemo2._description;
 
   @override
-  Icon get icon => const Icon(Icons.rectangle_outlined);
+  Widget get icon => const Icon(Icons.rectangle_outlined);
 }
 
 class _AnimationDemo2State extends State<AnimationDemo2>

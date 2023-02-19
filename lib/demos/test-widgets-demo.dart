@@ -17,7 +17,7 @@ class TestWidgetsDemo extends StatefulWidget implements DemoWidget {
   String get description => TestWidgetsDemo._description;
 
   @override
-  Icon get icon => const Icon(Icons.ramen_dining);
+  Widget get icon => const Icon(Icons.ramen_dining);
 
   @override
   State<TestWidgetsDemo> createState() => _TestWidgetsDemoState();
@@ -29,7 +29,7 @@ class _TestWidgetsDemoState extends State<TestWidgetsDemo>
   @override
   void initState() {
     animationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 5000));
+        vsync: this, duration: const Duration(milliseconds: 5000));
     super.initState();
   }
 
@@ -76,9 +76,9 @@ class _TestWidgetsDemoState extends State<TestWidgetsDemo>
                   children: widget.msgs
                       .map(
                         (e) => Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 10),
-                            margin: EdgeInsets.only(top: 10),
+                            margin: const EdgeInsets.only(top: 10),
                             decoration: BoxDecoration(
                               color: Colors.blue.shade400,
                               borderRadius: BorderRadius.circular(10),

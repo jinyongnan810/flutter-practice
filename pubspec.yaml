@@ -40,6 +40,7 @@ dependencies:
   json_annotation: ^4.6.0
   dio: ^4.0.6
   flutter_riverpod: ^1.0.4
+  font_awesome_flutter: ^10.4.0
 
 dev_dependencies:
   flutter_test:

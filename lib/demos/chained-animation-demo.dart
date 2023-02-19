@@ -17,7 +17,7 @@ class ChainedAnimationDemo extends StatefulWidget implements DemoWidget {
   String get description => ChainedAnimationDemo._description;
 
   @override
-  Icon get icon => const Icon(Icons.circle_outlined);
+  Widget get icon => const Icon(Icons.circle_outlined);
 }
 
 enum CircleSide { left, right }

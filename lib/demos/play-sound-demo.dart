@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/audio/audio_controller.dart';
 import 'package:flutter_practice/audio/sounds.dart';
 import 'package:flutter_practice/providers/audio_provider.dart';
 import 'package:flutter_practice/shared/demo-widget.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PlaySoundDemo extends ConsumerStatefulWidget implements DemoWidget {
@@ -21,7 +19,7 @@ class PlaySoundDemo extends ConsumerStatefulWidget implements DemoWidget {
   String get description => PlaySoundDemo._description;
 
   @override
-  Icon get icon => const Icon(Icons.music_note);
+  Widget get icon => const Icon(Icons.music_note);
 }
 
 class _PlaySoundDemoState extends ConsumerState<PlaySoundDemo> {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/demos/3d-animation-demo.dart';
 import 'package:flutter_practice/demos/animation-demo2.dart';
 import 'package:flutter_practice/demos/chained-animation-demo.dart';
 import 'package:flutter_practice/demos/play-sound-demo.dart';
@@ -20,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const AnimationDemo(),
     const AnimationDemo2(),
     const ChainedAnimationDemo(),
+    const ThreeDAnimationDemo(),
   ];
   int _selectedIndex = 0;
 
