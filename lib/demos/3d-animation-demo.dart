@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo-widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class ThreeDAnimationDemo extends StatefulWidget implements DemoWidget {
   const ThreeDAnimationDemo({Key? key}) : super(key: key);
@@ -56,6 +57,64 @@ class _ThreeDAnimationDemoState extends State<ThreeDAnimationDemo>
 
   @override
   Widget build(BuildContext context) {
+    final cubic = Stack(children: [
+      // back
+      Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.identity()..translate(Vector3(0, 0, -size)),
+        child: Container(
+          color: Colors.green,
+          width: size,
+          height: size,
+        ),
+      ),
+      // left
+      Transform(
+        alignment: Alignment.centerLeft,
+        transform: Matrix4.identity()..rotateY(pi / 2),
+        child: Container(
+          color: Colors.blue,
+          width: size,
+          height: size,
+        ),
+      ),
+      // right
+      Transform(
+        alignment: Alignment.centerRight,
+        transform: Matrix4.identity()..rotateY(-pi / 2),
+        child: Container(
+          color: Colors.purple,
+          width: size,
+          height: size,
+        ),
+      ),
+      // top
+      Transform(
+        alignment: Alignment.topCenter,
+        transform: Matrix4.identity()..rotateX(-pi / 2),
+        child: Container(
+          color: Colors.red,
+          width: size,
+          height: size,
+        ),
+      ),
+      // bottom
+      Transform(
+        alignment: Alignment.bottomCenter,
+        transform: Matrix4.identity()..rotateX(pi / 2),
+        child: Container(
+          color: Colors.brown,
+          width: size,
+          height: size,
+        ),
+      ),
+      // front
+      Container(
+        color: Colors.amber,
+        width: size,
+        height: size,
+      ),
+    ]);
     _xController
       ..reset()
       ..repeat();
@@ -76,13 +135,7 @@ class _ThreeDAnimationDemoState extends State<ThreeDAnimationDemo>
             ..rotateX(_animation.evaluate(_xController))
             ..rotateY(_animation.evaluate(_yController))
             ..rotateZ(_animation.evaluate(_zController)),
-          child: Stack(children: [
-            Container(
-              color: Colors.amber,
-              width: size,
-              height: size,
-            )
-          ]),
+          child: cubic,
         );
       },
     ));
