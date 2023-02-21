@@ -65,9 +65,12 @@ class _HeroAnimationDemoState extends State<HeroAnimationDemo>
         itemBuilder: (ctx, index) {
           final person = people[index];
           return ListTile(
-            leading: Text(
-              person.emoji,
-              style: const TextStyle(fontSize: 40),
+            leading: Hero(
+              tag: person.name,
+              child: Text(
+                person.emoji,
+                style: const TextStyle(fontSize: 40),
+              ),
             ),
             title: Text(person.name),
             subtitle: Text('${person.age} years old'),
@@ -89,9 +92,19 @@ class _PersonDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-        person.emoji,
-        style: const TextStyle(fontSize: 40),
+          title: Hero(
+        flightShuttleBuilder: (flightContext, animation, flightDirection,
+            fromHeroContext, toHeroContext) {
+          return const Text('🔥');
+        },
+        tag: person.name,
+        child: Material(
+          color: Colors.transparent,
+          child: Text(
+            person.emoji,
+            style: const TextStyle(fontSize: 40),
+          ),
+        ),
       )),
       body: Center(
           child: Column(
