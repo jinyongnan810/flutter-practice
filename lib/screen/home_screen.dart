@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/demos/3d-animation-demo.dart';
 import 'package:flutter_practice/demos/animation-demo2.dart';
 import 'package:flutter_practice/demos/chained-animation-demo.dart';
+import 'package:flutter_practice/demos/hero-animation-demo.dart';
 import 'package:flutter_practice/demos/play-sound-demo.dart';
 import 'package:flutter_practice/demos/test-widgets-demo.dart';
 import 'package:flutter_practice/demos/animation-demo.dart';
@@ -22,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const AnimationDemo2(),
     const ChainedAnimationDemo(),
     const ThreeDAnimationDemo(),
+    const HeroAnimationDemo(),
   ];
   int _selectedIndex = 0;
 
@@ -29,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Home'),
+          title: const Text('Flutter Practice'),
         ),
         body: SafeArea(
           child: Row(children: [
