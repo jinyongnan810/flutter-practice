@@ -90,20 +90,44 @@ class _PersonDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const scaleRatio = 1.5;
     return Scaffold(
       appBar: AppBar(
           title: Hero(
         flightShuttleBuilder: (flightContext, animation, flightDirection,
             fromHeroContext, toHeroContext) {
-          return const Text('🔥');
+          // return const Text('🔥');
+          switch (flightDirection) {
+            case HeroFlightDirection.push:
+              return Material(
+                color: Colors.transparent,
+                // child: ScaleTransition(
+                //   scale: animation.drive(
+                //     Tween<double>(begin: 1 / scaleRatio, end: 1).chain(
+                //       CurveTween(curve: Curves.fastOutSlowIn),
+                //     ),
+                //   ),
+                child: toHeroContext.widget,
+                // ),
+              );
+            case HeroFlightDirection.pop:
+              return Material(
+                color: Colors.transparent,
+                // child: ScaleTransition(
+                //   scale: animation.drive(
+                //     Tween<double>(begin: 1 / scaleRatio, end: 1).chain(
+                //       CurveTween(curve: Curves.fastOutSlowIn),
+                //     ),
+                //   ),
+                child: fromHeroContext.widget,
+                // ),
+              );
+          }
         },
         tag: person.name,
-        child: Material(
-          color: Colors.transparent,
-          child: Text(
-            person.emoji,
-            style: const TextStyle(fontSize: 40),
-          ),
+        child: Text(
+          person.emoji,
+          style: const TextStyle(fontSize: 60),
         ),
       )),
       body: Center(
