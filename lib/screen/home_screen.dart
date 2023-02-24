@@ -3,6 +3,7 @@ import 'package:flutter_practice/demos/3d-animation-demo.dart';
 import 'package:flutter_practice/demos/animation-demo2.dart';
 import 'package:flutter_practice/demos/chained-animation-demo.dart';
 import 'package:flutter_practice/demos/hero-animation-demo.dart';
+import 'package:flutter_practice/demos/implicit-animation-demo.dart';
 import 'package:flutter_practice/demos/play-sound-demo.dart';
 import 'package:flutter_practice/demos/test-widgets-demo.dart';
 import 'package:flutter_practice/demos/animation-demo.dart';
@@ -24,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const ChainedAnimationDemo(),
     const ThreeDAnimationDemo(),
     const HeroAnimationDemo(),
+    const ImplicitAnimationDemo(),
   ];
   int _selectedIndex = 0;
 
