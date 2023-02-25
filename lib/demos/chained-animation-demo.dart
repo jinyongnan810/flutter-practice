@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo-widget.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChainedAnimationDemo extends StatefulWidget implements DemoWidget {
   const ChainedAnimationDemo({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class ChainedAnimationDemo extends StatefulWidget implements DemoWidget {
   String get description => ChainedAnimationDemo._description;
 
   @override
-  Widget get icon => const Icon(Icons.circle_outlined);
+  Widget get icon => const FaIcon(FontAwesomeIcons.circleHalfStroke);
 }
 
 enum CircleSide { left, right }
