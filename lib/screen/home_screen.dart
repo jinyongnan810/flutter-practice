@@ -7,6 +7,7 @@ import 'package:flutter_practice/demos/implicit-animation-demo.dart';
 import 'package:flutter_practice/demos/play-sound-demo.dart';
 import 'package:flutter_practice/demos/test-widgets-demo.dart';
 import 'package:flutter_practice/demos/animation-demo.dart';
+import 'package:flutter_practice/demos/tween-animation-demo.dart';
 import 'package:flutter_practice/shared/demo-widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const ThreeDAnimationDemo(),
     const HeroAnimationDemo(),
     const ImplicitAnimationDemo(),
+    const TweenAnimationDemo(),
   ];
   int _selectedIndex = 0;
 
