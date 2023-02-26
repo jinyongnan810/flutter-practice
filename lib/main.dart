@@ -1,10 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/models/user.dart';
 import 'package:flutter_practice/screen/demo_screen.dart';
 import 'package:flutter_practice/screen/home_screen.dart';
-import 'package:flutter_practice/shared/demo-widget.dart';
+import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 
@@ -33,18 +31,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Practices',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        initialRoute: '/',
-        home: HomeScreen(),
-        onGenerateRoute: (RouteSettings settings) {
-          return MaterialPageRoute<void>(
-            builder: (_) => DemoScreen(
-              child: settings.arguments as DemoWidget,
-            ),
-          );
-        });
+      title: 'Flutter Practices',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: '/',
+      home: const HomeScreen(),
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute<void>(
+          builder: (_) => DemoScreen(
+            child: settings.arguments as DemoWidget,
+          ),
+        );
+      },
+    );
   }
 }

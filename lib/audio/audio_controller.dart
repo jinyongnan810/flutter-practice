@@ -5,7 +5,7 @@
 import 'dart:collection';
 import 'dart:math';
 
-import 'package:audioplayers/audioplayers.dart' hide Logger;
+import 'package:audioplayers/audioplayers.dart';
 import 'package:logging/logging.dart';
 
 import 'songs.dart';
@@ -49,11 +49,11 @@ class AudioController {
       : assert(polyphony >= 1),
         _musicPlayer = AudioPlayer(playerId: 'musicPlayer'),
         _sfxPlayers = Iterable.generate(
-                polyphony,
-                (i) => AudioPlayer(
-                      playerId: 'sfxPlayer#$i',
-                    )..setPlayerMode(PlayerMode.lowLatency))
-            .toList(growable: false),
+          polyphony,
+          (i) => AudioPlayer(
+            playerId: 'sfxPlayer#$i',
+          )..setPlayerMode(PlayerMode.lowLatency),
+        ).toList(growable: false),
         _playlist = Queue.of(List<Song>.of(songs)..shuffle()) {
     _sfxCache = AudioCache(
       prefix: sfxPrefix,
@@ -89,10 +89,11 @@ class AudioController {
     _logger.info('playing sfx:$filename');
     final sfxUri = _sfxCache.loadedFiles[filename];
     _sfxPlayers[_currentSfxPlayer].play(
-        sfxUri != null
-            ? UrlSource(sfxUri.path)
-            : UrlSource('$sfxPrefix$filename'),
-        volume: soundTypeToVolume(type));
+      sfxUri != null
+          ? UrlSource(sfxUri.path)
+          : UrlSource('$sfxPrefix$filename'),
+      volume: soundTypeToVolume(type),
+    );
     _currentSfxPlayer = (_currentSfxPlayer + 1) % _sfxPlayers.length;
   }
 
@@ -103,14 +104,15 @@ class AudioController {
     _musicPlayer.play(UrlSource('$musicPrefix${_playlist.first.filename}'));
   }
 
-  Future<void> _resumeMusic() async {
+  Future<void> startMusic() async {
     switch (_musicPlayer.state) {
       case PlayerState.paused:
         try {
           await _musicPlayer.resume();
+          _logger.info('music resumed');
         } catch (e) {
           // Sometimes, resuming fails with an "Unexpected" error.
-          print(e);
+          _logger.info(e);
           await _musicPlayer
               .play(UrlSource('$musicPrefix${_playlist.first.filename}'));
         }
@@ -118,27 +120,16 @@ class AudioController {
       case PlayerState.stopped:
         await _musicPlayer
             .play(UrlSource('$musicPrefix${_playlist.first.filename}'));
+        _logger.info('music started');
         break;
       case PlayerState.playing:
         break;
       case PlayerState.completed:
         await _musicPlayer
             .play(UrlSource('$musicPrefix${_playlist.first.filename}'));
+        _logger.info('music started');
         break;
     }
-  }
-
-  void _soundsOnHandler() {
-    for (final player in _sfxPlayers) {
-      if (player.state == PlayerState.playing) {
-        player.stop();
-      }
-    }
-  }
-
-  void startMusic() {
-    _musicPlayer.play(UrlSource('$musicPrefix${_playlist.first.filename}'));
-    _logger.info('music started');
   }
 
   void _stopAllSound() {

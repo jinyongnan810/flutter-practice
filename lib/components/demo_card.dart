@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/screen/demo_screen.dart';
-import 'package:flutter_practice/shared/demo-widget.dart';
+import 'package:flutter_practice/shared/demo_widget.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -27,28 +27,28 @@ class DemoCard extends StatelessWidget {
           constraints:
               const BoxConstraints(minHeight: 50, minWidth: 425, maxWidth: 425),
           child: Card(
-              color: Colors.blue,
-              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      widget.title,
-                      style: Theme.of(context).primaryTextTheme.headline5,
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      widget.description,
-                      style: Theme.of(context).primaryTextTheme.bodyText1,
-                    ),
-                  ],
-                ),
-              )),
+            color: Colors.blue,
+            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    widget.title,
+                    style: Theme.of(context).primaryTextTheme.headlineSmall,
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Text(
+                    widget.description,
+                    style: Theme.of(context).primaryTextTheme.bodyLarge,
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

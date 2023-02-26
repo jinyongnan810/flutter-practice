@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/shared/demo-widget.dart';
+import 'package:flutter_practice/shared/demo_widget.dart';
 
 class AnimationDemo2 extends StatefulWidget implements DemoWidget {
   const AnimationDemo2({Key? key}) : super(key: key);
@@ -53,15 +53,17 @@ class _AnimationDemo2State extends State<AnimationDemo2>
             transform: Matrix4.identity()..rotateY(_animation.value),
             child: Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(0.7),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(0, 0))
-                  ],
-                  color: Colors.blue),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.7),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 0),
+                  )
+                ],
+                color: Colors.blue,
+              ),
               width: 100,
               height: 100,
             ),

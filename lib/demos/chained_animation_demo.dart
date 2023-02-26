@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/shared/demo-widget.dart';
+import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChainedAnimationDemo extends StatefulWidget implements DemoWidget {
@@ -78,27 +78,33 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
       vsync: this,
       duration: const Duration(seconds: 1),
     );
-    _counterClockWiseAnimation =
-        Tween<double>(begin: 0, end: -pi / 2).animate(CurvedAnimation(
-      parent: _counterClockWiseController,
-      curve: Curves.bounceOut,
-    ));
+    _counterClockWiseAnimation = Tween<double>(begin: 0, end: -pi / 2).animate(
+      CurvedAnimation(
+        parent: _counterClockWiseController,
+        curve: Curves.bounceOut,
+      ),
+    );
     _flipController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
     );
-    _flipAnimation = Tween<double>(begin: 0, end: pi).animate(CurvedAnimation(
-      parent: _flipController,
-      curve: Curves.bounceOut,
-    ));
+    _flipAnimation = Tween<double>(begin: 0, end: pi).animate(
+      CurvedAnimation(
+        parent: _flipController,
+        curve: Curves.bounceOut,
+      ),
+    );
     _counterClockWiseController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _flipAnimation = Tween<double>(
-                begin: _flipAnimation.value, end: _flipAnimation.value + pi)
-            .animate(CurvedAnimation(
-          parent: _flipController,
-          curve: Curves.bounceOut,
-        ));
+          begin: _flipAnimation.value,
+          end: _flipAnimation.value + pi,
+        ).animate(
+          CurvedAnimation(
+            parent: _flipController,
+            curve: Curves.bounceOut,
+          ),
+        );
         _flipController
           ..reset()
           ..forward();
@@ -107,12 +113,14 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
     _flipController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _counterClockWiseAnimation = Tween<double>(
-                begin: _counterClockWiseAnimation.value,
-                end: _counterClockWiseAnimation.value - pi / 2)
-            .animate(CurvedAnimation(
-          parent: _counterClockWiseController,
-          curve: Curves.bounceOut,
-        ));
+          begin: _counterClockWiseAnimation.value,
+          end: _counterClockWiseAnimation.value - pi / 2,
+        ).animate(
+          CurvedAnimation(
+            parent: _counterClockWiseController,
+            curve: Curves.bounceOut,
+          ),
+        );
         _counterClockWiseController
           ..reset()
           ..forward();
@@ -153,26 +161,27 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
       ],
     );
     return Center(
-        child: AnimatedBuilder(
-      animation: _counterClockWiseController,
-      builder: (context, child) {
-        return Transform(
-          alignment: Alignment.center,
-          // rotate with z axis also rotates the canvas, so the y axis also rotates
-          transform: Matrix4.identity()
-            ..rotateZ(_counterClockWiseAnimation.value),
-          child: AnimatedBuilder(
-            animation: _flipController,
-            builder: (context, child) {
-              return Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()..rotateY(_flipAnimation.value),
-                child: circle,
-              );
-            },
-          ),
-        );
-      },
-    ));
+      child: AnimatedBuilder(
+        animation: _counterClockWiseController,
+        builder: (context, child) {
+          return Transform(
+            alignment: Alignment.center,
+            // rotate with z axis also rotates the canvas, so the y axis also rotates
+            transform: Matrix4.identity()
+              ..rotateZ(_counterClockWiseAnimation.value),
+            child: AnimatedBuilder(
+              animation: _flipController,
+              builder: (context, child) {
+                return Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()..rotateY(_flipAnimation.value),
+                  child: circle,
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
   }
 }

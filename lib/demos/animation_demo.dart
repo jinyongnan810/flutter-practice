@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/shared/demo-widget.dart';
+import 'package:flutter_practice/shared/demo_widget.dart';
 
 class AnimationDemo extends StatefulWidget implements DemoWidget {
   const AnimationDemo({Key? key}) : super(key: key);
@@ -52,37 +52,42 @@ class _AnimationDemoState extends State<AnimationDemo>
         shape: BoxShape.circle,
       ),
     );
-    return LayoutBuilder(builder: (context, constraint) {
-      return Stack(
-        children: [
-          _showEdgeBall
-              ?
-              // Positioned(left: 0, top: 0, child: edgeBall)
-              _AnimatedWidget(
-                  controller: _edgeBallAnimationController,
-                  from: Offset.zero,
-                  to: Offset.zero.translate(constraint.maxWidth - ballSize,
-                      constraint.maxHeight - ballSize),
-                  forwardingCurve: Curves.easeInToLinear,
-                  reversingCurve: Curves.linearToEaseOut,
-                  child: edgeBall)
-              : Container(),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
+    return LayoutBuilder(
+      builder: (context, constraint) {
+        return Stack(
+          children: [
+            _showEdgeBall
+                ?
+                // Positioned(left: 0, top: 0, child: edgeBall)
+                _AnimatedWidget(
+                    controller: _edgeBallAnimationController,
+                    from: Offset.zero,
+                    to: Offset.zero.translate(
+                      constraint.maxWidth - ballSize,
+                      constraint.maxHeight - ballSize,
+                    ),
+                    forwardingCurve: Curves.easeInToLinear,
+                    reversingCurve: Curves.linearToEaseOut,
+                    child: edgeBall,
+                  )
+                : Container(),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
                     onPressed: () {
                       setState(() {
                         _showEdgeBall = true;
                       });
                       _edgeBallAnimationController.forward();
                     },
-                    child: const Text('start animate')),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
+                    child: const Text('start animate'),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
                     onPressed: () {
                       _edgeBallAnimationController.reverse(from: 1).then((_) {
                         setState(() {
@@ -90,13 +95,15 @@ class _AnimationDemoState extends State<AnimationDemo>
                         });
                       });
                     },
-                    child: const Text('reverse animation')),
-              ],
+                    child: const Text('reverse animation'),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      );
-    });
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -130,16 +137,17 @@ class _AnimatedWidget extends StatelessWidget {
       builder: (context, child) {
         return Transform.translate(
           offset: Offset(
-              lerpDouble(
-                from.dx,
-                to.dx,
-                animation.value,
-              )!,
-              lerpDouble(
-                from.dy,
-                to.dy,
-                animation.value,
-              )!),
+            lerpDouble(
+              from.dx,
+              to.dx,
+              animation.value,
+            )!,
+            lerpDouble(
+              from.dy,
+              to.dy,
+              animation.value,
+            )!,
+          ),
           child: Transform.scale(
             scale: 1,
             child: Opacity(

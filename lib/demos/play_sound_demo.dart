@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/audio/sounds.dart';
 import 'package:flutter_practice/providers/audio_provider.dart';
-import 'package:flutter_practice/shared/demo-widget.dart';
+import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PlaySoundDemo extends ConsumerStatefulWidget implements DemoWidget {
@@ -33,28 +33,30 @@ class _PlaySoundDemoState extends ConsumerState<PlaySoundDemo> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
-              onPressed: () {
-                audioController.playSfx(SfxType.buttonTap);
-              },
-              child: const Text('play sfx')),
+            onPressed: () {
+              audioController.playSfx(SfxType.buttonTap);
+            },
+            child: const Text('play sfx'),
+          ),
           const SizedBox(
             height: 20,
           ),
           ElevatedButton(
-              onPressed: () {
-                if (playingMusic) {
-                  audioController.stopMusic();
-                  setState(() {
-                    playingMusic = false;
-                  });
-                } else {
-                  audioController.startMusic();
-                  setState(() {
-                    playingMusic = true;
-                  });
-                }
-              },
-              child: Text(playingMusic ? 'stop music' : 'play music'))
+            onPressed: () {
+              if (playingMusic) {
+                audioController.stopMusic();
+                setState(() {
+                  playingMusic = false;
+                });
+              } else {
+                audioController.startMusic();
+                setState(() {
+                  playingMusic = true;
+                });
+              }
+            },
+            child: Text(playingMusic ? 'stop music' : 'play music'),
+          )
         ],
       ),
     );

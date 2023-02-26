@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/shared/demo-widget.dart';
+import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ImplicitAnimationDemo extends StatefulWidget implements DemoWidget {
@@ -38,17 +38,19 @@ class _ImplicitAnimationDemoState extends State<ImplicitAnimationDemo> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextButton(
-              onPressed: () {
-                setState(() {
-                  isScaledDown = !isScaledDown;
-                });
-              },
-              child: Text(isScaledDown ? 'Zoom out' : 'Zoom in')),
+            onPressed: () {
+              setState(() {
+                isScaledDown = !isScaledDown;
+              });
+            },
+            child: Text(isScaledDown ? 'Zoom out' : 'Zoom in'),
+          ),
           AnimatedContainer(
-              duration: const Duration(milliseconds: 370),
-              width: isScaledDown ? 400 : MediaQuery.of(context).size.width,
-              curve: Curves.easeInOut,
-              child: Image.asset('assets/images/working-out.jpg')),
+            duration: const Duration(milliseconds: 370),
+            width: isScaledDown ? 400 : MediaQuery.of(context).size.width,
+            curve: Curves.easeInOut,
+            child: Image.asset('assets/images/working-out.jpg'),
+          ),
         ],
       ),
     );

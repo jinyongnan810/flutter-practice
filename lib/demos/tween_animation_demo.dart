@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/shared/demo-widget.dart';
+import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TweenAnimationDemo extends StatefulWidget implements DemoWidget {
@@ -48,24 +48,25 @@ class _TweenAnimationDemoState extends State<TweenAnimationDemo> {
       child: ClipPath(
         clipper: const CircleClipper(),
         child: TweenAnimationBuilder(
-            tween: ColorTween(begin: getRandomColor(), end: color),
-            duration: const Duration(seconds: 1),
-            onEnd: () {
-              setState(() {
-                color = getRandomColor();
-              });
-            },
-            builder: (context, Color? color, child) {
-              return ColorFiltered(
-                colorFilter: ColorFilter.mode(color!, BlendMode.srcATop),
-                child: child,
-              );
-            },
-            child: Container(
-              width: 200,
-              height: 200,
-              color: Colors.amber,
-            )),
+          tween: ColorTween(begin: getRandomColor(), end: color),
+          duration: const Duration(seconds: 1),
+          onEnd: () {
+            setState(() {
+              color = getRandomColor();
+            });
+          },
+          builder: (context, Color? color, child) {
+            return ColorFiltered(
+              colorFilter: ColorFilter.mode(color!, BlendMode.srcATop),
+              child: child,
+            );
+          },
+          child: Container(
+            width: 200,
+            height: 200,
+            color: Colors.amber,
+          ),
+        ),
       ),
     );
   }
@@ -78,8 +79,9 @@ class CircleClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     final path = Path();
     final rect = Rect.fromCircle(
-        center: Offset(size.width / 2, size.height / 2),
-        radius: size.width / 2);
+      center: Offset(size.width / 2, size.height / 2),
+      radius: size.width / 2,
+    );
     path.addOval(rect);
     return path;
   }
