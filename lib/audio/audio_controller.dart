@@ -47,12 +47,15 @@ class AudioController {
   /// never be overridden by sound effects.
   AudioController({int polyphony = 2})
       : assert(polyphony >= 1),
-        _musicPlayer = AudioPlayer(playerId: 'musicPlayer'),
+        _musicPlayer = AudioPlayer(playerId: 'musicPlayer')
+          ..setReleaseMode(ReleaseMode.stop),
         _sfxPlayers = Iterable.generate(
           polyphony,
           (i) => AudioPlayer(
             playerId: 'sfxPlayer#$i',
-          )..setPlayerMode(PlayerMode.lowLatency),
+          )
+            ..setPlayerMode(PlayerMode.lowLatency)
+            ..setReleaseMode(ReleaseMode.stop),
         ).toList(growable: false),
         _playlist = Queue.of(List<Song>.of(songs)..shuffle()) {
     _sfxCache = AudioCache(
