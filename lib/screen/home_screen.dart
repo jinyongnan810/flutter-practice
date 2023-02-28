@@ -40,20 +40,32 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Row(
           children: [
-            NavigationRail(
-              labelType: NavigationRailLabelType.selected,
-              destinations: [
-                for (final demo in _demos)
-                  NavigationRailDestination(
-                    icon: demo.icon,
-                    label: Text(demo.title),
-                  )
-              ],
-              selectedIndex: _selectedIndex,
-              onDestinationSelected: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
+            LayoutBuilder(
+              builder: (context, constraint) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints(minHeight: constraint.maxHeight),
+                    child: IntrinsicHeight(
+                      child: NavigationRail(
+                        labelType: NavigationRailLabelType.selected,
+                        destinations: [
+                          for (final demo in _demos)
+                            NavigationRailDestination(
+                              icon: demo.icon,
+                              label: Text(demo.title),
+                            )
+                        ],
+                        selectedIndex: _selectedIndex,
+                        onDestinationSelected: (index) {
+                          setState(() {
+                            _selectedIndex = index;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                );
               },
             ),
             const VerticalDivider(width: 1),
