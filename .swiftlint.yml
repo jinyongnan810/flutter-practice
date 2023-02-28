@@ -1,0 +1,2 @@
+excluded:
+  - macos/Flutter/GeneratedPluginRegistrant.swift
