@@ -9,6 +9,118 @@
 
 # Practices
 
+## Chain multiple animations
+
+Use controller's `addStatusListener` and `AnimationStatus.completed` status, to recreate and start next animation.
+
+Check out this [code](https://github.com/jinyongnan810/flutter-practice/blob/82cc3cf0b00dae19535dc888f0aad60ec6bb22d3/lib/demos/chained_animation_demo.dart#L97).
+
+## Create box shadows
+
+```dart
+Container(
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(10),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.7),
+        spreadRadius: 5,
+        blurRadius: 7,
+        offset: const Offset(0, 0),
+      )
+    ],
+    color: Colors.blue,
+  ),
+  width: 100,
+  height: 100,
+)
+```
+
+## Convenient object comparation
+
+```dart
+class Person {
+  final String id;
+  final String name;
+  final int age;
+
+  Person({required this.name, required this.age, String? uuid})
+      : id = uuid ?? const Uuid().v4();
+  Person updated([String? name, int? age]) => Person(
+        name: name ?? this.name,
+        age: age ?? this.age,
+        uuid: id,
+      );
+  String get displayName {
+    return '$name ($age years old)';
+  }
+
+  @override
+  bool operator ==(covariant Person other) => id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+}
+```
+
+## AnimationBuilder boilerplate
+
+```dart
+class _AnimatedWidget extends StatelessWidget {
+  const _AnimatedWidget({
+    required this.controller,
+    required this.from,
+    required this.to,
+    required this.forwardingCurve,
+    required this.reversingCurve,
+    required this.child,
+  });
+
+  final AnimationController controller;
+  final Offset from;
+  final Offset to;
+  final Curve forwardingCurve;
+  final Curve reversingCurve;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final animation = CurvedAnimation(
+      parent: controller,
+      // https://api.flutter.dev/flutter/animation/Curves-class.html
+      curve: forwardingCurve,
+      reverseCurve: reversingCurve,
+    );
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(
+              lerpDouble(
+                from.dx,
+                to.dx,
+                animation.value,
+              )!,
+              lerpDouble(
+                from.dy,
+                to.dy,
+                animation.value,
+              )!),
+          child: Transform.scale(
+            scale: 1,
+            child: Opacity(
+              opacity: clampDouble(animation.value, 0, 1),
+              child: child,
+            ),
+          ),
+        );
+      },
+      child: child,
+    );
+  }
+}
+```
+
 ## Text Overflow
 
 ![image](https://firebasestorage.googleapis.com/v0/b/mymemo-98f76.appspot.com/o/uploads%2FSIvHI3wJfEPSACxfj6WH1l53vZx1%2F566043fc-89db-4208-9ae5-179585b0b315.png?alt=media&token=c0be7047-cc9c-40e5-8c97-a0dd6b302197)
