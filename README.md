@@ -9,6 +9,35 @@
 
 # Practices
 
+## Chain tween to curves
+
+```dart
+ScaleTransition(
+  scale: animation.drive(
+  Tween<double>(begin: 1 / scaleRatio, end: 1).chain(
+    CurveTween(curve: Curves.fastOutSlowIn),
+  ),
+),
+```
+
+## Listen to and apply multiple animations
+
+```dart
+AnimatedBuilder(
+  animation: Listenable.merge([_xController, _yController, _zController]),
+  builder: (context, child) {
+    return Transform(
+      alignment: Alignment.center,
+      transform: Matrix4.identity()
+        ..rotateX(_animation.evaluate(_xController))
+        ..rotateY(_animation.evaluate(_yController))
+        ..rotateZ(_animation.evaluate(_zController)),
+      child: cubic,
+    );
+  },
+)
+```
+
 ## Chain multiple animations
 
 Use controller's `addStatusListener` and `AnimationStatus.completed` status, to recreate and start next animation.
