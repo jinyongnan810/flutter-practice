@@ -21,6 +21,8 @@ void main() {
   //   final user = User.fromJson(response.data['results'][0]);
   //   print(user);
   // });
+
+  // print('env: ${AppFeatures.testEnv}');
   runApp(const ProviderScope(child: MyApp()));
 }
 

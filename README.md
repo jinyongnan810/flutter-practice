@@ -5,37 +5,27 @@
 
 - Learn the basics
 - Learn how to build ui
-- Learn how other peaple code
+- Learn how other people code
 
 # Practices
 
-## Chain tween to curves
+## Setting envs by dart-define
 
 ```dart
-ScaleTransition(
-  scale: animation.drive(
-  Tween<double>(begin: 1 / scaleRatio, end: 1).chain(
-    CurveTween(curve: Curves.fastOutSlowIn),
-  ),
-),
-```
+// in vscode
+"configurations": [
+{
+    "name": "flutter-practice",
+    "request": "launch",
+    "type": "dart",
+    "args": ["--dart-define", "TEST_ENV=test_environment_variable"]
+},
+]
+// in dart
+class AppFeatures {
+  static const String testEnv = String.fromEnvironment('TEST_ENV');
+}
 
-## Listen to and apply multiple animations
-
-```dart
-AnimatedBuilder(
-  animation: Listenable.merge([_xController, _yController, _zController]),
-  builder: (context, child) {
-    return Transform(
-      alignment: Alignment.center,
-      transform: Matrix4.identity()
-        ..rotateX(_animation.evaluate(_xController))
-        ..rotateY(_animation.evaluate(_yController))
-        ..rotateZ(_animation.evaluate(_zController)),
-      child: cubic,
-    );
-  },
-)
 ```
 
 ## Chain multiple animations
@@ -65,7 +55,7 @@ Container(
 )
 ```
 
-## Convenient object comparation
+## Convenient object comparison
 
 ```dart
 class Person {
@@ -164,8 +154,8 @@ Text(title, overflow: TextOverflow.ellipsis,);
 ![image](https://firebasestorage.googleapis.com/v0/b/mymemo-98f76.appspot.com/o/uploads%2FSIvHI3wJfEPSACxfj6WH1l53vZx1%2Fc4619a76-7d36-4866-bbef-470f89d34a8a.gif?alt=media&token=a51c9651-f52b-4707-809c-0f78f5bba9f2)
 
 ```dart
-    // controll selected status
-    final seletectedSong = ref.watch(selectedSongProvider);
+    // control selected status
+    final selectedSong = ref.watch(selectedSongProvider);
     return DataTable(
         // not to show the checkbox
         showCheckboxColumn: false,
@@ -178,7 +168,7 @@ Text(title, overflow: TextOverflow.ellipsis,);
         ],
         // set data rows
         rows: tracks.map((e) {
-          final selected = seletectedSong?.id == e.id;
+          final selected = selectedSong?.id == e.id;
           final textStyle = TextStyle(
               color: selected
                   ? Theme.of(context).colorScheme.secondary
@@ -223,19 +213,19 @@ Text(title, overflow: TextOverflow.ellipsis,);
 ```dart
 // 1. attach Miniplayer (wrapped with OffStage) to the stack
 Miniplayer(
-      controller: miniplayerController,
-      minHeight: _playerMinHeight, // about 60
-      maxHeight: MediaQuery.of(context).size.height,
-      builder: (height, percentage) {
-         if (selectedVideo == null) {
-             return const SizedBox.shrink(); // disappears
-         }
-         if (height > _playerMinHeight + 50) { // display full screen
-              return const VideoScreen();
-         }
-
-         return const SmallVideoScreen(); // display mini screen
+  controller: miniplayerController,
+  minHeight: _playerMinHeight, // about 60
+  maxHeight: MediaQuery.of(context).size.height,
+  builder: (height, percentage) {
+      if (selectedVideo == null) {
+          return const SizedBox.shrink(); // disappears
       }
+      if (height > _playerMinHeight + 50) { // display full screen
+          return const VideoScreen();
+      }
+
+      return const SmallVideoScreen(); // display mini screen
+  }
 )
 // 2. add close button to the mini screen
 // 3. add downward arrow button to the full screen
@@ -474,7 +464,7 @@ static final _router = GoRouter(routes: [
               })
         ])
   ]);
-// 2. create MeterialApp with .router, and set the routes
+// 2. create MaterialApp with .router, and set the routes
 MaterialApp.router(
           title: "Kin's Page",
           scaffoldMessengerKey: scaffoldMessengerKey,
