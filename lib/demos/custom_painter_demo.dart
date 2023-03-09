@@ -59,14 +59,27 @@ class Polygon extends CustomPainter {
   }
 }
 
-class _CustomPainterDemoState extends State<CustomPainterDemo> {
+class _CustomPainterDemoState extends State<CustomPainterDemo>
+    with TickerProviderStateMixin {
+  late AnimationController _sidesController;
+  late Animation<int> _sidesAnimation;
   @override
   void initState() {
+    _sidesController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 5));
+    _sidesAnimation = IntTween(begin: 3, end: 15).animate(
+      CurvedAnimation(
+        parent: _sidesController,
+        curve: Curves.easeInOut,
+      ),
+    );
+    _sidesController.repeat();
     super.initState();
   }
 
   @override
   void dispose() {
+    _sidesController.dispose();
     super.dispose();
   }
 
@@ -76,12 +89,17 @@ class _CustomPainterDemoState extends State<CustomPainterDemo> {
       builder: (context, constraint) {
         final maxSize = min(constraint.maxWidth, constraint.maxHeight);
         return Center(
-          child: CustomPaint(
-            painter: Polygon(sides: 3),
-            child: SizedBox(
-              width: maxSize,
-              height: maxSize,
-            ),
+          child: AnimatedBuilder(
+            animation: Listenable.merge([_sidesAnimation]),
+            builder: (context, child) {
+              return CustomPaint(
+                painter: Polygon(sides: _sidesAnimation.value),
+                child: SizedBox(
+                  width: maxSize,
+                  height: maxSize,
+                ),
+              );
+            },
           ),
         );
       },
