@@ -63,23 +63,47 @@ class _CustomPainterDemoState extends State<CustomPainterDemo>
     with TickerProviderStateMixin {
   late AnimationController _sidesController;
   late Animation<int> _sidesAnimation;
+  late AnimationController _scaleController;
+  late Animation<double> _scaleAnimation;
+  late AnimationController _rotateController;
+  late Animation<double> _rotateAnimation;
   @override
   void initState() {
     _sidesController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 5));
+        AnimationController(vsync: this, duration: const Duration(seconds: 3));
     _sidesAnimation = IntTween(begin: 3, end: 15).animate(
       CurvedAnimation(
         parent: _sidesController,
+        curve: Curves.linear,
+      ),
+    );
+    _scaleController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 3));
+    _scaleAnimation = Tween<double>(begin: 0.1, end: 1).animate(
+      CurvedAnimation(
+        parent: _scaleController,
+        curve: Curves.bounceInOut,
+      ),
+    );
+    _rotateController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 3));
+    _rotateAnimation = Tween<double>(begin: 0, end: pi * 2).animate(
+      CurvedAnimation(
+        parent: _rotateController,
         curve: Curves.easeInOut,
       ),
     );
-    _sidesController.repeat();
+    _sidesController.repeat(reverse: true);
+    _scaleController.repeat(reverse: true);
+    _rotateController.repeat(reverse: true);
     super.initState();
   }
 
   @override
   void dispose() {
     _sidesController.dispose();
+    _scaleController.dispose();
+    _rotateController.dispose();
     super.dispose();
   }
 
@@ -92,11 +116,23 @@ class _CustomPainterDemoState extends State<CustomPainterDemo>
           child: AnimatedBuilder(
             animation: Listenable.merge([_sidesAnimation]),
             builder: (context, child) {
-              return CustomPaint(
-                painter: Polygon(sides: _sidesAnimation.value),
-                child: SizedBox(
-                  width: maxSize,
-                  height: maxSize,
+              return
+                  // Transform.scale(
+                  //   scale: _scaleAnimation.value,
+                  //   child:
+                  Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()
+                  ..rotateZ(_rotateAnimation.value)
+                  ..rotateY(_rotateAnimation.value)
+                  ..rotateX(_rotateAnimation.value),
+                child: CustomPaint(
+                  painter: Polygon(sides: _sidesAnimation.value),
+                  child: SizedBox(
+                    width: maxSize * _scaleAnimation.value,
+                    height: maxSize * _scaleAnimation.value,
+                  ),
+                  // ),
                 ),
               );
             },
