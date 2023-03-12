@@ -52,12 +52,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         BoxConstraints(minHeight: constraint.maxHeight),
                     child: IntrinsicHeight(
                       child: NavigationRail(
+                        key: const ValueKey('tabs'),
                         labelType: NavigationRailLabelType.selected,
                         destinations: [
                           for (final demo in _demos)
                             NavigationRailDestination(
                               icon: demo.icon,
-                              label: Text(demo.title),
+                              label: Text(
+                                demo.title,
+                                key: Key(demo.title),
+                              ),
                             )
                         ],
                         selectedIndex: _selectedIndex,

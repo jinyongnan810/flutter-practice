@@ -49,6 +49,7 @@ class _DartTestDemoState extends State<DartTestDemo> {
       decoration: const InputDecoration(hintText: 'Password'),
     );
     final button = ElevatedButton(
+      key: const ValueKey('login'),
       onPressed: () {
         if (_usernameController.text == "user" &&
             _passwordController.text == "password") {
