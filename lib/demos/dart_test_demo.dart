@@ -71,11 +71,18 @@ class _DartTestDemoState extends State<DartTestDemo> {
       children: [
         usernameInput,
         passwordInput,
-        if (_error != null) Text(_error!),
+        if (_error != null)
+          Text(
+            _error!,
+            key: const Key('error'),
+          ),
         button,
       ],
     );
-    const homePage = Text("Hello");
+    const homePage = Text(
+      "Hello",
+      key: Key('Hello'),
+    );
     return Center(
       child: _loggedIn ? homePage : loginPage,
     );
