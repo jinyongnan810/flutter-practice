@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/demos/custom_painter_demo.dart';
 import 'package:flutter_practice/demos/dart_test_demo.dart';
+import 'package:flutter_practice/demos/super_text_demo.dart';
 import 'package:flutter_practice/demos/threed_animation_demo.dart';
 import 'package:flutter_practice/demos/animation_demo2.dart';
 import 'package:flutter_practice/demos/chained_animation_demo.dart';
@@ -32,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const TweenAnimationDemo(),
     const CustomPainterDemo(),
     const DartTestDemo(),
+    const SuperTextDemo(),
   ];
   int _selectedIndex = 0;
 
