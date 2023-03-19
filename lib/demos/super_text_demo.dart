@@ -35,7 +35,7 @@ class _SuperTextDemoState extends State<SuperTextDemo> {
   Widget build(BuildContext context) {
     const bold = NamedAttribution("bold");
     final title = AttributedText(
-      text: 'Dart Test Demo',
+      text: 'SuperText Demo',
       spans: AttributedSpans(
         attributions: [
           const SpanMarker(
