@@ -6,6 +6,7 @@ import 'package:super_editor/super_editor_test.dart';
 
 // from super_test https://github.com/superlistapp/super_editor/blob/7999ca47704f47f92f668adb17d187d927937e10/super_editor/test/super_textfield/super_textfield_robot.dart
 import 'package:flutter/gestures.dart';
+// ignore: depend_on_referenced_packages
 import 'package:super_text_layout/super_text_layout.dart';
 
 void main() {
@@ -125,7 +126,6 @@ extension SuperTextFieldRobot on WidgetTester {
     Finder? superTextFieldFinder,
     TextAffinity affinity = TextAffinity.downstream,
   ]) async {
-    // TODO: De-duplicate this behavior with placeCaretInSuperTextField
     final fieldFinder = _findInnerPlatformTextField(
       superTextFieldFinder ?? find.byType(SuperTextField),
     );
