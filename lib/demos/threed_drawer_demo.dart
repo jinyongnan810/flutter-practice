@@ -40,7 +40,7 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
       duration: const Duration(seconds: 2),
     );
     _drawerAnimation =
-        Tween<double>(begin: 0, end: -pi / 2).animate(_drawerController);
+        Tween<double>(begin: pi / 2.7, end: 0).animate(_drawerController);
   }
 
   @override
@@ -76,32 +76,48 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
     final background = Container(
       color: Colors.black38,
     );
-    return AnimatedBuilder(
-      animation: Listenable.merge([_contentAnimation, _drawerAnimation]),
-      builder: (context, child) {
-        return Stack(
-          children: [
-            background,
-            Transform(
-              transform: Matrix4.identity()
-                // to make perspective transformations
-                ..setEntry(3, 2, 0.001)
-                ..translate(_contentAnimation.value * maxDrag)
-                ..rotateY(_contentAnimation.value),
-              alignment: Alignment.centerLeft,
-              child: content,
-            ),
-            Transform(
-              transform: Matrix4.identity()
-                ..setEntry(3, 2, 0.001)
-                ..translate(-width + _drawerAnimation.value * maxDrag)
-                ..rotateY(_drawerAnimation.value),
-              alignment: Alignment.centerRight,
-              child: drawer,
-            )
-          ],
-        );
+    return GestureDetector(
+      onHorizontalDragUpdate: (details) {
+        final delta = details.delta.dx / maxDrag;
+        _contentController.value += delta;
+        _drawerController.value += delta;
       },
+      onHorizontalDragEnd: (details) {
+        if (_contentController.value < 0.5) {
+          _contentController.reverse();
+          _drawerController.reverse();
+        } else {
+          _contentController.forward();
+          _drawerController.forward();
+        }
+      },
+      child: AnimatedBuilder(
+        animation: Listenable.merge([_contentController, _drawerController]),
+        builder: (context, child) {
+          return Stack(
+            children: [
+              background,
+              Transform(
+                transform: Matrix4.identity()
+                  // to make perspective transformations
+                  ..setEntry(3, 2, 0.001)
+                  ..translate(_contentAnimation.value * maxDrag)
+                  ..rotateY(_contentAnimation.value),
+                alignment: Alignment.centerLeft,
+                child: content,
+              ),
+              Transform(
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.001)
+                  ..translate(-width + _drawerAnimation.value * maxDrag)
+                  ..rotateY(_drawerAnimation.value),
+                alignment: Alignment.centerRight,
+                child: drawer,
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 }
