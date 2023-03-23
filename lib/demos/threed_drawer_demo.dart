@@ -45,7 +45,9 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
         Tween<double>(begin: pi / 2.7, end: 0).animate(_drawerController);
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      widgetWidth = (context.findRenderObject() as RenderBox).size.width;
+      setState(() {
+        widgetWidth = (context.findRenderObject() as RenderBox).size.width;
+      });
     });
   }
 
@@ -58,6 +60,7 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
   @override
   Widget build(BuildContext context) {
     final maxDrag = widgetWidth * 0.8;
+    // print('maxDrag:$maxDrag');
     final drawer = Material(
       child: Container(
         color: Colors.amber,
@@ -66,7 +69,7 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
             title: Text('Item $index'),
           ),
           itemCount: 20,
-          padding: const EdgeInsets.only(left: 80, top: 100),
+          padding: const EdgeInsets.only(left: 120),
         ),
       ),
     );
@@ -96,17 +99,20 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
           _drawerController.forward();
         }
       },
+      // TODO: fix the initial positions
       child: AnimatedBuilder(
         animation: Listenable.merge([_contentController, _drawerController]),
         builder: (context, child) {
+          // print(_drawerAnimation.value);
           return Stack(
+            clipBehavior: Clip.hardEdge,
             children: [
               background,
               Transform(
                 transform: Matrix4.identity()
                   // to make perspective transformations
                   ..setEntry(3, 2, 0.001)
-                  ..translate(_contentAnimation.value * maxDrag)
+                  ..translate(_contentController.value * maxDrag)
                   ..rotateY(_contentAnimation.value),
                 alignment: Alignment.centerLeft,
                 child: content,
@@ -115,7 +121,7 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
                 transform: Matrix4.identity()
                   ..setEntry(3, 2, 0.001)
                   ..translate(
-                    -widgetWidth + _drawerAnimation.value * maxDrag,
+                    -widgetWidth + _drawerController.value * maxDrag,
                   )
                   ..rotateY(_drawerAnimation.value),
                 alignment: Alignment.centerRight,
