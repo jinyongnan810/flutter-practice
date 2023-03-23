@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
 class ThreedDrawerDemo extends StatefulWidget implements DemoWidget {
@@ -26,6 +27,7 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
   late final Animation<double> _contentAnimation;
   late final AnimationController _drawerController;
   late final Animation<double> _drawerAnimation;
+  late double widgetWidth = 0;
   @override
   void initState() {
     super.initState();
@@ -41,6 +43,10 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
     );
     _drawerAnimation =
         Tween<double>(begin: pi / 2.7, end: 0).animate(_drawerController);
+
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      widgetWidth = (context.findRenderObject() as RenderBox).size.width;
+    });
   }
 
   @override
@@ -51,8 +57,7 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final maxDrag = width * 0.8;
+    final maxDrag = widgetWidth * 0.8;
     final drawer = Material(
       child: Container(
         color: Colors.amber,
@@ -109,7 +114,9 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
               Transform(
                 transform: Matrix4.identity()
                   ..setEntry(3, 2, 0.001)
-                  ..translate(-width + _drawerAnimation.value * maxDrag)
+                  ..translate(
+                    -widgetWidth + _drawerAnimation.value * maxDrag,
+                  )
                   ..rotateY(_drawerAnimation.value),
                 alignment: Alignment.centerRight,
                 child: drawer,
