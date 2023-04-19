@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/demos/animated_prompt_demo.dart';
 import 'package:flutter_practice/demos/custom_painter_demo.dart';
 import 'package:flutter_practice/demos/dart_test_demo.dart';
 import 'package:flutter_practice/demos/super_text_demo.dart';
@@ -36,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const ThreedDrawerDemo(),
     const DartTestDemo(),
     const SuperTextDemo(),
+    const AnimatedPromptDemo(),
   ];
   int _selectedIndex = 0;
 
