@@ -6,7 +6,8 @@
     "Reclip",
     "riverpod",
     "threed",
-    "vsync"
+    "vsync",
+    "xmark"
   ],
   "cSpell.ignorePaths": ["test/**"]
 }

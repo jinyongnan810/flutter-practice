@@ -23,26 +23,31 @@ class _AnimatedPromptDemoState extends State<AnimatedPromptDemo>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 100),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: const [
-          _Prompt(
-            icon: FaIcon(FontAwesomeIcons.check),
-            background: Colors.green,
-            title: "Thank you for your order!",
-            details: "Your order was successful. \nSee you again!",
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: const [
+        _Prompt(
+          icon: FaIcon(
+            FontAwesomeIcons.check,
+            color: Colors.white,
+            size: 32,
           ),
-          _Prompt(
-            icon: FaIcon(FontAwesomeIcons.x),
-            background: Colors.redAccent,
-            title: "Something went wrong!",
-            details:
-                "The order was unsuccessful. \nPlease check all information.",
-          )
-        ],
-      ),
+          background: Colors.green,
+          title: "Thank you for your order!",
+          details: "Your order was successful. \nSee you again!",
+        ),
+        _Prompt(
+          icon: FaIcon(
+            FontAwesomeIcons.xmark,
+            color: Colors.white,
+            size: 32,
+          ),
+          background: Colors.redAccent,
+          title: "Something went wrong!",
+          details:
+              "The order was unsuccessful. \nPlease check all information.",
+        )
+      ],
     );
   }
 }
@@ -65,7 +70,9 @@ class _Prompt extends StatefulWidget {
 
 class __PromptState extends State<_Prompt> with TickerProviderStateMixin {
   late final AnimationController _controller;
-  late final Animation<double> _animation;
+  late final Animation<double> _iconSizeAnimation;
+  late final Animation<double> _bgSizeAnimation;
+  late final Animation<double> _positionAnimation;
   @override
   void initState() {
     super.initState();
@@ -73,7 +80,9 @@ class __PromptState extends State<_Prompt> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(seconds: 2),
     );
-    _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
+    _iconSizeAnimation = Tween<double>(begin: 2, end: 1).animate(_controller);
+    _bgSizeAnimation = Tween<double>(begin: 3, end: 1).animate(_controller);
+    _positionAnimation = Tween<double>(begin: 3, end: 1).animate(_controller);
     _controller.repeat();
   }
 
@@ -85,30 +94,59 @@ class __PromptState extends State<_Prompt> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (ctx, _) {
-        return Transform(
-          alignment: Alignment.center,
-          transform: Matrix4.identity()..rotateY(_animation.value),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.7),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: const Offset(0, 0),
-                )
-              ],
-              color: Colors.blue,
-            ),
-            width: 100,
-            height: 100,
+    return Container(
+      width: 300,
+      height: 350,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: Colors.black,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              const SizedBox(
+                height: 150,
+              ),
+              Text(
+                widget.title,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                widget.details,
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              )
+            ],
           ),
-        );
-      },
+          Positioned.fill(
+            top: 20,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: widget.background,
+                  borderRadius: const BorderRadius.all(Radius.circular(100)),
+                ),
+                alignment: Alignment.center,
+                child: widget.icon,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
