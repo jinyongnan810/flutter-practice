@@ -19,8 +19,7 @@ class AnimatedPromptDemo extends StatefulWidget implements DemoWidget {
   Widget get icon => const FaIcon(FontAwesomeIcons.check);
 }
 
-class _AnimatedPromptDemoState extends State<AnimatedPromptDemo>
-    with TickerProviderStateMixin {
+class _AnimatedPromptDemoState extends State<AnimatedPromptDemo> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -30,7 +29,6 @@ class _AnimatedPromptDemoState extends State<AnimatedPromptDemo>
           icon: FaIcon(
             FontAwesomeIcons.check,
             color: Colors.white,
-            size: 32,
           ),
           background: Colors.green,
           title: "Thank you for your order!",
@@ -40,7 +38,6 @@ class _AnimatedPromptDemoState extends State<AnimatedPromptDemo>
           icon: FaIcon(
             FontAwesomeIcons.xmark,
             color: Colors.white,
-            size: 32,
           ),
           background: Colors.redAccent,
           title: "Something went wrong!",
@@ -68,22 +65,27 @@ class _Prompt extends StatefulWidget {
   State<_Prompt> createState() => __PromptState();
 }
 
-class __PromptState extends State<_Prompt> with TickerProviderStateMixin {
+class __PromptState extends State<_Prompt> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _iconSizeAnimation;
   late final Animation<double> _bgSizeAnimation;
-  late final Animation<double> _positionAnimation;
+  late final Animation<Offset> _positionAnimation;
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 500),
     );
-    _iconSizeAnimation = Tween<double>(begin: 2, end: 1).animate(_controller);
-    _bgSizeAnimation = Tween<double>(begin: 3, end: 1).animate(_controller);
-    _positionAnimation = Tween<double>(begin: 3, end: 1).animate(_controller);
-    _controller.repeat();
+    _iconSizeAnimation = Tween<double>(begin: 7, end: 6)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _bgSizeAnimation = Tween<double>(begin: 2, end: 0.4)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _positionAnimation = Tween<Offset>(
+      begin: const Offset(0, 0),
+      end: const Offset(0, -0.23),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _controller.forward();
   }
 
   @override
@@ -94,58 +96,81 @@ class __PromptState extends State<_Prompt> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 300,
-      height: 350,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: Colors.black,
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Stack(
+    final content = Padding(
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Column(
+          const SizedBox(
+            height: 150,
+          ),
+          Text(
+            widget.title,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            widget.details,
+            style: const TextStyle(
+              fontSize: 20,
+            ),
+          )
+        ],
+      ),
+    );
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.7),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 0),
+            )
+          ],
+        ),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: 100,
+            minHeight: 100,
+            maxHeight: MediaQuery.of(context).size.height * 0.8,
+            maxWidth: MediaQuery.of(context).size.width * 0.8,
+          ),
+          child: Stack(
             children: [
-              const SizedBox(
-                height: 150,
-              ),
-              Text(
-                widget.title,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                widget.details,
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
+              content,
+              Positioned.fill(
+                child: SlideTransition(
+                  position: _positionAnimation,
+                  child: ScaleTransition(
+                    scale: _bgSizeAnimation,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: widget.background,
+                        shape: BoxShape.circle,
+                      ),
+                      alignment: Alignment.center,
+                      // child: widget.icon,
+                      child: ScaleTransition(
+                        scale: _iconSizeAnimation,
+                        child: widget.icon,
+                      ),
+                    ),
+                  ),
                 ),
               )
             ],
           ),
-          Positioned.fill(
-            top: 20,
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: widget.background,
-                  borderRadius: const BorderRadius.all(Radius.circular(100)),
-                ),
-                alignment: Alignment.center,
-                child: widget.icon,
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
