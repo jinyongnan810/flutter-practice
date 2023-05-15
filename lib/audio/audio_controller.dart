@@ -107,6 +107,7 @@ class AudioController {
     _musicPlayer.play(UrlSource('$musicPrefix${_playlist.first.filename}'));
   }
 
+  // TODO: fix audio player
   Future<void> startMusic() async {
     switch (_musicPlayer.state) {
       case PlayerState.paused:
