@@ -22,9 +22,9 @@ class AnimatedPromptDemo extends StatefulWidget implements DemoWidget {
 class _AnimatedPromptDemoState extends State<AnimatedPromptDemo> {
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: const [
+      children: [
         _Prompt(
           icon: FaIcon(
             FontAwesomeIcons.check,
