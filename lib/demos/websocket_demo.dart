@@ -3,25 +3,25 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-class TweenAnimationDemo extends StatefulWidget implements DemoWidget {
-  const TweenAnimationDemo({Key? key}) : super(key: key);
+class WebSocketDemo extends StatefulWidget implements DemoWidget {
+  const WebSocketDemo({Key? key}) : super(key: key);
   static const String _title = 'WebSocket Demo';
   static const String _description =
       'https://docs.flutter.dev/cookbook/networking/web-sockets';
 
   @override
-  State<TweenAnimationDemo> createState() => _TweenAnimationDemoState();
+  State<WebSocketDemo> createState() => _WebSocketDemoState();
   @override
-  String get title => TweenAnimationDemo._title;
+  String get title => WebSocketDemo._title;
 
   @override
-  String get description => TweenAnimationDemo._description;
+  String get description => WebSocketDemo._description;
 
   @override
   Widget get icon => const FaIcon(FontAwesomeIcons.internetExplorer);
 }
 
-class _TweenAnimationDemoState extends State<TweenAnimationDemo> {
+class _WebSocketDemoState extends State<WebSocketDemo> {
   late final TextEditingController controller;
   late final WebSocketChannel channel;
   @override
@@ -47,9 +47,16 @@ class _TweenAnimationDemoState extends State<TweenAnimationDemo> {
         children: [
           TextField(
             controller: controller,
-            onSubmitted: (value) {},
+            onSubmitted: (value) {
+              channel.sink.add(value);
+            },
           ),
-          const Text('')
+          StreamBuilder(
+            stream: channel.stream,
+            builder: (context, snapshot) {
+              return Text(snapshot.hasData ? '${snapshot.data}' : '');
+            },
+          )
         ],
       ),
     );

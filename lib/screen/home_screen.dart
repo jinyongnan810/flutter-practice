@@ -13,6 +13,7 @@ import 'package:flutter_practice/demos/test_widgets_demo.dart';
 import 'package:flutter_practice/demos/animation_demo.dart';
 import 'package:flutter_practice/demos/threed_drawer_demo.dart';
 import 'package:flutter_practice/demos/tween_animation_demo.dart';
+import 'package:flutter_practice/demos/websocket_demo.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const DartTestDemo(),
     const SuperTextDemo(),
     const AnimatedPromptDemo(),
+    const WebSocketDemo(),
   ];
   int _selectedIndex = 0;
 

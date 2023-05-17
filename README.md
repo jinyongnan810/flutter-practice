@@ -9,6 +9,28 @@
 
 # Practices
 
+## Use WebSocket
+
+```dart
+// package
+import 'package:web_socket_channel/web_socket_channel.dart';
+// create channel
+final channel = WebSocketChannel.connect(
+  Uri.parse('wss://echo.websocket.events'),
+);
+// send message
+channel.sink.add(value);
+// listen for message
+StreamBuilder(
+  stream: channel.stream,
+  builder: (context, snapshot) {
+    return Text(snapshot.hasData ? '${snapshot.data}' : '');
+  },
+)
+// close channel
+channel.sink.close();
+```
+
 ## Setting envs by dart-define
 
 ```dart
