@@ -108,6 +108,7 @@ class AudioController {
   }
 
   // TODO: fix audio player
+  // https://github.com/bluefireteam/audioplayers/blob/main/getting_started.md
   Future<void> startMusic() async {
     switch (_musicPlayer.state) {
       case PlayerState.paused:
