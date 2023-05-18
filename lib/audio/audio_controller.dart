@@ -15,16 +15,7 @@ import 'sounds.dart';
 class AudioController {
   final _logger = Logger('AudioController');
 
-  late AudioCache _sfxCache;
-
   final AudioPlayer _musicPlayer;
-
-  /// This is a list of [AudioPlayer] instances which are rotated to play
-  /// sound effects.
-  ///
-  /// Normally, we would just call [AudioCache.play] and let it procure its
-  /// own [AudioPlayer] every time. But this seems to lead to errors and
-  /// bad performance on iOS devices.
   final List<AudioPlayer> _sfxPlayers;
 
   int _currentSfxPlayer = 0;
@@ -33,8 +24,8 @@ class AudioController {
 
   final Random _random = Random();
 
-  final sfxPrefix = 'assets/sfx/';
-  final musicPrefix = 'assets/music/';
+  final sfxPrefix = 'sfx/';
+  final musicPrefix = 'music/';
 
   /// Creates an instance that plays music and sound.
   ///
@@ -58,9 +49,6 @@ class AudioController {
             ..setReleaseMode(ReleaseMode.stop),
         ).toList(growable: false),
         _playlist = Queue.of(List<Song>.of(songs)..shuffle()) {
-    _sfxCache = AudioCache(
-      prefix: sfxPrefix,
-    );
     _musicPlayer.onPlayerComplete.listen(_changeSong);
   }
 
@@ -72,14 +60,7 @@ class AudioController {
     }
   }
 
-  /// Preloads all sound effects.
-  Future<void> initialize() async {
-    // This assumes there is only a limited number of sound effects in the game.
-    // If there are hundreds of long sound effect files, it's better
-    // to be more selective when preloading.
-    await _sfxCache
-        .loadAll(SfxType.values.expand(soundTypeToFilename).toList());
-  }
+  Future<void> initialize() async {}
 
   /// Plays a single sound effect, defined by [type].
   ///
@@ -90,11 +71,8 @@ class AudioController {
     final options = soundTypeToFilename(type);
     final filename = options[_random.nextInt(options.length)];
     _logger.info('playing sfx:$filename');
-    final sfxUri = _sfxCache.loadedFiles[filename];
     _sfxPlayers[_currentSfxPlayer].play(
-      sfxUri != null
-          ? UrlSource(sfxUri.path)
-          : UrlSource('$sfxPrefix$filename'),
+      AssetSource('$sfxPrefix$filename'),
       volume: soundTypeToVolume(type),
     );
     _currentSfxPlayer = (_currentSfxPlayer + 1) % _sfxPlayers.length;
@@ -104,11 +82,9 @@ class AudioController {
     // Put the song that just finished playing to the end of the playlist.
     _playlist.addLast(_playlist.removeFirst());
     // Play the next song.
-    _musicPlayer.play(UrlSource('$musicPrefix${_playlist.first.filename}'));
+    _musicPlayer.play(AssetSource('$musicPrefix${_playlist.first.filename}'));
   }
 
-  // TODO: fix audio player
-  // https://github.com/bluefireteam/audioplayers/blob/main/getting_started.md
   Future<void> startMusic() async {
     switch (_musicPlayer.state) {
       case PlayerState.paused:
@@ -119,19 +95,19 @@ class AudioController {
           // Sometimes, resuming fails with an "Unexpected" error.
           _logger.info(e);
           await _musicPlayer
-              .play(UrlSource('$musicPrefix${_playlist.first.filename}'));
+              .play(AssetSource('$musicPrefix${_playlist.first.filename}'));
         }
         break;
       case PlayerState.stopped:
         await _musicPlayer
-            .play(UrlSource('$musicPrefix${_playlist.first.filename}'));
+            .play(AssetSource('$musicPrefix${_playlist.first.filename}'));
         _logger.info('music started');
         break;
       case PlayerState.playing:
         break;
       case PlayerState.completed:
         await _musicPlayer
-            .play(UrlSource('$musicPrefix${_playlist.first.filename}'));
+            .play(AssetSource('$musicPrefix${_playlist.first.filename}'));
         _logger.info('music started');
         break;
     }
