@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/demos/animated_prompt_demo.dart';
 import 'package:flutter_practice/demos/custom_painter_demo.dart';
 import 'package:flutter_practice/demos/dart_test_demo.dart';
+import 'package:flutter_practice/demos/flutter_portal_demo.dart';
 import 'package:flutter_practice/demos/super_text_demo.dart';
 import 'package:flutter_practice/demos/threed_animation_demo.dart';
 import 'package:flutter_practice/demos/animation_demo2.dart';
@@ -40,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const SuperTextDemo(),
     const AnimatedPromptDemo(),
     const WebSocketDemo(),
+    const FlutterPortalDemo(),
   ];
   int _selectedIndex = 0;
 

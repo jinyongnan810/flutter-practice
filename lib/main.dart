@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 import 'package:flutter_practice/screen/demo_screen.dart';
 import 'package:flutter_practice/screen/home_screen.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
@@ -32,20 +33,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Practices',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Portal(
+      child: MaterialApp(
+        title: 'Flutter Practices',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        initialRoute: '/',
+        home: const HomeScreen(),
+        onGenerateRoute: (RouteSettings settings) {
+          return MaterialPageRoute<void>(
+            builder: (_) => DemoScreen(
+              child: settings.arguments as DemoWidget,
+            ),
+          );
+        },
       ),
-      initialRoute: '/',
-      home: const HomeScreen(),
-      onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute<void>(
-          builder: (_) => DemoScreen(
-            child: settings.arguments as DemoWidget,
-          ),
-        );
-      },
     );
   }
 }
