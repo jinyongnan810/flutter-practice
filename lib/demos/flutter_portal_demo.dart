@@ -9,7 +9,7 @@ class FlutterPortalDemo extends StatefulWidget implements DemoWidget {
   static const String _description = 'https://pub.dev/packages/flutter_portal';
 
   @override
-  State<FlutterPortalDemo> createState() => _WebSocketDemoState();
+  State<FlutterPortalDemo> createState() => _FlutterPortalDemoState();
   @override
   String get title => FlutterPortalDemo._title;
 
@@ -20,7 +20,7 @@ class FlutterPortalDemo extends StatefulWidget implements DemoWidget {
   Widget get icon => const FaIcon(FontAwesomeIcons.message);
 }
 
-class _WebSocketDemoState extends State<FlutterPortalDemo> {
+class _FlutterPortalDemoState extends State<FlutterPortalDemo> {
   bool _showPopup = false;
 
   @override
