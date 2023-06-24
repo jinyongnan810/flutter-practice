@@ -4,6 +4,7 @@ import 'package:flutter_practice/demos/custom_painter_demo.dart';
 import 'package:flutter_practice/demos/dart_test_demo.dart';
 import 'package:flutter_practice/demos/flutter_portal_demo.dart';
 import 'package:flutter_practice/demos/flutter_portal_hints_demo.dart';
+import 'package:flutter_practice/demos/interactive_view_demo.dart';
 import 'package:flutter_practice/demos/super_text_demo.dart';
 import 'package:flutter_practice/demos/threed_animation_demo.dart';
 import 'package:flutter_practice/demos/animation_demo2.dart';
@@ -27,6 +28,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<DemoWidget> _demos = [
+    const InteractiveViewDemo(),
     const PlaySoundDemo(),
     TestWidgetsDemo(),
     const AnimationDemo(),
