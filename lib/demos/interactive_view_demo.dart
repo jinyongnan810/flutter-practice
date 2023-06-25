@@ -20,22 +20,25 @@ class InteractiveViewDemo extends StatefulWidget implements DemoWidget {
   Widget get icon => const FaIcon(FontAwesomeIcons.expand);
 }
 
+const canvasSize = Size(5000, 5000);
+
 class _InteractiveViewDemoState extends State<InteractiveViewDemo> {
   late final TransformationController _transformationController;
   @override
   void initState() {
     _transformationController = TransformationController();
     super.initState();
-    // Future.microtask(
-    //   () {
-    //     final result = Matrix4.identity()
-    //       ..translate(
-    //         2500,
-    //         2500,
-    //       );
-    //     _transformationController.value = result;
-    //   },
-    // );
+    Future.microtask(
+      () {
+        final size = MediaQuery.of(context).size;
+        final result = Matrix4.identity()
+          ..translate(
+            size.width / 2 - canvasSize.width / 2,
+            size.height / 2 - canvasSize.height / 2,
+          );
+        _transformationController.value = result;
+      },
+    );
   }
 
   @override
@@ -50,11 +53,10 @@ class _InteractiveViewDemoState extends State<InteractiveViewDemo> {
       minScale: 0.1,
       maxScale: 10,
       constrained: false,
-      // TODO: center this
       transformationController: _transformationController,
       child: SizedBox(
-        width: 5000,
-        height: 5000,
+        width: canvasSize.width,
+        height: canvasSize.height,
         child: Stack(
           children: [
             Positioned.fill(
@@ -68,12 +70,26 @@ class _InteractiveViewDemoState extends State<InteractiveViewDemo> {
                 ),
               ),
             ),
-            const Positioned(
-              top: 2500,
-              left: 2500,
-              child: Text(
-                'Interactive View',
-                style: TextStyle(fontSize: 100),
+            Positioned(
+              top: canvasSize.height / 2 - 250,
+              left: canvasSize.width / 2 - 250,
+              child: Container(
+                width: 500,
+                height: 500,
+                decoration: const BoxDecoration(color: Colors.white),
+                alignment: Alignment.center,
+                child: const Text(
+                  'Interactive View',
+                  style: TextStyle(fontSize: 50),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 1000,
+              left: 1000,
+              child: Image.asset(
+                'assets/images/working-out.jpg',
+                width: 1000,
               ),
             )
           ],
