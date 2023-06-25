@@ -22,7 +22,10 @@ class InteractiveViewDemo extends StatefulWidget implements DemoWidget {
 
 const canvasSize = Size(5000, 5000);
 
-class _InteractiveViewDemoState extends State<InteractiveViewDemo> {
+class _InteractiveViewDemoState extends State<InteractiveViewDemo>
+// not working
+    with
+        AutomaticKeepAliveClientMixin {
   late final TransformationController _transformationController;
   @override
   void initState() {
@@ -44,11 +47,13 @@ class _InteractiveViewDemoState extends State<InteractiveViewDemo> {
   @override
   void dispose() {
     _transformationController.dispose();
+    debugPrint('InteractiveViewDemo disposed');
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return InteractiveViewer(
       minScale: 0.1,
       maxScale: 10,
@@ -97,4 +102,7 @@ class _InteractiveViewDemoState extends State<InteractiveViewDemo> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
