@@ -23,10 +23,62 @@ class InteractiveViewDemo extends StatefulWidget implements DemoWidget {
 const canvasSize = Size(5000, 5000);
 
 class _InteractiveViewDemoState extends State<InteractiveViewDemo>
-// not working
-    with
-        AutomaticKeepAliveClientMixin {
+    with TickerProviderStateMixin {
+  late final TabController _tabController;
+  @override
+  void initState() {
+    _tabController = TabController(length: 3, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Interactive View Demo'),
+          bottom: TabBar(
+            tabs: const [
+              Tab(text: 'Tab 1'),
+              Tab(text: 'Tab 2'),
+              Tab(text: 'Tab 3'),
+            ],
+            controller: _tabController,
+          ),
+        ),
+        body: TabBarView(
+          controller: _tabController,
+          children: const [
+            _InteractiveViewTab(),
+            Center(child: Text('page2')),
+            Center(child: Text('page3'))
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InteractiveViewTab extends StatefulWidget {
+  const _InteractiveViewTab();
+
+  @override
+  State<_InteractiveViewTab> createState() => __InteractiveViewTabState();
+}
+
+class __InteractiveViewTabState extends State<_InteractiveViewTab>
+    with AutomaticKeepAliveClientMixin {
   late final TransformationController _transformationController;
+  // seems not working with NavigationRail but works with TabBar
+  @override
+  bool get wantKeepAlive => true;
   @override
   void initState() {
     _transformationController = TransformationController();
@@ -102,7 +154,4 @@ class _InteractiveViewDemoState extends State<InteractiveViewDemo>
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
