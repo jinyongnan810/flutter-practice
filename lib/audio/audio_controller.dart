@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:async';
 import 'dart:collection';
 import 'dart:math';
 
@@ -27,6 +28,8 @@ class AudioController {
   final sfxPrefix = 'sfx/';
   final musicPrefix = 'music/';
 
+  final hasSetup = Completer();
+
   /// Creates an instance that plays music and sound.
   ///
   /// Use [polyphony] to configure the number of sound effects (SFX) that can
@@ -38,18 +41,28 @@ class AudioController {
   /// never be overridden by sound effects.
   AudioController({int polyphony = 2})
       : assert(polyphony >= 1),
-        _musicPlayer = AudioPlayer(playerId: 'musicPlayer')
-          ..setReleaseMode(ReleaseMode.stop),
+        _musicPlayer = AudioPlayer(playerId: 'musicPlayer'),
         _sfxPlayers = Iterable.generate(
           polyphony,
           (i) => AudioPlayer(
             playerId: 'sfxPlayer#$i',
-          )
-            ..setPlayerMode(PlayerMode.lowLatency)
-            ..setReleaseMode(ReleaseMode.stop),
+          ),
         ).toList(growable: false),
         _playlist = Queue.of(List<Song>.of(songs)..shuffle()) {
+    setup();
+  }
+
+  Future<void> setup() async {
     _musicPlayer.onPlayerComplete.listen(_changeSong);
+    _musicPlayer.setVolume(0.5);
+    _musicPlayer.setReleaseMode(ReleaseMode.stop);
+    for (var player in _sfxPlayers) {
+      player.setVolume(0.8);
+      player
+        ..setPlayerMode(PlayerMode.lowLatency)
+        ..setReleaseMode(ReleaseMode.stop);
+    }
+    hasSetup.complete();
   }
 
   void dispose() {
@@ -60,14 +73,13 @@ class AudioController {
     }
   }
 
-  Future<void> initialize() async {}
-
   /// Plays a single sound effect, defined by [type].
   ///
   /// The controller will ignore this call when the attached settings'
   /// [SettingsController.muted] is `true` or if its
   /// [SettingsController.soundsOn] is `false`.
-  void playSfx(SfxType type) {
+  Future<void> playSfx(SfxType type) async {
+    await hasSetup.future;
     final options = soundTypeToFilename(type);
     final filename = options[_random.nextInt(options.length)];
     _logger.info('playing sfx:$filename');
@@ -78,7 +90,8 @@ class AudioController {
     _currentSfxPlayer = (_currentSfxPlayer + 1) % _sfxPlayers.length;
   }
 
-  void _changeSong(void _) {
+  Future<void> _changeSong(void _) async {
+    await hasSetup.future;
     // Put the song that just finished playing to the end of the playlist.
     _playlist.addLast(_playlist.removeFirst());
     // Play the next song.
@@ -86,6 +99,7 @@ class AudioController {
   }
 
   Future<void> startMusic() async {
+    await hasSetup.future;
     switch (_musicPlayer.state) {
       case PlayerState.paused:
         try {
@@ -113,7 +127,8 @@ class AudioController {
     }
   }
 
-  void _stopAllSound() {
+  Future<void> _stopAllSound() async {
+    await hasSetup.future;
     if (_musicPlayer.state == PlayerState.playing) {
       _musicPlayer.pause();
     }
@@ -122,7 +137,8 @@ class AudioController {
     }
   }
 
-  void stopMusic() {
+  Future<void> stopMusic() async {
+    await hasSetup.future;
     if (_musicPlayer.state == PlayerState.playing) {
       _musicPlayer.pause();
       _logger.info('music stopped');
