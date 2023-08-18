@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
 
 class InteractiveViewDemo extends StatefulWidget implements DemoWidget {
   const InteractiveViewDemo({Key? key}) : super(key: key);
@@ -147,6 +148,16 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
               child: Image.asset(
                 'assets/images/working-out.jpg',
                 width: 1000,
+              ),
+            ),
+            // got emoji's lottie file from https://googlefonts.github.io/noto-emoji-animation/
+            Positioned(
+              top: 2000,
+              left: 2000,
+              child: Lottie.asset(
+                'assets/lotties/smile.json',
+                width: 500,
+                height: 500,
               ),
             )
           ],
