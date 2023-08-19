@@ -75,14 +75,19 @@ class _InteractiveViewTab extends StatefulWidget {
 }
 
 class __InteractiveViewTabState extends State<_InteractiveViewTab>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   late final TransformationController _transformationController;
+  late final AnimationController _lottieAnimationController;
   // seems not working with NavigationRail but works with TabBar
   @override
   bool get wantKeepAlive => true;
   @override
   void initState() {
     _transformationController = TransformationController();
+    _lottieAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
     super.initState();
     Future.microtask(
       () {
@@ -100,6 +105,7 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
   @override
   void dispose() {
     _transformationController.dispose();
+    _lottieAnimationController.dispose();
     debugPrint('InteractiveViewDemo disposed');
     super.dispose();
   }
@@ -158,6 +164,26 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 'assets/lotties/smile.json',
                 width: 500,
                 height: 500,
+              ),
+            ),
+            Positioned(
+              top: 2000,
+              left: 2600,
+              child: InkWell(
+                onTap: () {
+                  if (_lottieAnimationController.isAnimating) {
+                    _lottieAnimationController.stop();
+                  } else {
+                    _lottieAnimationController.reset();
+                    _lottieAnimationController.forward();
+                  }
+                },
+                child: Lottie.network(
+                  'https://fonts.gstatic.com/s/e/notoemoji/latest/1f917/lottie.json',
+                  width: 500,
+                  height: 500,
+                  controller: _lottieAnimationController,
+                ),
               ),
             )
           ],
