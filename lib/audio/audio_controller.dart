@@ -124,6 +124,8 @@ class AudioController {
             .play(AssetSource('$musicPrefix${_playlist.first.filename}'));
         _logger.info('music started');
         break;
+      case PlayerState.disposed:
+        break;
     }
   }
 
