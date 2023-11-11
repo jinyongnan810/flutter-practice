@@ -5,7 +5,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
 class ThreedDrawerDemo extends StatefulWidget implements DemoWidget {
-  const ThreedDrawerDemo({Key? key}) : super(key: key);
+  const ThreedDrawerDemo({super.key});
   static const String _title = '3d drawer demo';
   static const String _description = '3d effect drawer';
 

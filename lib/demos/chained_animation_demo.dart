@@ -5,7 +5,7 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChainedAnimationDemo extends StatefulWidget implements DemoWidget {
-  const ChainedAnimationDemo({Key? key}) : super(key: key);
+  const ChainedAnimationDemo({super.key});
   static const String _title = 'Chained Animation Demo';
   static const String _description = '2 step animation';
 

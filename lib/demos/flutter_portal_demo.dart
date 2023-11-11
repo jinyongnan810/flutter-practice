@@ -4,7 +4,7 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FlutterPortalDemo extends StatefulWidget implements DemoWidget {
-  const FlutterPortalDemo({Key? key}) : super(key: key);
+  const FlutterPortalDemo({super.key});
   static const String _title = 'Flutter Portal Demo';
   static const String _description = 'https://pub.dev/packages/flutter_portal';
 
@@ -52,12 +52,12 @@ class _FlutterPortalDemoState extends State<FlutterPortalDemo> {
 
 class DeclarativeDatePicker extends StatelessWidget {
   const DeclarativeDatePicker({
-    Key? key,
+    super.key,
     required this.visible,
     required this.onDismissed,
     required this.onClose,
     required this.child,
-  }) : super(key: key);
+  });
 
   final bool visible;
   final Widget child;
@@ -97,9 +97,8 @@ class DeclarativeDatePicker extends StatelessWidget {
 
 class _Popup extends StatelessWidget {
   const _Popup({
-    Key? key,
     required this.children,
-  }) : super(key: key);
+  });
 
   final List<Widget> children;
 
@@ -127,12 +126,11 @@ class _Popup extends StatelessWidget {
 
 class _ModalEntry extends StatelessWidget {
   const _ModalEntry({
-    Key? key,
     required this.onClose,
     required this.visible,
     required this.popup,
     required this.child,
-  }) : super(key: key);
+  });
 
   final VoidCallback onClose;
   final bool visible;

@@ -4,7 +4,7 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FlutterPortalHintsDemo extends StatefulWidget implements DemoWidget {
-  const FlutterPortalHintsDemo({Key? key}) : super(key: key);
+  const FlutterPortalHintsDemo({super.key});
   static const String _title = 'TextField Hints Demo';
   static const String _description = 'https://pub.dev/packages/flutter_portal';
 
@@ -73,11 +73,9 @@ class _FlutterPortalHintsDemoState extends State<FlutterPortalHintsDemo> {
 
 class _HintPortalTarget extends StatelessWidget {
   const _HintPortalTarget({
-    Key? key,
-    // required this.visible,
     required this.onClose,
     required this.child,
-  }) : super(key: key);
+  });
 
   // final bool visible;
   final VoidCallback onClose;

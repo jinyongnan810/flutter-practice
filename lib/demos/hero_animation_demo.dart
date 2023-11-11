@@ -3,7 +3,7 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HeroAnimationDemo extends StatefulWidget implements DemoWidget {
-  const HeroAnimationDemo({Key? key}) : super(key: key);
+  const HeroAnimationDemo({super.key});
   static const String _title = 'Hero Animation Demo';
   static const String _description = 'Hero effect between pages';
 

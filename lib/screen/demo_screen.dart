@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
 class DemoScreen extends StatelessWidget {
-  const DemoScreen({Key? key, required this.child}) : super(key: key);
+  const DemoScreen({super.key, required this.child});
   static const String routeName = '/demoScreen';
 
   final DemoWidget child;

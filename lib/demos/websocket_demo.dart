@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class WebSocketDemo extends StatefulWidget implements DemoWidget {
-  const WebSocketDemo({Key? key}) : super(key: key);
+  const WebSocketDemo({super.key});
   static const String _title = 'WebSocket Demo';
   static const String _description =
       'https://docs.flutter.dev/cookbook/networking/web-sockets';

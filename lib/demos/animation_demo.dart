@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
 class AnimationDemo extends StatefulWidget implements DemoWidget {
-  const AnimationDemo({Key? key}) : super(key: key);
+  const AnimationDemo({super.key});
   static const String _title = 'Animation Demo';
   static const String _description = 'Practice Animation related';
 

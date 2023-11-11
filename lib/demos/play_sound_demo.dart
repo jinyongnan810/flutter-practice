@@ -5,7 +5,7 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PlaySoundDemo extends ConsumerStatefulWidget implements DemoWidget {
-  const PlaySoundDemo({Key? key}) : super(key: key);
+  const PlaySoundDemo({super.key});
   static const String _title = 'Play Sound Demo';
   static const String _description =
       'Practice Caching and Playing Sound and all';

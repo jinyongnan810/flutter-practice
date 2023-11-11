@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class ThreeDAnimationDemo extends StatefulWidget implements DemoWidget {
-  const ThreeDAnimationDemo({Key? key}) : super(key: key);
+  const ThreeDAnimationDemo({super.key});
   static const String _title = '3d Animation Demo';
   static const String _description = '3d cube rotating';
 

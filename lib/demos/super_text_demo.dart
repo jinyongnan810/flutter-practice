@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:super_editor/super_editor.dart';
 
 class SuperTextDemo extends StatefulWidget implements DemoWidget {
-  const SuperTextDemo({Key? key}) : super(key: key);
+  const SuperTextDemo({super.key});
   static const String _title = 'SuperText Demo';
   static const String _description = 'Try out SuperText.';
 

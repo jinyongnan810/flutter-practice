@@ -20,7 +20,7 @@ import 'package:flutter_practice/demos/websocket_demo.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

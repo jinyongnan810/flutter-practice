@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 
 class InteractiveViewDemo extends StatefulWidget implements DemoWidget {
-  const InteractiveViewDemo({Key? key}) : super(key: key);
+  const InteractiveViewDemo({super.key});
   static const String _title = 'Interactive View Demo';
   static const String _description =
       'Zoom in, zoom out, positioning stuff, etc.';

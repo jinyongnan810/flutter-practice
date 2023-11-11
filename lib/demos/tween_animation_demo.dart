@@ -5,7 +5,7 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TweenAnimationDemo extends StatefulWidget implements DemoWidget {
-  const TweenAnimationDemo({Key? key}) : super(key: key);
+  const TweenAnimationDemo({super.key});
   static const String _title = 'Tween Animation Demo';
   static const String _description = 'Changing color';
 

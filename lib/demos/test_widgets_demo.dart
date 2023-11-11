@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
 class TestWidgetsDemo extends StatefulWidget implements DemoWidget {
-  TestWidgetsDemo({Key? key})
-      : msgs = [],
-        super(key: key);
+  TestWidgetsDemo({super.key}) : msgs = [];
   static const String _title = 'Test Widgets Demo';
   static const String _description = 'Test some of the widgets.';
   final List<String> msgs;

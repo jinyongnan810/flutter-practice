@@ -3,7 +3,7 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DartTestDemo extends StatefulWidget implements DemoWidget {
-  const DartTestDemo({Key? key}) : super(key: key);
+  const DartTestDemo({super.key});
   static const String _title = 'Testing Demo';
   static const String _description = 'Try testing user journey.';
 

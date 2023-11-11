@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
 class AnimationDemo2 extends StatefulWidget implements DemoWidget {
-  const AnimationDemo2({Key? key}) : super(key: key);
+  const AnimationDemo2({super.key});
   static const String _title = 'Animation Demo2';
   static const String _description = 'Flipping rectangle animation';
 

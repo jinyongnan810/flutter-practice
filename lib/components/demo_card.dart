@@ -9,7 +9,7 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 // ignore_for_file: public_member_api_docs
 
 class DemoCard extends StatelessWidget {
-  const DemoCard({Key? key, required this.widget}) : super(key: key);
+  const DemoCard({super.key, required this.widget});
 
   final DemoWidget widget;
 

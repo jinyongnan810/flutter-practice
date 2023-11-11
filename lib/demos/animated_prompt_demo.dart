@@ -3,7 +3,7 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AnimatedPromptDemo extends StatefulWidget implements DemoWidget {
-  const AnimatedPromptDemo({Key? key}) : super(key: key);
+  const AnimatedPromptDemo({super.key});
   static const String _title = 'Animated Prompt';
   static const String _description = 'Dynamic Prompt';
 

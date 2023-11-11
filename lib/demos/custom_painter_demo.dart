@@ -5,7 +5,7 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomPainterDemo extends StatefulWidget implements DemoWidget {
-  const CustomPainterDemo({Key? key}) : super(key: key);
+  const CustomPainterDemo({super.key});
   static const String _title = 'CustomPainter Animation Demo';
   static const String _description =
       'Using CustomPainter to create dynamic polygon animations';

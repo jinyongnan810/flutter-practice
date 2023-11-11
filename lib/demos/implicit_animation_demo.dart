@@ -3,7 +3,7 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ImplicitAnimationDemo extends StatefulWidget implements DemoWidget {
-  const ImplicitAnimationDemo({Key? key}) : super(key: key);
+  const ImplicitAnimationDemo({super.key});
   static const String _title = 'Implicit Animation Demo';
   static const String _description = 'Scaling image';
 
