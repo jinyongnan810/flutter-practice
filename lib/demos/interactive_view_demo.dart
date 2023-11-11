@@ -59,7 +59,7 @@ class _InteractiveViewDemoState extends State<InteractiveViewDemo>
           children: const [
             _InteractiveViewTab(),
             Center(child: Text('page2')),
-            Center(child: Text('page3'))
+            Center(child: Text('page3')),
           ],
         ),
       ),
@@ -185,7 +185,7 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                   controller: _lottieAnimationController,
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

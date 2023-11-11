@@ -43,7 +43,7 @@ class _AnimatedPromptDemoState extends State<AnimatedPromptDemo> {
           title: "Something went wrong!",
           details:
               "The order was unsuccessful. \nPlease check all information.",
-        )
+        ),
       ],
     );
   }
@@ -119,7 +119,7 @@ class __PromptState extends State<_Prompt> with SingleTickerProviderStateMixin {
             style: const TextStyle(
               fontSize: 20,
             ),
-          )
+          ),
         ],
       ),
     );
@@ -135,7 +135,7 @@ class __PromptState extends State<_Prompt> with SingleTickerProviderStateMixin {
               spreadRadius: 5,
               blurRadius: 7,
               offset: const Offset(0, 0),
-            )
+            ),
           ],
         ),
         child: ConstrainedBox(
@@ -167,7 +167,7 @@ class __PromptState extends State<_Prompt> with SingleTickerProviderStateMixin {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

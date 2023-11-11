@@ -100,7 +100,7 @@ class _HintPortalTarget extends StatelessWidget {
               onTap: () {
                 onClose();
               },
-            )
+            ),
         ],
       ),
       child: child,

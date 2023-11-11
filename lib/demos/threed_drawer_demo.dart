@@ -126,7 +126,7 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
                   ..rotateY(_drawerAnimation.value),
                 alignment: Alignment.centerRight,
                 child: drawer,
-              )
+              ),
             ],
           );
         },

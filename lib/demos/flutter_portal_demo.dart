@@ -87,7 +87,7 @@ class DeclarativeDatePicker extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
       child: child,

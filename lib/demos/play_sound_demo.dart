@@ -56,7 +56,7 @@ class _PlaySoundDemoState extends ConsumerState<PlaySoundDemo> {
               }
             },
             child: Text(playingMusic ? 'stop music' : 'play music'),
-          )
+          ),
         ],
       ),
     );

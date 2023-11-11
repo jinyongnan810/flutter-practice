@@ -60,7 +60,7 @@ class _AnimationDemo2State extends State<AnimationDemo2>
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: const Offset(0, 0),
-                  )
+                  ),
                 ],
                 color: Colors.blue,
               ),

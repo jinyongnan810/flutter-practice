@@ -56,7 +56,7 @@ class _WebSocketDemoState extends State<WebSocketDemo> {
             builder: (context, snapshot) {
               return Text(snapshot.hasData ? '${snapshot.data}' : '');
             },
-          )
+          ),
         ],
       ),
     );

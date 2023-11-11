@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 demo.title,
                                 key: Key(demo.title),
                               ),
-                            )
+                            ),
                         ],
                         selectedIndex: _selectedIndex,
                         onDestinationSelected: (index) {
@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const VerticalDivider(width: 1),
             Expanded(
               child: _demos[_selectedIndex],
-            )
+            ),
           ],
         ),
       ),
