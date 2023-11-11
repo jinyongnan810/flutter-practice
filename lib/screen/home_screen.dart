@@ -16,6 +16,7 @@ import 'package:flutter_practice/demos/test_widgets_demo.dart';
 import 'package:flutter_practice/demos/animation_demo.dart';
 import 'package:flutter_practice/demos/threed_drawer_demo.dart';
 import 'package:flutter_practice/demos/tween_animation_demo.dart';
+import 'package:flutter_practice/demos/twod_scrolling_demo.dart';
 import 'package:flutter_practice/demos/websocket_demo.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
@@ -29,6 +30,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final List<DemoWidget> _demos = [
     const InteractiveViewDemo(),
+    const TwoDScrollingDemo(),
     const PlaySoundDemo(),
     TestWidgetsDemo(),
     const AnimationDemo(),
