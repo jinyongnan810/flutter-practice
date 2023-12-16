@@ -9,6 +9,48 @@
 
 # Practices
 
+## Use inherited widget
+
+```dart
+// create inherited widget
+class Tester extends InheritedWidget {
+  const Tester({
+    super.key,
+    required super.child,
+    required this.data,
+  });
+
+  final String data;
+
+  static Tester? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<Tester>();
+  }
+
+  @override
+  bool updateShouldNotify(Tester oldWidget) {
+    return data != oldWidget.data;
+  }
+}
+// use inherited widget
+@override
+Widget build(BuildContext context) {
+  return Tester(
+    data: data,
+    child: Column(
+      children: [
+        TextField(
+          controller: controller,
+          onChanged: (value) => setState(() => data = value),
+        ),
+        const _LayerOne(),
+      ],
+    ),
+  );
+}
+// get inherited widget data
+Text(Tester.of(context)!.data);
+```
+
 ## Use WebSocket
 
 ```dart
