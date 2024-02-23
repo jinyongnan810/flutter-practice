@@ -47,6 +47,9 @@ dependencies:
   web_socket_channel: ^2.4.0
   flutter_portal: ^1.1.4
   lottie: ^3.0.0
+  google_generative_ai: ^0.2.1
+  flutter_dotenv: ^5.1.0
+  flutter_markdown: ^0.6.20+1
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +84,7 @@ flutter:
     - assets/sfx/
     - assets/images/
     - assets/lotties/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

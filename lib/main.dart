@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:flutter_practice/screen/demo_screen.dart';
 import 'package:flutter_practice/screen/home_screen.dart';
@@ -7,11 +8,12 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 
-void main() {
+Future<void> main() async {
   if (kReleaseMode) {
     // Don't log anything below warnings in production.
     Logger.root.level = Level.WARNING;
   }
+  await dotenv.load(fileName: ".env");
   Logger.root.onRecord.listen((record) {
     debugPrint('${record.level.name}: ${record.time}: '
         '${record.loggerName}: '

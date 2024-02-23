@@ -7,6 +7,7 @@ import 'package:flutter_practice/demos/custom_painter_demo.dart';
 import 'package:flutter_practice/demos/dart_test_demo.dart';
 import 'package:flutter_practice/demos/flutter_portal_demo.dart';
 import 'package:flutter_practice/demos/flutter_portal_hints_demo.dart';
+import 'package:flutter_practice/demos/gemini_demo.dart';
 import 'package:flutter_practice/demos/hero_animation_demo.dart';
 import 'package:flutter_practice/demos/implicit_animation_demo.dart';
 import 'package:flutter_practice/demos/inherited_widget_demo.dart';
@@ -29,6 +30,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<DemoWidget> _demos = [
+    const GeminiDemo(),
     const InheritedWidgetDemo(),
     const InteractiveViewDemo(),
     const TwoDScrollingDemo(),
