@@ -50,8 +50,6 @@ class _GeminiDemoState extends ConsumerState<GeminiDemo> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: TextField(
-            minLines: 1,
-            maxLines: 3,
             controller: controller,
             onSubmitted: (value) {
               ref.read(_Providers.actions).generate(value, model);
@@ -59,7 +57,13 @@ class _GeminiDemoState extends ConsumerState<GeminiDemo> {
           ),
         ),
         if (isLoading) const Text("Thinking..."),
-        Expanded(child: Markdown(data: result ?? '')),
+        Expanded(
+          child: Markdown(
+            data: result ?? '',
+            selectable: true,
+            softLineBreak: true,
+          ),
+        ),
       ],
     );
   }

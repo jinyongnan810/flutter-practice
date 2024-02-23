@@ -9,6 +9,7 @@
 
 # Todos
 - Pigeon
+- Fix 2d scrolling
 
 # Practices
 
