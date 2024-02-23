@@ -12,5 +12,20 @@
     "vsync",
     "xmark"
   ],
-  "cSpell.ignorePaths": ["test/**"]
+  "dart.flutterSdkPath": "~/.asdf/installs/flutter/3.19.0-stable",
+  "cSpell.ignorePaths": ["test/**"],
+  "[dart]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  }
 }
