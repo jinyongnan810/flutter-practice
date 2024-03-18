@@ -13,7 +13,7 @@
     "vsync",
     "xmark"
   ],
-  "dart.flutterSdkPath": "~/.asdf/installs/flutter/3.19.0-stable",
+  "dart.flutterSdkPath": "~/.asdf/installs/flutter/3.19.2-stable",
   "cSpell.ignorePaths": ["test/**"],
   "[dart]": {
     "editor.codeActionsOnSave": {
