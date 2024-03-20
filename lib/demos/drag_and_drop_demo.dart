@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -76,9 +79,31 @@ class __SplitPanelsState extends State<_SplitPanels> {
     });
   }
 
-  void updateDrapPreview(PanelLocation update) {
+  void updateDropPreview(PanelLocation update) {
     setState(() {
       dropPreview = update;
+    });
+  }
+
+  void drop() {
+    assert(dropPreview != null, 'dropPreview is null');
+    assert(hoveringData != null, 'hoveringData is null');
+    setState(() {
+      if (dragStart != null) {
+        if (dragStart!.$2 == Panel.upper) {
+          upper.removeAt(dragStart!.$1);
+        } else {
+          lower.removeAt(dragStart!.$1);
+        }
+      }
+      if (dropPreview!.$2 == Panel.upper) {
+        upper.insert(min(upper.length, dropPreview!.$1), hoveringData!);
+      } else {
+        lower.insert(min(lower.length, dropPreview!.$1), hoveringData!);
+      }
+      dragStart = null;
+      dropPreview = null;
+      hoveringData = null;
     });
   }
 
@@ -96,12 +121,23 @@ class __SplitPanelsState extends State<_SplitPanels> {
               height: constraints.maxHeight / 2,
               width: constraints.maxWidth,
               top: 0,
-              child: _ItemsPanel(
-                crossAxisCount: _columns,
-                items: upper,
-                spacing: _spacing,
-                onDragStart: onDragStart,
+              child: _DropRegion(
+                updateDropPreview: updateDropPreview,
+                onDrop: drop,
+                childSize: itemSize,
                 panel: Panel.upper,
+                columns: _columns,
+                child: _ItemsPanel(
+                  crossAxisCount: _columns,
+                  items: upper,
+                  spacing: _spacing,
+                  onDragStart: onDragStart,
+                  panel: Panel.upper,
+                  dragStart: dragStart?.$2 == Panel.upper ? dragStart : null,
+                  dropPreview:
+                      dropPreview?.$2 == Panel.upper ? dropPreview : null,
+                  hoveringData: hoveringData,
+                ),
               ),
             ),
             Positioned(
@@ -114,12 +150,23 @@ class __SplitPanelsState extends State<_SplitPanels> {
               height: constraints.maxHeight / 2,
               width: constraints.maxWidth,
               top: constraints.maxHeight / 2 + 2,
-              child: _ItemsPanel(
-                crossAxisCount: _columns,
-                items: lower,
-                spacing: _spacing,
-                onDragStart: onDragStart,
+              child: _DropRegion(
+                updateDropPreview: updateDropPreview,
+                onDrop: drop,
+                childSize: itemSize,
                 panel: Panel.lower,
+                columns: _columns,
+                child: _ItemsPanel(
+                  crossAxisCount: _columns,
+                  items: lower,
+                  spacing: _spacing,
+                  onDragStart: onDragStart,
+                  panel: Panel.lower,
+                  dragStart: dragStart?.$2 == Panel.lower ? dragStart : null,
+                  dropPreview:
+                      dropPreview?.$2 == Panel.lower ? dropPreview : null,
+                  hoveringData: hoveringData,
+                ),
               ),
             ),
           ],
@@ -136,33 +183,91 @@ class _ItemsPanel extends StatelessWidget {
     required this.spacing,
     required this.onDragStart,
     required this.panel,
+    required this.dragStart,
+    required this.dropPreview,
+    required this.hoveringData,
   });
   final int crossAxisCount;
   final List<String> items;
   final double spacing;
   final void Function(PanelLocation) onDragStart;
   final Panel panel;
+  final PanelLocation? dragStart;
+  final PanelLocation? dropPreview;
+  final String? hoveringData;
 
   @override
   Widget build(BuildContext context) {
+    final itemsCopy = List<String>.from(items);
+
+    PanelLocation? dragStartCopy;
+    PanelLocation? dropPreviewCopy;
+    if (dragStart != null) {
+      dragStartCopy = dragStart!.copyWith();
+    }
+    if (dropPreview != null && hoveringData != null) {
+      dropPreviewCopy = dropPreview!.copyWith(
+        index: min(items.length, dropPreview!.$1),
+      );
+      if (dragStartCopy?.$2 == dropPreviewCopy.$2) {
+        itemsCopy.removeAt(dragStartCopy!.$1);
+        dragStartCopy = null;
+      }
+      itemsCopy.insert(
+        min(dropPreviewCopy.$1, itemsCopy.length),
+        hoveringData!,
+      );
+    }
     return GridView.count(
       crossAxisCount: crossAxisCount,
       padding: const EdgeInsets.all(4),
       mainAxisSpacing: spacing,
       crossAxisSpacing: spacing,
-      children: items.asMap().entries.map((entry) {
+      children: itemsCopy.asMap().entries.map((entry) {
+        final isStartingDrag = entry.key == dragStartCopy?.$1;
         final child = Center(
           child: Text(
             entry.value,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: isStartingDrag || entry.key == dropPreviewCopy?.$1
+                  ? Colors.grey
+                  : Colors.white,
             ),
           ),
         );
-        final decoratedContainer = Container(
+        final StatelessWidget decoratedContainer;
+        if (entry.key == dragStartCopy?.$1) {
+          decoratedContainer = Container(
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+            ),
+            child: child,
+          );
+        } else if (entry.key == dropPreviewCopy?.$1) {
+          decoratedContainer = DottedBorder(
+            borderType: BorderType.RRect,
+            radius: const Radius.circular(20),
+            dashPattern: const [10, 10],
+            color: Colors.grey,
+            strokeWidth: 2,
+            child: child,
+          );
+        } else {
+          decoratedContainer = Container(
+            height: 200,
+            decoration: const BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
+            child: child,
+          );
+        }
+        Container(
           height: 200,
           decoration: const BoxDecoration(
             color: Colors.grey,
@@ -213,5 +318,54 @@ class _DraggableWidget extends StatelessWidget {
         child: child,
       ),
     );
+  }
+}
+
+class _DropRegion extends StatefulWidget {
+  const _DropRegion({
+    required this.childSize,
+    required this.columns,
+    required this.panel,
+    required this.updateDropPreview,
+    required this.onDrop,
+    required this.child,
+  });
+  final Size childSize;
+  final int columns;
+  final Panel panel;
+  final void Function(PanelLocation) updateDropPreview;
+  final VoidCallback onDrop;
+  final Widget child;
+
+  @override
+  State<_DropRegion> createState() => __DropRegionState();
+}
+
+class __DropRegionState extends State<_DropRegion> {
+  int? dropIndex;
+  @override
+  Widget build(BuildContext context) {
+    return DropRegion(
+      formats: Formats.standardFormats,
+      onDropOver: (event) {
+        _updatePreview(event.position.local);
+        return DropOperation.copy;
+      },
+      onPerformDrop: (event) async {
+        widget.onDrop();
+      },
+      child: widget.child,
+    );
+  }
+
+  void _updatePreview(Offset hoverPosition) {
+    final int row = hoverPosition.dy ~/ widget.childSize.height;
+    final int column =
+        (hoverPosition.dx - widget.childSize.width) ~/ widget.childSize.width;
+    int newDropIndex = (row * widget.columns) + column;
+    if (newDropIndex != dropIndex) {
+      dropIndex = newDropIndex;
+      widget.updateDropPreview((dropIndex!, widget.panel));
+    }
   }
 }
