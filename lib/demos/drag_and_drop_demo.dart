@@ -7,6 +7,8 @@ import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 
+// TODO: summarize this demo
+
 enum Panel { upper, lower }
 
 typedef PanelLocation = (int, Panel);
@@ -53,7 +55,7 @@ class _DragAndDropDemoState extends State<DragAndDropDemo> {
 }
 
 class _SplitPanels extends StatefulWidget {
-  const _SplitPanels({super.key});
+  const _SplitPanels();
 
   @override
   State<_SplitPanels> createState() => __SplitPanelsState();
@@ -301,7 +303,6 @@ class _ItemsPanel extends StatelessWidget {
 
 class _DraggableWidget extends StatelessWidget {
   const _DraggableWidget({
-    super.key,
     required this.data,
     required this.child,
     required this.onDragStart,
