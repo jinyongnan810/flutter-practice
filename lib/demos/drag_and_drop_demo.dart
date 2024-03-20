@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:dotted_border/dotted_border.dart';
@@ -85,6 +86,12 @@ class __SplitPanelsState extends State<_SplitPanels> {
     });
   }
 
+  void setExternalData(String data) {
+    setState(() {
+      hoveringData = data;
+    });
+  }
+
   void drop() {
     assert(dropPreview != null, 'dropPreview is null');
     assert(hoveringData != null, 'hoveringData is null');
@@ -124,6 +131,7 @@ class __SplitPanelsState extends State<_SplitPanels> {
               child: _DropRegion(
                 updateDropPreview: updateDropPreview,
                 onDrop: drop,
+                setExternalData: setExternalData,
                 childSize: itemSize,
                 panel: Panel.upper,
                 columns: _columns,
@@ -153,6 +161,7 @@ class __SplitPanelsState extends State<_SplitPanels> {
               child: _DropRegion(
                 updateDropPreview: updateDropPreview,
                 onDrop: drop,
+                setExternalData: setExternalData,
                 childSize: itemSize,
                 panel: Panel.lower,
                 columns: _columns,
@@ -328,6 +337,7 @@ class _DropRegion extends StatefulWidget {
     required this.panel,
     required this.updateDropPreview,
     required this.onDrop,
+    required this.setExternalData,
     required this.child,
   });
   final Size childSize;
@@ -335,6 +345,7 @@ class _DropRegion extends StatefulWidget {
   final Panel panel;
   final void Function(PanelLocation) updateDropPreview;
   final VoidCallback onDrop;
+  final void Function(String) setExternalData;
   final Widget child;
 
   @override
@@ -354,14 +365,25 @@ class __DropRegionState extends State<_DropRegion> {
       onPerformDrop: (event) async {
         widget.onDrop();
       },
+      onDropEnter: (event) {
+        if (event.session.items.first.dataReader != null) {
+          final dataReader = event.session.items.first.dataReader!;
+          if (!dataReader.canProvide(Formats.plainTextFile)) {
+            return;
+          }
+          dataReader.getFile(Formats.plainTextFile, (value) async {
+            widget.setExternalData(utf8.decode(await value.readAll()));
+          });
+        }
+      },
       child: widget.child,
     );
   }
 
   void _updatePreview(Offset hoverPosition) {
     final int row = hoverPosition.dy ~/ widget.childSize.height;
-    final int column =
-        (hoverPosition.dx - widget.childSize.width) ~/ widget.childSize.width;
+    final int column = (hoverPosition.dx - widget.childSize.width / 2) ~/
+        widget.childSize.width;
     int newDropIndex = (row * widget.columns) + column;
     if (newDropIndex != dropIndex) {
       dropIndex = newDropIndex;
