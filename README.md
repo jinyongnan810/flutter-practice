@@ -13,6 +13,20 @@
 
 # Practices
 
+## Super Drag and Drop
+### Make things draggable
+- To make a widget draggable, wrap it with `Draggable`, and with `DragItemWidget`.
+- In `DragItemWidget`, set the data in `DragItem`, which to be provided by `dragItemProvider`.
+- To specify style when dragging, use `dragBuilder` in `DragItemWidget`.
+- Drag start event callback can be called at `dragItemProvider`.
+
+### Detect drag in and drop
+- To detect being dragged over, make a zone with `DropRegion`.
+- `onDropEnter` is called once the draggable is dragged into the region.
+- `onDropOver` is called when the draggable is dragged over the region, and can be used to detect cursor position in realtime.
+- `onDrop` is called when the draggable is dropped over the region.
+- To drag a system file in the region, check and use `event.session.items.first.dataReader` in `onDropEnter`.
+
 ## Use inherited widget
 
 ```dart
