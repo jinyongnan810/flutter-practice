@@ -40,6 +40,7 @@ analyzer:
     - "lib/generated_plugin_registrant.dart"
     - "lib/pigeon.dart"
     - "pigeon/interface.dart"
+    - "build/**"
   errors:
     invalid_annotation_target: ignore
   language:
