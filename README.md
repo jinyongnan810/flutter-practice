@@ -8,6 +8,8 @@
 - Learn how other people code
 
 # Todos
+- remove tabs and move to one screen
+- support mobile
 - Pigeon
 - Fix 2d scrolling
 

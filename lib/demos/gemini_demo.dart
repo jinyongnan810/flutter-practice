@@ -4,6 +4,7 @@ import 'package:flutter_practice/demos/gemini_demo_providers.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 typedef _Providers = GeminiDemoProviders;
 
@@ -42,28 +43,78 @@ class _GeminiDemoState extends ConsumerState<GeminiDemo> {
   @override
   Widget build(BuildContext context) {
     final model = ref.watch(_Providers.geminiModelProvider);
-    final isLoading = ref.watch(_Providers.isLoading);
-    final result = ref.watch(_Providers.result);
+    final qas = ref.watch(_Providers.qas);
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              reverse: true,
+              child: Column(
+                children:
+                    qas.map((qa) => _QAItem(qa: qa)).toList(growable: false),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 8.0,
+            ),
+            child: TextField(
+              autofocus: true,
+              controller: controller,
+              decoration: InputDecoration(
+                hintText: 'Ask me anything',
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.send),
+                  onPressed: () {
+                    ref
+                        .read(_Providers.actions)
+                        .generate(controller.text, model);
+                    controller.clear();
+                  },
+                ),
+              ),
+              textInputAction: TextInputAction.done,
+              onSubmitted: (value) {
+                ref.read(_Providers.actions).generate(value, model);
+                controller.clear();
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _QAItem extends ConsumerWidget {
+  const _QAItem({required this.qa});
+  final QA qa;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-          child: TextField(
-            controller: controller,
-            onSubmitted: (value) {
-              ref.read(_Providers.actions).generate(value, model);
-            },
-          ),
+        Text(
+          qa.question,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        if (isLoading) const Text("Thinking..."),
-        Expanded(
-          child: Markdown(
-            data: result ?? '',
-            selectable: true,
-            softLineBreak: true,
-          ),
-        ),
+        qa.answer.isEmpty
+            ? const Text('Thinking...')
+            : MarkdownBody(
+                data: qa.answer,
+                selectable: true,
+                onTapLink: (text, href, title) {
+                  if (href != null) {
+                    launchUrlString(href);
+                  }
+                },
+              ),
+        const Divider(),
       ],
     );
   }
