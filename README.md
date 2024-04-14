@@ -7,13 +7,22 @@
 - Learn how to build ui
 - Learn how other people code
 
-# Todos
-- remove tabs and move to one screen
+# ToDos
 - support mobile
 - Pigeon
-- Fix 2d scrolling
+- Do ToDos
 
 # Practices
+
+## Google fonts
+### set global font
+```dart
+theme: ThemeData(
+  useMaterial3: true,
+  colorScheme: lightColorScheme,
+  textTheme: GoogleFonts.caveatTextTheme(), // this line
+),
+```
 
 ## Super Drag and Drop
 ### Make things draggable
