@@ -83,8 +83,12 @@ class _DartTestDemoState extends State<DartTestDemo> {
       "Hello",
       key: Key('Hello'),
     );
-    return Center(
+    final content = Center(
       child: _loggedIn ? homePage : loginPage,
+    );
+
+    return SafeArea(
+      child: Scaffold(appBar: AppBar(title: Text(widget.title)), body: content),
     );
   }
 }

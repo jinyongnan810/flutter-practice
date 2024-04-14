@@ -33,7 +33,7 @@ class _ImplicitAnimationDemoState extends State<ImplicitAnimationDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    final content = SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -52,6 +52,12 @@ class _ImplicitAnimationDemoState extends State<ImplicitAnimationDemo> {
             child: Image.asset('assets/images/working-out.jpg'),
           ),
         ],
+      ),
+    );
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: content,
       ),
     );
   }

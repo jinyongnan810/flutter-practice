@@ -42,7 +42,7 @@ class _WebSocketDemoState extends State<WebSocketDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    final content = Center(
       child: Column(
         children: [
           TextField(
@@ -58,6 +58,12 @@ class _WebSocketDemoState extends State<WebSocketDemo> {
             },
           ),
         ],
+      ),
+    );
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: content,
       ),
     );
   }

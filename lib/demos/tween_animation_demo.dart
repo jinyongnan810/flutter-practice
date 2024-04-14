@@ -38,7 +38,7 @@ class _TweenAnimationDemoState extends State<TweenAnimationDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    final content = Center(
       // child: Container(
       //   decoration: BoxDecoration(
       //       borderRadius: BorderRadius.circular(100), color: Colors.amber),
@@ -67,6 +67,13 @@ class _TweenAnimationDemoState extends State<TweenAnimationDemo> {
             color: Colors.amber,
           ),
         ),
+      ),
+    );
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: content,
       ),
     );
   }

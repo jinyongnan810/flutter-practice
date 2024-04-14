@@ -126,7 +126,7 @@ class _ThreeDAnimationDemoState extends State<ThreeDAnimationDemo>
     _zController
       ..reset()
       ..repeat();
-    return Center(
+    final content = Center(
       child: AnimatedBuilder(
         animation: Listenable.merge([_xController, _yController, _zController]),
         builder: (context, child) {
@@ -140,6 +140,13 @@ class _ThreeDAnimationDemoState extends State<ThreeDAnimationDemo>
             child: cubic,
           );
         },
+      ),
+    );
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: content,
       ),
     );
   }

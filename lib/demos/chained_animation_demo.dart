@@ -160,7 +160,7 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
         ),
       ],
     );
-    return Center(
+    final content = Center(
       child: AnimatedBuilder(
         animation: _counterClockWiseController,
         builder: (context, child) {
@@ -182,6 +182,9 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
           );
         },
       ),
+    );
+    return SafeArea(
+      child: Scaffold(appBar: AppBar(title: Text(widget.title)), body: content),
     );
   }
 }

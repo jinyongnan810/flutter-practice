@@ -3,24 +3,24 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
-class AnimationDemo2 extends StatefulWidget implements DemoWidget {
-  const AnimationDemo2({super.key});
+class AnimatedBuilderDemo2 extends StatefulWidget implements DemoWidget {
+  const AnimatedBuilderDemo2({super.key});
   static const String _title = 'Animation Demo2';
   static const String _description = 'Flipping rectangle animation';
 
   @override
-  State<AnimationDemo2> createState() => _AnimationDemo2State();
+  State<AnimatedBuilderDemo2> createState() => _AnimatedBuilderDemo2State();
   @override
-  String get title => AnimationDemo2._title;
+  String get title => AnimatedBuilderDemo2._title;
 
   @override
-  String get description => AnimationDemo2._description;
+  String get description => AnimatedBuilderDemo2._description;
 
   @override
   Widget get icon => const Icon(Icons.rectangle_outlined);
 }
 
-class _AnimationDemo2State extends State<AnimationDemo2>
+class _AnimatedBuilderDemo2State extends State<AnimatedBuilderDemo2>
     with TickerProviderStateMixin {
   late final AnimationController _flippingAnimationController;
   late final Animation<double> _animation;
@@ -44,7 +44,7 @@ class _AnimationDemo2State extends State<AnimationDemo2>
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    final content = Center(
       child: AnimatedBuilder(
         animation: _flippingAnimationController,
         builder: (ctx, _) {
@@ -70,6 +70,10 @@ class _AnimationDemo2State extends State<AnimationDemo2>
           );
         },
       ),
+    );
+
+    return SafeArea(
+      child: Scaffold(appBar: AppBar(title: Text(widget.title)), body: content),
     );
   }
 }

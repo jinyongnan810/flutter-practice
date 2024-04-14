@@ -25,7 +25,7 @@ class _FlutterPortalDemoState extends State<FlutterPortalDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final content = Column(
       children: [
         TextButton(onPressed: () {}, child: const Text('hello')),
         _ModalEntry(
@@ -46,6 +46,12 @@ class _FlutterPortalDemoState extends State<FlutterPortalDemo> {
           ),
         ),
       ],
+    );
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: content,
+      ),
     );
   }
 }

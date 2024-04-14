@@ -12,9 +12,7 @@ class GeminiDemoProviders {
     ),
   );
   static final qas = StateProvider<List<QA>>((ref) {
-    ref.listenSelf((previous, next) {
-      print('qas: $next');
-    });
+    ref.listenSelf((previous, next) {});
     return [];
   });
   static final actions = Provider.autoDispose((ref) => _Actions(ref.read));

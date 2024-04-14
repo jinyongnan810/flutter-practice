@@ -22,7 +22,7 @@ class AnimatedPromptDemo extends StatefulWidget implements DemoWidget {
 class _AnimatedPromptDemoState extends State<AnimatedPromptDemo> {
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    const content = Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _Prompt(
@@ -45,6 +45,16 @@ class _AnimatedPromptDemoState extends State<AnimatedPromptDemo> {
               "The order was unsuccessful. \nPlease check all information.",
         ),
       ],
+    );
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: const Center(
+          child: content,
+        ),
+      ),
     );
   }
 }

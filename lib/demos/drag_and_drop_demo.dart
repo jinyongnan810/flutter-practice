@@ -48,7 +48,15 @@ class _DragAndDropDemoState extends State<DragAndDropDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return const _SplitPanels();
+    const content = _SplitPanels();
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: content,
+      ),
+    );
   }
 }
 

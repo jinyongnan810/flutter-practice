@@ -3,24 +3,24 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
-class AnimationDemo extends StatefulWidget implements DemoWidget {
-  const AnimationDemo({super.key});
+class AnimatedBuilderDemo extends StatefulWidget implements DemoWidget {
+  const AnimatedBuilderDemo({super.key});
   static const String _title = 'Animation Demo';
   static const String _description = 'Practice Animation related';
 
   @override
-  State<AnimationDemo> createState() => _AnimationDemoState();
+  State<AnimatedBuilderDemo> createState() => _AnimatedBuilderDemoState();
   @override
-  String get title => AnimationDemo._title;
+  String get title => AnimatedBuilderDemo._title;
 
   @override
-  String get description => AnimationDemo._description;
+  String get description => AnimatedBuilderDemo._description;
 
   @override
   Widget get icon => const Icon(Icons.animation);
 }
 
-class _AnimationDemoState extends State<AnimationDemo>
+class _AnimatedBuilderDemoState extends State<AnimatedBuilderDemo>
     with TickerProviderStateMixin {
   late final AnimationController _edgeBallAnimationController;
   bool _showEdgeBall = false;
@@ -51,7 +51,7 @@ class _AnimationDemoState extends State<AnimationDemo>
         shape: BoxShape.circle,
       ),
     );
-    return LayoutBuilder(
+    final content = LayoutBuilder(
       builder: (context, constraint) {
         return Stack(
           children: [
@@ -102,6 +102,15 @@ class _AnimationDemoState extends State<AnimationDemo>
           ],
         );
       },
+    );
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: content,
+      ),
     );
   }
 }

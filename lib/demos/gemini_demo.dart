@@ -44,7 +44,7 @@ class _GeminiDemoState extends ConsumerState<GeminiDemo> {
   Widget build(BuildContext context) {
     final model = ref.watch(_Providers.geminiModelProvider);
     final qas = ref.watch(_Providers.qas);
-    return Padding(
+    final content = Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -85,6 +85,15 @@ class _GeminiDemoState extends ConsumerState<GeminiDemo> {
             ),
           ),
         ],
+      ),
+    );
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: content,
       ),
     );
   }

@@ -37,7 +37,7 @@ class _InheritedWidgetDemoState extends State<InheritedWidgetDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return Tester(
+    final content = Tester(
       data: data,
       child: Column(
         children: [
@@ -47,6 +47,13 @@ class _InheritedWidgetDemoState extends State<InheritedWidgetDemo> {
           ),
           const _LayerOne(),
         ],
+      ),
+    );
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: content,
       ),
     );
   }

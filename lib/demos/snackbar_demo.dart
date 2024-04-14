@@ -3,25 +3,25 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
-class TestWidgetsDemo extends StatefulWidget implements DemoWidget {
-  TestWidgetsDemo({super.key}) : msgs = [];
-  static const String _title = 'Test Widgets Demo';
-  static const String _description = 'Test some of the widgets.';
-  final List<String> msgs;
+class SnackbarDemo extends StatefulWidget implements DemoWidget {
+  SnackbarDemo({super.key});
+  static const String _title = 'Snackbar Demo';
+  static const String _description = 'Dynamic snackbar messages.';
+  final List<String> msgs = [];
   @override
-  String get title => TestWidgetsDemo._title;
+  String get title => SnackbarDemo._title;
 
   @override
-  String get description => TestWidgetsDemo._description;
+  String get description => SnackbarDemo._description;
 
   @override
   Widget get icon => const Icon(Icons.ramen_dining);
 
   @override
-  State<TestWidgetsDemo> createState() => _TestWidgetsDemoState();
+  State<SnackbarDemo> createState() => _SnackbarDemoState();
 }
 
-class _TestWidgetsDemoState extends State<TestWidgetsDemo>
+class _SnackbarDemoState extends State<SnackbarDemo>
     with TickerProviderStateMixin {
   late AnimationController animationController;
   @override
@@ -35,7 +35,7 @@ class _TestWidgetsDemoState extends State<TestWidgetsDemo>
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    final content = Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -106,6 +106,12 @@ class _TestWidgetsDemoState extends State<TestWidgetsDemo>
             height: 20,
           ),
         ],
+      ),
+    );
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: content,
       ),
     );
   }

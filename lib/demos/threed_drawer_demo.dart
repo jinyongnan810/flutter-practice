@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 
+// TODO: fix this
 class ThreedDrawerDemo extends StatefulWidget implements DemoWidget {
   const ThreedDrawerDemo({super.key});
   static const String _title = '3d drawer demo';
@@ -75,7 +76,7 @@ class _ThreedDrawerDemoState extends State<ThreedDrawerDemo>
     );
     final content = Scaffold(
       appBar: AppBar(
-        title: const Text('Content'),
+        title: const Text('3D Drawer Demo'),
       ),
       body: const Center(
         child: Text('content'),

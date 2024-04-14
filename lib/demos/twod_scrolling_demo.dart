@@ -30,28 +30,33 @@ class TwoDScrollingDemo extends StatefulWidget implements DemoWidget {
 class _TwoDScrollingDemoState extends State<TwoDScrollingDemo> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: TwoDimensionalGridView(
-        diagonalDragBehavior: DiagonalDragBehavior.free,
-        delegate: TwoDimensionalChildBuilderDelegate(
-          maxXIndex: 9,
-          maxYIndex: 9,
-          builder: (BuildContext context, ChildVicinity vicinity) {
-            return Container(
-              color: vicinity.xIndex.isEven && vicinity.yIndex.isEven
-                  ? Colors.amber[50]
-                  : (vicinity.xIndex.isOdd && vicinity.yIndex.isOdd
-                      ? Colors.purple[50]
-                      : null),
-              height: 200,
-              width: 200,
-              child: Center(
-                child: Text(
-                  'Row ${vicinity.yIndex}: Column ${vicinity.xIndex}',
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: TwoDimensionalGridView(
+          diagonalDragBehavior: DiagonalDragBehavior.free,
+          delegate: TwoDimensionalChildBuilderDelegate(
+            maxXIndex: 9,
+            maxYIndex: 9,
+            builder: (BuildContext context, ChildVicinity vicinity) {
+              return Container(
+                color: vicinity.xIndex.isEven && vicinity.yIndex.isEven
+                    ? Colors.amber[50]
+                    : (vicinity.xIndex.isOdd && vicinity.yIndex.isOdd
+                        ? Colors.purple[50]
+                        : null),
+                height: 200,
+                width: 200,
+                child: Center(
+                  child: Text(
+                    'Row ${vicinity.yIndex}: Column ${vicinity.xIndex}',
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

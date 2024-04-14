@@ -109,7 +109,7 @@ class _CustomPainterDemoState extends State<CustomPainterDemo>
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
+    final content = LayoutBuilder(
       builder: (context, constraint) {
         final maxSize = min(constraint.maxWidth, constraint.maxHeight);
         return Center(
@@ -139,6 +139,9 @@ class _CustomPainterDemoState extends State<CustomPainterDemo>
           ),
         );
       },
+    );
+    return SafeArea(
+      child: Scaffold(appBar: AppBar(title: Text(widget.title)), body: content),
     );
   }
 }

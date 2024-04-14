@@ -3,24 +3,24 @@ import 'package:flutter_portal/flutter_portal.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class FlutterPortalHintsDemo extends StatefulWidget implements DemoWidget {
-  const FlutterPortalHintsDemo({super.key});
+class FlutterPortalDemo2 extends StatefulWidget implements DemoWidget {
+  const FlutterPortalDemo2({super.key});
   static const String _title = 'TextField Hints Demo';
   static const String _description = 'https://pub.dev/packages/flutter_portal';
 
   @override
-  State<FlutterPortalHintsDemo> createState() => _FlutterPortalHintsDemoState();
+  State<FlutterPortalDemo2> createState() => _FlutterPortalDemo2State();
   @override
-  String get title => FlutterPortalHintsDemo._title;
+  String get title => FlutterPortalDemo2._title;
 
   @override
-  String get description => FlutterPortalHintsDemo._description;
+  String get description => FlutterPortalDemo2._description;
 
   @override
   Widget get icon => const FaIcon(FontAwesomeIcons.droplet);
 }
 
-class _FlutterPortalHintsDemoState extends State<FlutterPortalHintsDemo> {
+class _FlutterPortalDemo2State extends State<FlutterPortalDemo2> {
   bool _showHint = false;
   late TextEditingController _textEditingController;
   @override
@@ -51,7 +51,7 @@ class _FlutterPortalHintsDemoState extends State<FlutterPortalHintsDemo> {
         });
       },
     );
-    return Container(
+    final content = Container(
       padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 10),
       width: 300,
       alignment: Alignment.center,
@@ -67,6 +67,12 @@ class _FlutterPortalHintsDemoState extends State<FlutterPortalHintsDemo> {
               child: main,
             )
           : main,
+    );
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: content,
+      ),
     );
   }
 }

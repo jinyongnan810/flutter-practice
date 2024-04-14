@@ -44,7 +44,7 @@ class _HeroAnimationDemoState extends State<HeroAnimationDemo>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('People'),
+        title: Text(widget.title),
       ),
       body: ListView.builder(
         itemBuilder: (ctx, index) {

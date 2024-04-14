@@ -28,7 +28,7 @@ class _PlaySoundDemoState extends ConsumerState<PlaySoundDemo> {
   @override
   Widget build(BuildContext context) {
     final audioController = ref.watch(audioControllerProvider);
-    return Center(
+    final content = Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -58,6 +58,12 @@ class _PlaySoundDemoState extends ConsumerState<PlaySoundDemo> {
             child: Text(playingMusic ? 'stop music' : 'play music'),
           ),
         ],
+      ),
+    );
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: content,
       ),
     );
   }
