@@ -333,6 +333,14 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/websocket',
               ),
             ),
+            Positioned(
+              top: 2600,
+              left: 2800,
+              child: _DemoLink(
+                title: 'Quill',
+                link: '/flutter-quill',
+              ),
+            ),
           ],
         ),
       ),
