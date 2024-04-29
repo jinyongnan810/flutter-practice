@@ -8,7 +8,11 @@
       "name": "flutter-practice",
       "request": "launch",
       "type": "dart",
-      "args": ["--dart-define", "TEST_ENV=test_environment_variable"]
+      "args": [
+        "--dart-define",
+        "TEST_ENV=test_environment_variable",
+        "--verbose"
+      ]
     },
     {
       "name": "flutter-practice (profile mode)",

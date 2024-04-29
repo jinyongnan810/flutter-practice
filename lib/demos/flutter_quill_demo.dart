@@ -5,6 +5,7 @@ import 'package:flutter_quill/markdown_quill.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:markdown_quill/markdown_quill.dart' as mq;
 
+// to run at ios, rust must be updated to the latest version: https://github.com/singerdmx/flutter-quill/issues/1749#issuecomment-1969313369
 class FlutterQuillDemo extends StatefulWidget implements DemoWidget {
   const FlutterQuillDemo({super.key});
   static const String _title = 'Flutter Quill Demo';
