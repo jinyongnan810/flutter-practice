@@ -341,6 +341,14 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/flutter-quill',
               ),
             ),
+            Positioned(
+              top: 2700,
+              left: 2750,
+              child: _DemoLink(
+                title: 'Pigeon',
+                link: '/pigeon',
+              ),
+            ),
           ],
         ),
       ),

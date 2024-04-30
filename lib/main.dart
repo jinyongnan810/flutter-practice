@@ -17,6 +17,7 @@ import 'package:flutter_practice/demos/gemini_demo.dart';
 import 'package:flutter_practice/demos/hero_animation_demo.dart';
 import 'package:flutter_practice/demos/implicit_animation_demo.dart';
 import 'package:flutter_practice/demos/inherited_widget_demo.dart';
+import 'package:flutter_practice/demos/pigeon_demo.dart';
 import 'package:flutter_practice/demos/play_sound_demo.dart';
 import 'package:flutter_practice/demos/snackbar_demo.dart';
 import 'package:flutter_practice/demos/threed_animation_demo.dart';
@@ -24,6 +25,7 @@ import 'package:flutter_practice/demos/threed_drawer_demo.dart';
 import 'package:flutter_practice/demos/tween_animation_demo.dart';
 import 'package:flutter_practice/demos/twod_scrolling_demo.dart';
 import 'package:flutter_practice/demos/websocket_demo.dart';
+import 'package:flutter_practice/pigeon.dart';
 import 'package:flutter_practice/screen/home_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -48,6 +50,8 @@ Future<void> main() async {
   // });
 
   // print('env: ${AppFeatures.testEnv}');
+
+  TestFlutterApi.setUp(FlutterApi());
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -140,6 +144,10 @@ final _router = GoRouter(
         GoRoute(
           path: 'flutter-quill',
           builder: (context, state) => const FlutterQuillDemo(),
+        ),
+        GoRoute(
+          path: 'pigeon',
+          builder: (context, state) => const PigeonDemo(),
         ),
       ],
     ),

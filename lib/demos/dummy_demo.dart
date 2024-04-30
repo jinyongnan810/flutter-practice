@@ -32,6 +32,12 @@ class _DummyDemoState extends State<DummyDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return const Center();
+    const content = Center(
+      child: Text('This is a dummy demo.'),
+    );
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.title)),
+      body: content,
+    );
   }
 }
