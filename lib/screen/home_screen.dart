@@ -349,6 +349,14 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/pigeon',
               ),
             ),
+            Positioned(
+              top: 2800,
+              left: 2700,
+              child: _DemoLink(
+                title: 'Gradients and Shaders',
+                link: '/gradient',
+              ),
+            ),
           ],
         ),
       ),

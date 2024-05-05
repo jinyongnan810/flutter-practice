@@ -14,6 +14,7 @@ import 'package:flutter_practice/demos/flutter_portal_demo.dart';
 import 'package:flutter_practice/demos/flutter_portal_demo2.dart';
 import 'package:flutter_practice/demos/flutter_quill_demo.dart';
 import 'package:flutter_practice/demos/gemini_demo.dart';
+import 'package:flutter_practice/demos/gradient_demo.dart';
 import 'package:flutter_practice/demos/hero_animation_demo.dart';
 import 'package:flutter_practice/demos/implicit_animation_demo.dart';
 import 'package:flutter_practice/demos/inherited_widget_demo.dart';
@@ -148,6 +149,10 @@ final _router = GoRouter(
         GoRoute(
           path: 'pigeon',
           builder: (context, state) => const PigeonDemo(),
+        ),
+        GoRoute(
+          path: 'gradient',
+          builder: (context, state) => const GradientDemo(),
         ),
       ],
     ),
