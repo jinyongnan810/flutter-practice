@@ -21,6 +21,7 @@ import 'package:flutter_practice/demos/inherited_widget_demo.dart';
 import 'package:flutter_practice/demos/pigeon_demo.dart';
 import 'package:flutter_practice/demos/play_sound_demo.dart';
 import 'package:flutter_practice/demos/snackbar_demo.dart';
+import 'package:flutter_practice/demos/theme_color_demo.dart';
 import 'package:flutter_practice/demos/threed_animation_demo.dart';
 import 'package:flutter_practice/demos/threed_drawer_demo.dart';
 import 'package:flutter_practice/demos/tween_animation_demo.dart';
@@ -153,6 +154,10 @@ final _router = GoRouter(
         GoRoute(
           path: 'gradient',
           builder: (context, state) => const GradientDemo(),
+        ),
+        GoRoute(
+          path: 'theme-color',
+          builder: (context, state) => const ThemeColorDemo(),
         ),
       ],
     ),

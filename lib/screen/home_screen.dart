@@ -357,6 +357,14 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/gradient',
               ),
             ),
+            Positioned(
+              top: 2900,
+              left: 2600,
+              child: _DemoLink(
+                title: 'Theme Color',
+                link: '/theme-color',
+              ),
+            ),
           ],
         ),
       ),
