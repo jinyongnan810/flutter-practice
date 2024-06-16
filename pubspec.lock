@@ -765,6 +765,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  mix:
+    dependency: "direct main"
+    description:
+      name: mix
+      sha256: "06625c1c17c708db08634c1eec2a04abed86d04982aaddf8db9b15c4660e83b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   mockito:
     dependency: "direct main"
     description:

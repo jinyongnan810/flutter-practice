@@ -365,6 +365,14 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/theme-color',
               ),
             ),
+            Positioned(
+              top: 2800,
+              left: 2500,
+              child: _DemoLink(
+                title: 'Mix',
+                link: '/mix',
+              ),
+            ),
           ],
         ),
       ),
