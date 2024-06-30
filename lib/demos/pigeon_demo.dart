@@ -50,7 +50,6 @@ class _PigeonDemoState extends State<PigeonDemo> {
               message =
                   '${result.message}, battery level is: ${result.batteryLevel * 100}%.';
             });
-            print('message: $message');
           },
           child: const Icon(Icons.battery_0_bar),
         ),
@@ -61,7 +60,5 @@ class _PigeonDemoState extends State<PigeonDemo> {
 
 class FlutterApi implements TestFlutterApi {
   @override
-  void onGotBatteryLevel(double batteryLevel) {
-    print('from native: battery level is: $batteryLevel.');
-  }
+  void onGotBatteryLevel(double batteryLevel) {}
 }

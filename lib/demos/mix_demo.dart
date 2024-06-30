@@ -35,46 +35,52 @@ class _MixDemoState extends State<MixDemo> {
 
   @override
   Widget build(BuildContext context) {
-    final content = VBox(
-      style: containerStyle,
-      children: [
-        const _HoverBox(),
-        HBox(
-          style: lineStyle,
-          children: const [
-            _PrimaryButton(
-              text: 'Primary Large',
-              icon: FontAwesomeIcons.hand,
-              size: ButtonSize.large,
-            ),
-            _PrimaryButton(text: 'Primary Medium', icon: FontAwesomeIcons.hand),
-            _PrimaryButton(
-              text: 'Primary Small',
-              icon: FontAwesomeIcons.hand,
-              size: ButtonSize.small,
-            ),
-          ],
-        ),
-        HBox(
-          style: lineStyle,
-          children: const [
-            _SecondaryButton(
-              text: 'Secondary Large',
-              icon: FontAwesomeIcons.hand,
-              size: ButtonSize.large,
-            ),
-            _SecondaryButton(
-              text: 'Secondary Medium',
-              icon: FontAwesomeIcons.hand,
-            ),
-            _SecondaryButton(
-              text: 'Secondary Small',
-              icon: FontAwesomeIcons.hand,
-              size: ButtonSize.small,
-            ),
-          ],
-        ),
-      ],
+    final content = SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: VBox(
+        style: containerStyle,
+        children: [
+          const _HoverBox(),
+          HBox(
+            style: lineStyle,
+            children: const [
+              _PrimaryButton(
+                text: 'Primary Large',
+                icon: FontAwesomeIcons.hand,
+                size: ButtonSize.large,
+              ),
+              _PrimaryButton(
+                text: 'Primary Medium',
+                icon: FontAwesomeIcons.hand,
+              ),
+              _PrimaryButton(
+                text: 'Primary Small',
+                icon: FontAwesomeIcons.hand,
+                size: ButtonSize.small,
+              ),
+            ],
+          ),
+          HBox(
+            style: lineStyle,
+            children: const [
+              _SecondaryButton(
+                text: 'Secondary Large',
+                icon: FontAwesomeIcons.hand,
+                size: ButtonSize.large,
+              ),
+              _SecondaryButton(
+                text: 'Secondary Medium',
+                icon: FontAwesomeIcons.hand,
+              ),
+              _SecondaryButton(
+                text: 'Secondary Small',
+                icon: FontAwesomeIcons.hand,
+                size: ButtonSize.small,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
@@ -158,7 +164,7 @@ class _ButtonBase extends StatelessWidget {
 }
 
 class _HoverBox extends StatelessWidget {
-  const _HoverBox({super.key});
+  const _HoverBox();
 
   @override
   Widget build(BuildContext context) {

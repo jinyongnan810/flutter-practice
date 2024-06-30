@@ -70,7 +70,6 @@ class _FlutterQuillDemoState extends State<FlutterQuillDemo> {
               focusNode: focusNode,
               configurations: QuillEditorConfigurations(
                 controller: controller,
-                readOnly: false,
               ),
             ),
           ),
@@ -101,6 +100,7 @@ class _FlutterQuillDemoState extends State<FlutterQuillDemo> {
             setState(() {
               markdown = mq.DeltaToMarkdown(
                 customEmbedHandlers: {
+                  // cspell: disable-next-line
                   EmbeddableTable.tableType: EmbeddableTable.toMdSyntax,
                 },
               ).convert(delta);
