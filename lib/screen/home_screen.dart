@@ -185,8 +185,8 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
               top: 2300,
               left: 1700,
               child: _DemoLink(
-                title: 'Animated Prompt',
-                link: '/animated-prompt',
+                title: 'Animations',
+                link: '/animations',
               ),
             ),
             Positioned(
@@ -203,22 +203,6 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
               child: _DemoLink(
                 title: 'Tween Animation',
                 link: '/tween-animation',
-              ),
-            ),
-            Positioned(
-              top: 2100,
-              left: 1700,
-              child: _DemoLink(
-                title: 'AnimatedBuilder',
-                link: '/animated-builder',
-              ),
-            ),
-            Positioned(
-              top: 2170,
-              left: 1750,
-              child: _DemoLink(
-                title: 'AnimatedBuilder2',
-                link: '/animated-builder2',
               ),
             ),
             Positioned(

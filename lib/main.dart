@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:flutter_practice/color_schemes.g.dart';
-import 'package:flutter_practice/demos/animated_builder_demo.dart';
-import 'package:flutter_practice/demos/animated_builder_demo2.dart';
-import 'package:flutter_practice/demos/animated_prompt_demo.dart';
+import 'package:flutter_practice/demos/animations_demo.dart';
 import 'package:flutter_practice/demos/chained_animation_demo.dart';
 import 'package:flutter_practice/demos/custom_painter_demo.dart';
 import 'package:flutter_practice/demos/dart_test_demo.dart';
@@ -67,18 +65,6 @@ final _router = GoRouter(
         GoRoute(
           path: 'gemini-chat',
           builder: (context, state) => const GeminiDemo(),
-        ),
-        GoRoute(
-          path: 'animated-prompt',
-          builder: (context, state) => const AnimatedPromptDemo(),
-        ),
-        GoRoute(
-          path: 'animated-builder',
-          builder: (context, state) => const AnimatedBuilderDemo(),
-        ),
-        GoRoute(
-          path: 'animated-builder2',
-          builder: (context, state) => const AnimatedBuilderDemo2(),
         ),
         GoRoute(
           path: 'chained-animation',
@@ -161,6 +147,10 @@ final _router = GoRouter(
           builder: (context, state) => const ThemeColorDemo(),
         ),
         GoRoute(path: 'mix', builder: (context, state) => const MixDemo()),
+        GoRoute(
+          path: 'animations',
+          builder: (context, state) => const AnimationsDemo(),
+        ),
       ],
     ),
   ],
