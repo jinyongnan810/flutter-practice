@@ -61,50 +61,55 @@ class _Prompt extends HookWidget {
       ),
     );
     final bgSizeAnimation = useMemoized(
-      () => Tween<double>(begin: 2, end: 0.4).animate(
+      () => Tween<double>(begin: 2, end: 0.2).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOut),
       ),
     );
     final positionAnimation = useMemoized(
       () => Tween<Offset>(
         begin: const Offset(0, 0),
-        end: const Offset(0, -0.23),
+        end: const Offset(0, -0.3),
       ).animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut)),
     );
-    final content = SingleChildScrollView(
-      child: GestureDetector(
-        onTap: () {
-          controller.reset();
-          controller.forward();
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(
-                height: 80,
+    final content = LayoutBuilder(
+      builder: (context, constraints) {
+        final height = constraints.maxHeight;
+        return SingleChildScrollView(
+          child: GestureDetector(
+            onTap: () {
+              controller.reset();
+              controller.forward();
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: height / 5,
+                  ),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    details,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Text(
-                details,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
     return ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(10)),

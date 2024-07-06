@@ -4,7 +4,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:flutter_practice/color_schemes.g.dart';
 import 'package:flutter_practice/demos/animations_demo.dart';
-import 'package:flutter_practice/demos/chained_animation_demo.dart';
 import 'package:flutter_practice/demos/custom_painter_demo.dart';
 import 'package:flutter_practice/demos/dart_test_demo.dart';
 import 'package:flutter_practice/demos/drag_and_drop_demo.dart';
@@ -65,10 +64,6 @@ final _router = GoRouter(
         GoRoute(
           path: 'gemini-chat',
           builder: (context, state) => const GeminiDemo(),
-        ),
-        GoRoute(
-          path: 'chained-animation',
-          builder: (context, state) => const ChainedAnimationDemo(),
         ),
         GoRoute(
           path: 'custom-painter',

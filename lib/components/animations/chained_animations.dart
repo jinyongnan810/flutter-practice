@@ -1,71 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/shared/demo_widget.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ChainedAnimationDemo extends StatefulWidget implements DemoWidget {
-  const ChainedAnimationDemo({super.key});
-  static const String _title = 'Chained Animation Demo';
-  static const String _description = '2 step animation';
+class ChainedAnimations extends StatefulWidget {
+  const ChainedAnimations({super.key});
 
   @override
-  State<ChainedAnimationDemo> createState() => _ChainedAnimationDemoState();
-  @override
-  String get title => ChainedAnimationDemo._title;
-
-  @override
-  String get description => ChainedAnimationDemo._description;
-
-  @override
-  Widget get icon => const FaIcon(FontAwesomeIcons.circleHalfStroke);
+  State<ChainedAnimations> createState() => _ChainedAnimationsState();
 }
 
-enum CircleSide { left, right }
-
-extension CirclePath on CircleSide {
-  Path toPath(Size size) {
-    final path = Path();
-    late Offset offset;
-    late bool clockwise;
-    switch (this) {
-      case CircleSide.left:
-        path.moveTo(size.width, 0);
-        offset = Offset(size.width, size.height);
-        clockwise = false;
-        break;
-      case CircleSide.right:
-        path.moveTo(0, 0);
-        offset = Offset(0, size.height);
-        clockwise = true;
-        break;
-    }
-    path.arcToPoint(
-      offset,
-      radius: Radius.elliptical(size.width / 2, size.height / 2),
-      clockwise: clockwise,
-    );
-    path.close();
-    return path;
-  }
-}
-
-class HalfCircleClipper extends CustomClipper<Path> {
-  final CircleSide side;
-  HalfCircleClipper({required this.side});
-
-  @override
-  Path getClip(Size size) {
-    return side.toPath(size);
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return true;
-  }
-}
-
-class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
+class _ChainedAnimationsState extends State<ChainedAnimations>
     with TickerProviderStateMixin {
   late final AnimationController _counterClockWiseController;
   late Animation<double> _counterClockWiseAnimation;
@@ -126,6 +70,8 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
           ..forward();
       }
     });
+    _counterClockWiseController.reset();
+    _counterClockWiseController.forward();
   }
 
   @override
@@ -137,28 +83,31 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
 
   @override
   Widget build(BuildContext context) {
-    _counterClockWiseController.reset();
-    _counterClockWiseController.forward();
-    final circle = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ClipPath(
-          clipper: HalfCircleClipper(side: CircleSide.left),
-          child: Container(
-            color: Colors.blue,
-            width: 200,
-            height: 200,
-          ),
-        ),
-        ClipPath(
-          clipper: HalfCircleClipper(side: CircleSide.right),
-          child: Container(
-            color: Colors.amber,
-            width: 200,
-            height: 200,
-          ),
-        ),
-      ],
+    final circle = LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ClipPath(
+              clipper: HalfCircleClipper(side: CircleSide.left),
+              child: Container(
+                color: Colors.blue,
+                width: width / 3,
+                height: width / 3,
+              ),
+            ),
+            ClipPath(
+              clipper: HalfCircleClipper(side: CircleSide.right),
+              child: Container(
+                color: Colors.amber,
+                width: width / 3,
+                height: width / 3,
+              ),
+            ),
+          ],
+        );
+      },
     );
     final content = Center(
       child: AnimatedBuilder(
@@ -183,8 +132,50 @@ class _ChainedAnimationDemoState extends State<ChainedAnimationDemo>
         },
       ),
     );
-    return SafeArea(
-      child: Scaffold(appBar: AppBar(title: Text(widget.title)), body: content),
+    return content;
+  }
+}
+
+enum CircleSide { left, right }
+
+extension CirclePath on CircleSide {
+  Path toPath(Size size) {
+    final path = Path();
+    late Offset offset;
+    late bool clockwise;
+    switch (this) {
+      case CircleSide.left:
+        path.moveTo(size.width, 0);
+        offset = Offset(size.width, size.height);
+        clockwise = false;
+        break;
+      case CircleSide.right:
+        path.moveTo(0, 0);
+        offset = Offset(0, size.height);
+        clockwise = true;
+        break;
+    }
+    path.arcToPoint(
+      offset,
+      radius: Radius.elliptical(size.width / 2, size.height / 2),
+      clockwise: clockwise,
     );
+    path.close();
+    return path;
+  }
+}
+
+class HalfCircleClipper extends CustomClipper<Path> {
+  final CircleSide side;
+  HalfCircleClipper({required this.side});
+
+  @override
+  Path getClip(Size size) {
+    return side.toPath(size);
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
   }
 }

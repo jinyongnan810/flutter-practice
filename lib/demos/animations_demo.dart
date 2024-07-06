@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/components/animations/animated_container_with_transforms.dart';
 import 'package:flutter_practice/components/animations/animation_with_transitions.dart';
+import 'package:flutter_practice/components/animations/chained_animations.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -50,6 +51,10 @@ class _AnimationsDemoState extends State<AnimationsDemo> {
             title: 'Animation with transitions',
             content: AnimationWithTransitions(),
           ),
+          _Item(
+            title: 'Chained animations',
+            content: ChainedAnimations(),
+          ),
         ],
       ),
     );
@@ -61,7 +66,7 @@ class _AnimationsDemoState extends State<AnimationsDemo> {
 }
 
 class _Item extends StatelessWidget {
-  const _Item({super.key, required this.title, required this.content});
+  const _Item({required this.title, required this.content});
   final String title;
   final Widget content;
 
