@@ -6,7 +6,6 @@ import 'package:flutter_practice/color_schemes.g.dart';
 import 'package:flutter_practice/demos/animations_demo.dart';
 import 'package:flutter_practice/demos/custom_painter_demo.dart';
 import 'package:flutter_practice/demos/dart_test_demo.dart';
-import 'package:flutter_practice/demos/drag_and_drop_demo.dart';
 import 'package:flutter_practice/demos/flutter_portal_demo.dart';
 import 'package:flutter_practice/demos/flutter_portal_demo2.dart';
 import 'package:flutter_practice/demos/flutter_quill_demo.dart';
@@ -72,10 +71,6 @@ final _router = GoRouter(
         GoRoute(
           path: 'dart-test',
           builder: (context, state) => const DartTestDemo(),
-        ),
-        GoRoute(
-          path: 'drag-and-drop',
-          builder: (context, state) => const DragAndDropDemo(),
         ),
         GoRoute(
           path: 'portal1',
