@@ -357,6 +357,14 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/mix',
               ),
             ),
+            Positioned(
+              top: 2750,
+              left: 2300,
+              child: _DemoLink(
+                title: 'ShoreBird',
+                link: '/shorebird',
+              ),
+            ),
           ],
         ),
       ),

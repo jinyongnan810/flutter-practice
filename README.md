@@ -13,6 +13,16 @@
 
 # Practices
 
+## Shorebird code push
+- do [quick start](https://docs.shorebird.dev/guides/code-push-quickstart/)
+
+### install aab on device
+```bash
+brew install bundletool
+bundletool build-apks --bundle=app-release.aab --output=app-release.apks
+bundletool install-apks --apks=app-release.apks
+```
+
 ## Google fonts
 ### set global font
 ```dart
