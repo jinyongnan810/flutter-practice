@@ -4,7 +4,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:flutter_practice/color_schemes.g.dart';
 import 'package:flutter_practice/demos/animations_demo.dart';
-import 'package:flutter_practice/demos/custom_painter_demo.dart';
 import 'package:flutter_practice/demos/dart_test_demo.dart';
 import 'package:flutter_practice/demos/flutter_portal_demo.dart';
 import 'package:flutter_practice/demos/flutter_portal_demo2.dart';
@@ -12,7 +11,6 @@ import 'package:flutter_practice/demos/flutter_quill_demo.dart';
 import 'package:flutter_practice/demos/gemini_demo.dart';
 import 'package:flutter_practice/demos/gradient_demo.dart';
 import 'package:flutter_practice/demos/hero_animation_demo.dart';
-import 'package:flutter_practice/demos/implicit_animation_demo.dart';
 import 'package:flutter_practice/demos/inherited_widget_demo.dart';
 import 'package:flutter_practice/demos/mix_demo.dart';
 import 'package:flutter_practice/demos/pigeon_demo.dart';
@@ -20,9 +18,7 @@ import 'package:flutter_practice/demos/play_sound_demo.dart';
 import 'package:flutter_practice/demos/shorebird_demo.dart';
 import 'package:flutter_practice/demos/snackbar_demo.dart';
 import 'package:flutter_practice/demos/theme_color_demo.dart';
-import 'package:flutter_practice/demos/threed_animation_demo.dart';
 import 'package:flutter_practice/demos/threed_drawer_demo.dart';
-import 'package:flutter_practice/demos/tween_animation_demo.dart';
 import 'package:flutter_practice/demos/twod_scrolling_demo.dart';
 import 'package:flutter_practice/demos/websocket_demo.dart';
 import 'package:flutter_practice/pigeon.dart';
@@ -66,10 +62,6 @@ final _router = GoRouter(
           builder: (context, state) => const GeminiDemo(),
         ),
         GoRoute(
-          path: 'custom-painter',
-          builder: (context, state) => const CustomPainterDemo(),
-        ),
-        GoRoute(
           path: 'dart-test',
           builder: (context, state) => const DartTestDemo(),
         ),
@@ -86,10 +78,6 @@ final _router = GoRouter(
           builder: (context, state) => const HeroAnimationDemo(),
         ),
         GoRoute(
-          path: 'implicit-animation',
-          builder: (context, state) => const ImplicitAnimationDemo(),
-        ),
-        GoRoute(
           path: 'inherited-widget',
           builder: (context, state) => const InheritedWidgetDemo(),
         ),
@@ -102,16 +90,8 @@ final _router = GoRouter(
           builder: (context, state) => SnackbarDemo(),
         ),
         GoRoute(
-          path: '3d',
-          builder: (context, state) => const ThreeDAnimationDemo(),
-        ),
-        GoRoute(
           path: '3d-drawer',
           builder: (context, state) => const ThreedDrawerDemo(),
-        ),
-        GoRoute(
-          path: 'tween-animation',
-          builder: (context, state) => const TweenAnimationDemo(),
         ),
         GoRoute(
           path: '2d-scrolling',

@@ -80,7 +80,7 @@ class _ShoreBirdDemoState extends State<ShoreBirdDemo> {
               });
             }
           } catch (error, _) {
-            print('Error: $error');
+            debugPrint('Error: $error');
           }
         } else {
           setState(() {

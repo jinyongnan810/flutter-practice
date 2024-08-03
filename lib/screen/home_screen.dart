@@ -190,51 +190,11 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
               ),
             ),
             Positioned(
-              top: 2400,
-              left: 1750,
-              child: _DemoLink(
-                title: 'Implicit Animation',
-                link: '/implicit-animation',
-              ),
-            ),
-            Positioned(
-              top: 2350,
-              left: 1400,
-              child: _DemoLink(
-                title: 'Tween Animation',
-                link: '/tween-animation',
-              ),
-            ),
-            Positioned(
               top: 2175,
               left: 1550,
               child: _DemoLink(
                 title: '3D drawer',
                 link: '/3d-drawer',
-              ),
-            ),
-            Positioned(
-              top: 2000,
-              left: 1800,
-              child: _DemoLink(
-                title: 'Chained Animation',
-                link: '/chained-animation',
-              ),
-            ),
-            Positioned(
-              top: 1925,
-              left: 1650,
-              child: _DemoLink(
-                title: '3D Animation',
-                link: '/3d',
-              ),
-            ),
-            Positioned(
-              top: 2600,
-              left: 1700,
-              child: _DemoLink(
-                title: 'Custom Painter',
-                link: '/custom-painter',
               ),
             ),
             Positioned(

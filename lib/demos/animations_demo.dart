@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/components/animations/animated_container_with_transforms.dart';
 import 'package:flutter_practice/components/animations/animation_with_transitions.dart';
 import 'package:flutter_practice/components/animations/chained_animations.dart';
+import 'package:flutter_practice/components/animations/custom_painter_polygon_animation.dart';
+import 'package:flutter_practice/components/animations/threed_animation.dart';
+import 'package:flutter_practice/components/animations/tween_animation.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -35,7 +38,7 @@ class _AnimationsDemoState extends State<AnimationsDemo> {
 
   @override
   Widget build(BuildContext context) {
-    final crossCount = MediaQuery.sizeOf(context).width > 600 ? 4 : 2;
+    final crossCount = MediaQuery.sizeOf(context).width > 600 ? 3 : 2;
     final content = Padding(
       padding: const EdgeInsets.all(16),
       child: GridView.count(
@@ -54,6 +57,18 @@ class _AnimationsDemoState extends State<AnimationsDemo> {
           _Item(
             title: 'Chained animations',
             content: ChainedAnimations(),
+          ),
+          _Item(
+            title: 'Tween animation',
+            content: TweenAnimation(),
+          ),
+          _Item(
+            title: 'Polygon(CustomPainter) animation',
+            content: CustomPainterPolygonAnimation(),
+          ),
+          _Item(
+            title: '3D animation',
+            content: ThreedAnimation(),
           ),
         ],
       ),
