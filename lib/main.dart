@@ -15,6 +15,7 @@ import 'package:flutter_practice/demos/inherited_widget_demo.dart';
 import 'package:flutter_practice/demos/mix_demo.dart';
 import 'package:flutter_practice/demos/pigeon_demo.dart';
 import 'package:flutter_practice/demos/play_sound_demo.dart';
+import 'package:flutter_practice/demos/shader_mask_demo.dart';
 import 'package:flutter_practice/demos/shorebird_demo.dart';
 import 'package:flutter_practice/demos/snackbar_demo.dart';
 import 'package:flutter_practice/demos/theme_color_demo.dart';
@@ -121,6 +122,10 @@ final _router = GoRouter(
         GoRoute(
           path: 'animations',
           builder: (context, state) => const AnimationsDemo(),
+        ),
+        GoRoute(
+          path: 'shader-mask',
+          builder: (context, state) => const ShaderMaskDemo(),
         ),
         if (defaultTargetPlatform == TargetPlatform.android ||
             defaultTargetPlatform == TargetPlatform.iOS)

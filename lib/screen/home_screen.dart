@@ -325,6 +325,14 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/shorebird',
               ),
             ),
+            Positioned(
+              top: 2700,
+              left: 2700,
+              child: _DemoLink(
+                title: 'Shader Mask',
+                link: '/shader-mask',
+              ),
+            ),
           ],
         ),
       ),
