@@ -239,6 +239,9 @@ class _GradientDemoState extends State<GradientDemo>
       child: MeshGradient(
         points: _initialMeshGradientPoints,
         options: MeshGradientOptions(),
+        child: const Center(
+          child: Text('MeshGradient', style: TextStyle(color: Colors.white)),
+        ),
       ),
     );
     const meshGradientWithAnimation = _MeshGradientWithAnimation();
@@ -476,13 +479,11 @@ class _MeshGradientWithAnimation extends StatefulWidget {
 }
 
 class __MeshGradientWithAnimationState extends State<_MeshGradientWithAnimation>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late final _meshGradientController =
       MeshGradientController(points: _initialMeshGradientPoints, vsync: this);
-  Future<void> _animateOnce() async {
-    // every time we call animateSequence, it creates a new animation controller
-    // and dispose method will throw for multiple ticker is used.
-    // so this is not suitable for repeated animations
+  late final Timer _repeatTimer;
+  Future<void> _animate() async {
     await _meshGradientController.animateSequence(
       duration: const Duration(seconds: 4),
       sequences: [
@@ -536,15 +537,75 @@ class __MeshGradientWithAnimationState extends State<_MeshGradientWithAnimation>
         ),
       ],
     );
+    await Future.delayed(const Duration(seconds: 1));
+    await _meshGradientController.animateSequence(
+      duration: const Duration(seconds: 4),
+      sequences: [
+        AnimationSequence(
+          pointIndex: 0,
+          newPoint: MeshGradientPoint(
+            position: _initialMeshGradientPoints.first.position,
+            color: _initialMeshGradientPoints.first.color,
+          ),
+          interval: const Interval(
+            0,
+            0.2,
+            curve: Curves.easeInOut,
+          ),
+        ),
+        AnimationSequence(
+          pointIndex: 1,
+          newPoint: MeshGradientPoint(
+            position: _initialMeshGradientPoints[1].position,
+            color: _initialMeshGradientPoints[1].color,
+          ),
+          interval: const Interval(
+            0,
+            0.4,
+            curve: Curves.ease,
+          ),
+        ),
+        AnimationSequence(
+          pointIndex: 2,
+          newPoint: MeshGradientPoint(
+            position: _initialMeshGradientPoints[2].position,
+            color: _initialMeshGradientPoints[2].color,
+          ),
+          interval: const Interval(
+            0,
+            0.8,
+            curve: Curves.ease,
+          ),
+        ),
+        AnimationSequence(
+          pointIndex: 3,
+          newPoint: MeshGradientPoint(
+            position: _initialMeshGradientPoints[3].position,
+            color: _initialMeshGradientPoints[3].color,
+          ),
+          interval: const Interval(
+            0,
+            0.9,
+            curve: Curves.ease,
+          ),
+        ),
+      ],
+    );
+    await Future.delayed(const Duration(seconds: 1));
   }
 
   @override
   void initState() {
+    _animate();
+    _repeatTimer = Timer.periodic(const Duration(seconds: 11), (timer) {
+      _animate();
+    });
     super.initState();
   }
 
   @override
   void dispose() {
+    _repeatTimer.cancel();
     // not sure why this throw error.
     _meshGradientController.dispose();
     super.dispose();
@@ -552,15 +613,16 @@ class __MeshGradientWithAnimationState extends State<_MeshGradientWithAnimation>
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        _animateOnce();
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(_borderRadius),
-        child: MeshGradient(
-          options: MeshGradientOptions(),
-          controller: _meshGradientController,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(_borderRadius),
+      child: MeshGradient(
+        options: MeshGradientOptions(),
+        controller: _meshGradientController,
+        child: const Center(
+          child: Text(
+            'MeshGradientController',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
     );
@@ -598,6 +660,12 @@ class _MeshGradientWithRepeatedAnimationState
         ],
         options: AnimatedMeshGradientOptions(),
         controller: _controller,
+        child: const Center(
+          child: Text(
+            'AnimatedMeshGradient',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
       ),
     );
   }
