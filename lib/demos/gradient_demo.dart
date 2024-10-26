@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mesh_gradient/mesh_gradient.dart';
 
 const _borderRadius = 8.0;
 
@@ -24,12 +26,44 @@ class GradientDemo extends StatefulWidget implements DemoWidget {
   Widget get icon => const FaIcon(FontAwesomeIcons.paintbrush);
 }
 
+final _initialMeshGradientPoints = [
+  MeshGradientPoint(
+    position: const Offset(
+      0.2,
+      0.6,
+    ),
+    color: Colors.red,
+  ),
+  MeshGradientPoint(
+    position: const Offset(
+      0.4,
+      0.5,
+    ),
+    color: Colors.purple,
+  ),
+  MeshGradientPoint(
+    position: const Offset(
+      0.7,
+      0.4,
+    ),
+    color: Colors.green,
+  ),
+  MeshGradientPoint(
+    position: const Offset(
+      0.4,
+      0.9,
+    ),
+    color: Colors.yellow,
+  ),
+];
+
 class _GradientDemoState extends State<GradientDemo>
     with SingleTickerProviderStateMixin {
   late final _controller = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 4),
   );
+
   @override
   void initState() {
     super.initState();
@@ -200,6 +234,16 @@ class _GradientDemoState extends State<GradientDemo>
         ),
       ),
     );
+    final meshGradient = ClipRRect(
+      borderRadius: BorderRadius.circular(_borderRadius),
+      child: MeshGradient(
+        points: _initialMeshGradientPoints,
+        options: MeshGradientOptions(),
+      ),
+    );
+    const meshGradientWithAnimation = _MeshGradientWithAnimation();
+    const meshGradientWithRepeatedAnimation =
+        _MeshGradientWithRepeatedAnimation();
 
     final content = Padding(
       padding: const EdgeInsets.all(12.0),
@@ -217,6 +261,9 @@ class _GradientDemoState extends State<GradientDemo>
           sweepGradientBox,
           sweepGradientDynamicBorder,
           sweepGradientShootingStarBorder,
+          meshGradient,
+          meshGradientWithAnimation,
+          meshGradientWithRepeatedAnimation,
         ],
       ),
     );
@@ -418,4 +465,140 @@ class DynamicShootingStarBorderPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+}
+
+class _MeshGradientWithAnimation extends StatefulWidget {
+  const _MeshGradientWithAnimation();
+
+  @override
+  State<_MeshGradientWithAnimation> createState() =>
+      __MeshGradientWithAnimationState();
+}
+
+class __MeshGradientWithAnimationState extends State<_MeshGradientWithAnimation>
+    with SingleTickerProviderStateMixin {
+  late final _meshGradientController =
+      MeshGradientController(points: _initialMeshGradientPoints, vsync: this);
+  Future<void> _animateOnce() async {
+    // every time we call animateSequence, it creates a new animation controller
+    // and dispose method will throw for multiple ticker is used.
+    // so this is not suitable for repeated animations
+    await _meshGradientController.animateSequence(
+      duration: const Duration(seconds: 4),
+      sequences: [
+        AnimationSequence(
+          pointIndex: 0,
+          newPoint: MeshGradientPoint(
+            position: const Offset(0.9, 0.9),
+            color: _initialMeshGradientPoints.first.color,
+          ),
+          interval: const Interval(
+            0,
+            0.7,
+            curve: Curves.easeInOut,
+          ),
+        ),
+        AnimationSequence(
+          pointIndex: 1,
+          newPoint: MeshGradientPoint(
+            position: const Offset(0.1, 0.1),
+            color: _initialMeshGradientPoints[1].color,
+          ),
+          interval: const Interval(
+            0,
+            0.4,
+            curve: Curves.ease,
+          ),
+        ),
+        AnimationSequence(
+          pointIndex: 2,
+          newPoint: MeshGradientPoint(
+            position: const Offset(0.1, 0.9),
+            color: _initialMeshGradientPoints[2].color,
+          ),
+          interval: const Interval(
+            0,
+            0.8,
+            curve: Curves.ease,
+          ),
+        ),
+        AnimationSequence(
+          pointIndex: 3,
+          newPoint: MeshGradientPoint(
+            position: const Offset(0.8, 0.2),
+            color: _initialMeshGradientPoints[3].color,
+          ),
+          interval: const Interval(
+            0,
+            0.8,
+            curve: Curves.ease,
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // not sure why this throw error.
+    _meshGradientController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        _animateOnce();
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(_borderRadius),
+        child: MeshGradient(
+          options: MeshGradientOptions(),
+          controller: _meshGradientController,
+        ),
+      ),
+    );
+  }
+}
+
+class _MeshGradientWithRepeatedAnimation extends StatefulWidget {
+  const _MeshGradientWithRepeatedAnimation();
+
+  @override
+  State<_MeshGradientWithRepeatedAnimation> createState() =>
+      _MeshGradientWithRepeatedAnimationState();
+}
+
+class _MeshGradientWithRepeatedAnimationState
+    extends State<_MeshGradientWithRepeatedAnimation> {
+  late final AnimatedMeshGradientController _controller =
+      AnimatedMeshGradientController();
+  @override
+  void initState() {
+    super.initState();
+    _controller.start();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(_borderRadius),
+      child: AnimatedMeshGradient(
+        colors: const [
+          Colors.red,
+          Colors.purple,
+          Colors.green,
+          Colors.yellow,
+        ],
+        options: AnimatedMeshGradientOptions(),
+        controller: _controller,
+      ),
+    );
+  }
 }
