@@ -5,8 +5,8 @@ void main() {
   test('find bold test', () {
     const bold = NamedAttribution("bold");
     final attributedString = AttributedText(
-      text: 'Attributed Text',
-      spans: AttributedSpans(
+      'Attributed Text',
+      AttributedSpans(
         attributions: [
           const SpanMarker(
             attribution: bold,
@@ -23,6 +23,6 @@ void main() {
     );
     final boldRange =
         attributedString.getAttributedRange({ExpectedSpans.bold}, 5);
-    expect(boldRange, const SpanRange(start: 5, end: 8));
+    expect(boldRange, const SpanRange(5, 8));
   });
 }
