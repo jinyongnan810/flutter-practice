@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:flutter_quill/markdown_quill.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:markdown_quill/markdown_quill.dart' as mq;
+import 'package:markdown_quill/markdown_quill.dart';
 
 // to run at ios, rust must be updated to the latest version: https://github.com/singerdmx/flutter-quill/issues/1749#issuecomment-1969313369
 class FlutterQuillDemo extends StatefulWidget implements DemoWidget {
@@ -45,6 +44,7 @@ class _FlutterQuillDemoState extends State<FlutterQuillDemo> {
     final content = Column(
       children: [
         QuillToolbar.simple(
+          controller: controller,
           configurations: QuillSimpleToolbarConfigurations(
             showFontFamily: false,
             showBackgroundColorButton: false,
@@ -55,7 +55,6 @@ class _FlutterQuillDemoState extends State<FlutterQuillDemo> {
             showSubscript: false,
             showSuperscript: false,
             showIndent: false,
-            controller: controller,
             buttonOptions: QuillSimpleToolbarButtonOptions(
               base: QuillToolbarBaseButtonOptions(
                 afterButtonPressed: () => focusNode.requestFocus(),
@@ -67,10 +66,9 @@ class _FlutterQuillDemoState extends State<FlutterQuillDemo> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: QuillEditor.basic(
+              controller: controller,
               focusNode: focusNode,
-              configurations: QuillEditorConfigurations(
-                controller: controller,
-              ),
+              configurations: QuillEditorConfigurations(),
             ),
           ),
         ),
@@ -98,7 +96,7 @@ class _FlutterQuillDemoState extends State<FlutterQuillDemo> {
           onPressed: () {
             final delta = controller.document.toDelta();
             setState(() {
-              markdown = mq.DeltaToMarkdown(
+              markdown = DeltaToMarkdown(
                 customEmbedHandlers: {
                   // cspell: disable-next-line
                   EmbeddableTable.tableType: EmbeddableTable.toMdSyntax,

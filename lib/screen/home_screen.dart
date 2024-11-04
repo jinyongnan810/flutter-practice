@@ -81,6 +81,9 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
     super.initState();
     Future.microtask(
       () {
+        if (!mounted) {
+          return;
+        }
         final size = MediaQuery.of(context).size;
         final result = Matrix4.identity()
           ..translate(
