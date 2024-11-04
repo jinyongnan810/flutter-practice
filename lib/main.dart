@@ -11,6 +11,7 @@ import 'package:flutter_practice/demos/flutter_quill_demo.dart';
 import 'package:flutter_practice/demos/gemini_demo.dart';
 import 'package:flutter_practice/demos/gradient_demo.dart';
 import 'package:flutter_practice/demos/hero_animation_demo.dart';
+import 'package:flutter_practice/demos/image_filter_demo.dart';
 import 'package:flutter_practice/demos/inherited_widget_demo.dart';
 import 'package:flutter_practice/demos/mix_demo.dart';
 import 'package:flutter_practice/demos/pigeon_demo.dart';
@@ -126,6 +127,10 @@ final _router = GoRouter(
         GoRoute(
           path: 'shader-mask',
           builder: (context, state) => const ShaderMaskDemo(),
+        ),
+        GoRoute(
+          path: 'image-filter',
+          builder: (context, state) => const ImageFilterDemo(),
         ),
         if (defaultTargetPlatform == TargetPlatform.android ||
             defaultTargetPlatform == TargetPlatform.iOS)

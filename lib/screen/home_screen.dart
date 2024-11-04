@@ -333,6 +333,15 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/shader-mask',
               ),
             ),
+
+            Positioned(
+              top: 2600,
+              left: 3100,
+              child: _DemoLink(
+                title: 'Image Filter',
+                link: '/image-filter',
+              ),
+            ),
           ],
         ),
       ),
