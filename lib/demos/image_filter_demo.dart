@@ -103,7 +103,15 @@ class _InteractiveImagePageState extends State<InteractiveImagePage> {
                 content,
                 Positioned.fill(
                   child: BackdropFilter(
-                    filter: ui.ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    filter: ui.ImageFilter.compose(
+                      outer: ui.ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                      inner: ui.ColorFilter.matrix([
+                        0.2126, 0.7152, 0.0722, 0, 0, //
+                        0.2126, 0.7152, 0.0722, 0, 0, //
+                        0.2126, 0.7152, 0.0722, 0, 0, //
+                        0, 0, 0, 1, 0, //
+                      ]),
+                    ),
                     child: CustomPaint(
                       painter: InteractiveImagePainter(position: _position),
                       // ColoredBox(color: Colors.black.withOpacity(0)),
@@ -127,18 +135,6 @@ class InteractiveImagePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // canvas.drawPaint(
-    //   Paint()
-    //     // Apply blur and greyscale effect
-    //     ..imageFilter = ui.ImageFilter.blur(sigmaX: 20, sigmaY: 20)
-    //     ..colorFilter = const ColorFilter.matrix([
-    //       0.2126, 0.7152, 0.0722, 0, 0, //
-    //       0.2126, 0.7152, 0.0722, 0, 0, //
-    //       0.2126, 0.7152, 0.0722, 0, 0, //
-    //       0, 0, 0, 1, 0, //
-    //     ]),
-    // );
-    // Draw clear circle at interaction point
     if (position != null) {
       canvas.drawCircle(
         Offset(position!.dx * size.width, position!.dy * size.height),
