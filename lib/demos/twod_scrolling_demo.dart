@@ -8,7 +8,6 @@ import 'package:flutter/src/rendering/viewport_offset.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-// TODO: fix this
 class TwoDScrollingDemo extends StatefulWidget implements DemoWidget {
   const TwoDScrollingDemo({super.key});
   static const String _title = '2D scrolling Demo';

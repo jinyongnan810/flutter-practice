@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -53,33 +52,10 @@ class InteractiveImagePage extends StatefulWidget {
 
 class _InteractiveImagePageState extends State<InteractiveImagePage> {
   Offset? _position;
-  ui.Image? _image;
-  static const imageUrl = 'https://i.imgur.com/PVxynOu.png';
 
   @override
   void initState() {
     super.initState();
-    _loadImage();
-  }
-
-  Future<void> _loadImage() async {
-    try {
-      final completer = Completer<ui.Image>();
-      final imageStream =
-          const NetworkImage(imageUrl).resolve(ImageConfiguration.empty);
-
-      imageStream.addListener(
-        ImageStreamListener(
-          (info, _) => completer.complete(info.image),
-          onError: (error, _) => completer.completeError(error),
-        ),
-      );
-
-      _image = await completer.future;
-      setState(() {});
-    } catch (e) {
-      debugPrint('Error loading image: $e');
-    }
   }
 
   void _updateInteraction(Offset globalPosition) {
@@ -89,68 +65,79 @@ class _InteractiveImagePageState extends State<InteractiveImagePage> {
     setState(() {
       _position = Offset(
         (localPos.dx / box.size.width).clamp(0.0, 1.0),
-        ((localPos.dy - InteractiveImagePainter.radius) / box.size.height)
-            .clamp(0.0, 1.0),
+        (localPos.dy / box.size.height).clamp(0.0, 1.0),
       );
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final content = Stack(
+      children: [
+        Align(
+          alignment: Alignment.center,
+          child: Image.asset(
+            'assets/images/working-out.jpg',
+            fit: BoxFit.fitHeight,
+          ),
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Text('Some Text'),
+        ),
+      ],
+    );
     return Center(
-      child: Container(
-        decoration: BoxDecoration(border: Border.all()),
-        clipBehavior: Clip.antiAlias,
-        child: _image == null
-            ? const CircularProgressIndicator()
-            : GestureDetector(
-                onPanStart: (d) => _updateInteraction(d.globalPosition),
-                onPanUpdate: (d) => _updateInteraction(d.globalPosition),
-                onTapDown: (d) => _updateInteraction(d.globalPosition),
-                child: CustomPaint(
-                  size: Size(
-                    _image!.width.toDouble(),
-                    _image!.height.toDouble(),
-                  ),
-                  painter: InteractiveImagePainter(
-                    image: _image!,
-                    position: _position,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Container(
+          decoration: BoxDecoration(border: Border.all()),
+          constraints: BoxConstraints(maxWidth: 400),
+          clipBehavior: Clip.antiAlias,
+          child: GestureDetector(
+            // onPanStart: (d) => _updateInteraction(d.globalPosition),
+            onPanUpdate: (d) => _updateInteraction(d.globalPosition),
+            // onTapDown: (d) => _updateInteraction(d.globalPosition),
+            child: Stack(
+              children: [
+                content,
+                Positioned.fill(
+                  child: BackdropFilter(
+                    filter: ui.ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    child: CustomPaint(
+                      painter: InteractiveImagePainter(position: _position),
+                      // ColoredBox(color: Colors.black.withOpacity(0)),
+                    ),
                   ),
                 ),
-              ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
 }
 
 class InteractiveImagePainter extends CustomPainter {
-  final ui.Image image;
   final Offset? position;
   static const radius = 120.0;
 
-  const InteractiveImagePainter({required this.image, required this.position});
+  const InteractiveImagePainter({required this.position});
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Draw original image
-    canvas.drawImage(image, Offset.zero, Paint());
-
-    // Start a new layer
-    final rect = Offset.zero & size;
-    canvas.saveLayer(rect, Paint());
-    canvas.drawImage(
-      image,
-      Offset.zero,
-      Paint()
-        // Apply blur and greyscale effect
-        ..imageFilter = ui.ImageFilter.blur(sigmaX: 20, sigmaY: 20)
-        ..colorFilter = const ColorFilter.matrix([
-          0.2126, 0.7152, 0.0722, 0, 0, //
-          0.2126, 0.7152, 0.0722, 0, 0, //
-          0.2126, 0.7152, 0.0722, 0, 0, //
-          0, 0, 0, 1, 0, //
-        ]),
-    );
+    // canvas.drawPaint(
+    //   Paint()
+    //     // Apply blur and greyscale effect
+    //     ..imageFilter = ui.ImageFilter.blur(sigmaX: 20, sigmaY: 20)
+    //     ..colorFilter = const ColorFilter.matrix([
+    //       0.2126, 0.7152, 0.0722, 0, 0, //
+    //       0.2126, 0.7152, 0.0722, 0, 0, //
+    //       0.2126, 0.7152, 0.0722, 0, 0, //
+    //       0, 0, 0, 1, 0, //
+    //     ]),
+    // );
     // Draw clear circle at interaction point
     if (position != null) {
       canvas.drawCircle(
@@ -164,15 +151,14 @@ class InteractiveImagePainter extends CustomPainter {
             ),
             radius,
             [Colors.transparent, Colors.blue],
+            // [0.8, 1],
           )
           ..blendMode = BlendMode.dstIn,
       );
     }
-    // End layer
-    canvas.restore();
   }
 
   @override
   bool shouldRepaint(InteractiveImagePainter oldDelegate) =>
-      image != oldDelegate.image || position != oldDelegate.position;
+      position != oldDelegate.position;
 }
