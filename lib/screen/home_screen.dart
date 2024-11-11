@@ -329,8 +329,8 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
               ),
             ),
             Positioned(
-              top: 2700,
-              left: 2700,
+              top: 2900,
+              left: 2900,
               child: _DemoLink(
                 title: 'Shader Mask',
                 link: '/shader-mask',
