@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:flutter_practice/color_schemes.g.dart';
 import 'package:flutter_practice/demos/animations_demo.dart';
+import 'package:flutter_practice/demos/blur_when_scroll_demo.dart';
 import 'package:flutter_practice/demos/dart_test_demo.dart';
 import 'package:flutter_practice/demos/flutter_portal_demo.dart';
 import 'package:flutter_practice/demos/flutter_portal_demo2.dart';
@@ -131,6 +132,10 @@ final _router = GoRouter(
         GoRoute(
           path: 'image-filter',
           builder: (context, state) => const ImageFilterDemo(),
+        ),
+        GoRoute(
+          path: 'blur-when-scroll',
+          builder: (context, state) => const BlurWhenScrollDemo(),
         ),
         if (defaultTargetPlatform == TargetPlatform.android ||
             defaultTargetPlatform == TargetPlatform.iOS)

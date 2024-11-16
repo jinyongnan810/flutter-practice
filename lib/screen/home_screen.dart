@@ -345,6 +345,14 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/image-filter',
               ),
             ),
+            Positioned(
+              top: 2700,
+              left: 3200,
+              child: _DemoLink(
+                title: 'Blur When Scroll',
+                link: '/blur-when-scroll',
+              ),
+            ),
           ],
         ),
       ),
