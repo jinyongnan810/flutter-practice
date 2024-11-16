@@ -353,6 +353,14 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/blur-when-scroll',
               ),
             ),
+            Positioned(
+              top: 2500,
+              left: 3300,
+              child: _DemoLink(
+                title: 'Ripple Effect',
+                link: '/ripple-effect',
+              ),
+            ),
           ],
         ),
       ),

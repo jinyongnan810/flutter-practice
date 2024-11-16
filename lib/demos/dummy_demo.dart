@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DummyDemo extends StatefulWidget implements DemoWidget {
   const DummyDemo({super.key});
-  static const String _title = 'Dummy Demo';
+  static const String _title = 'Dummy demo';
   static const String _description = '';
 
   @override

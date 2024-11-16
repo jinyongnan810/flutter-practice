@@ -9,7 +9,7 @@ class BlurWhenScrollDemo extends StatefulWidget implements DemoWidget {
   const BlurWhenScrollDemo({super.key});
   static const String _title = 'Blur when scroll demo';
   static const String _description =
-      'original code from: https://github.com/Rahiche/image_filters/tree/main';
+      'original code by Mr.Raouf Rahiche from: https://github.com/Rahiche/image_filters';
 
   @override
   State<BlurWhenScrollDemo> createState() => _BlurWhenScrollDemoState();

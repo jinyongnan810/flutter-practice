@@ -17,6 +17,7 @@ import 'package:flutter_practice/demos/inherited_widget_demo.dart';
 import 'package:flutter_practice/demos/mix_demo.dart';
 import 'package:flutter_practice/demos/pigeon_demo.dart';
 import 'package:flutter_practice/demos/play_sound_demo.dart';
+import 'package:flutter_practice/demos/ripple_effect_demo.dart';
 import 'package:flutter_practice/demos/shader_mask_demo.dart';
 import 'package:flutter_practice/demos/shorebird_demo.dart';
 import 'package:flutter_practice/demos/snackbar_demo.dart';
@@ -136,6 +137,10 @@ final _router = GoRouter(
         GoRoute(
           path: 'blur-when-scroll',
           builder: (context, state) => const BlurWhenScrollDemo(),
+        ),
+        GoRoute(
+          path: 'ripple-effect',
+          builder: (context, state) => const RippleEffectDemo(),
         ),
         if (defaultTargetPlatform == TargetPlatform.android ||
             defaultTargetPlatform == TargetPlatform.iOS)
