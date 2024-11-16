@@ -51,7 +51,7 @@ class _BlurWhenScrollDemoState extends State<BlurWhenScrollDemo>
     );
     _lastScrollPos = currentPos;
     _scrollEndTimer?.cancel();
-    _scrollEndTimer = Timer(const Duration(milliseconds: 100), () {
+    _scrollEndTimer = Timer(const Duration(milliseconds: 60), () {
       _animationController.animateTo(
         0,
         duration: const Duration(milliseconds: 100),

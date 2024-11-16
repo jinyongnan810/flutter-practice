@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:animated_loading_border/animated_loading_border.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -71,6 +72,8 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
   // seems not working with NavigationRail but works with TabBar
   @override
   bool get wantKeepAlive => true;
+
+  final _initialScale = 0.3;
   @override
   void initState() {
     _transformationController = TransformationController();
@@ -85,12 +88,19 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
           return;
         }
         final size = MediaQuery.of(context).size;
+        // print('size: $size, canvasSize: $canvasSize');
+        // center and scale to 0.3
         final result = Matrix4.identity()
           ..translate(
-            size.width / 2 - canvasSize.width / 2,
-            size.height / 2 - canvasSize.height / 2,
-          );
+            size.width / 2 - canvasSize.width * _initialScale / 2,
+            size.height / 2 - canvasSize.height * _initialScale / 2,
+          )
+          ..scale(_initialScale);
+        // print('result $result');
         _transformationController.value = result;
+        // _transformationController.addListener(() {
+        //   print('value: ${_transformationController.value}');
+        // });
       },
     );
   }
@@ -106,6 +116,7 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return InteractiveViewer(
       minScale: 0.1,
       maxScale: 10,
@@ -320,14 +331,16 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/mix',
               ),
             ),
-            Positioned(
-              top: 2750,
-              left: 2300,
-              child: _DemoLink(
-                title: 'ShoreBird',
-                link: '/shorebird',
+            if (defaultTargetPlatform == TargetPlatform.android ||
+                defaultTargetPlatform == TargetPlatform.iOS)
+              Positioned(
+                top: 2750,
+                left: 2300,
+                child: _DemoLink(
+                  title: 'ShoreBird',
+                  link: '/shorebird',
+                ),
               ),
-            ),
             Positioned(
               top: 2900,
               left: 2900,
@@ -338,27 +351,27 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
             ),
 
             Positioned(
-              top: 2600,
-              left: 3100,
-              child: _DemoLink(
-                title: 'Image Filter',
-                link: '/image-filter',
-              ),
-            ),
-            Positioned(
-              top: 2700,
-              left: 3200,
+              top: 2620,
+              left: 1850,
               child: _DemoLink(
                 title: 'Blur When Scroll',
                 link: '/blur-when-scroll',
               ),
             ),
             Positioned(
-              top: 2500,
-              left: 3300,
+              top: 2780,
+              left: 2000,
               child: _DemoLink(
                 title: 'Ripple Effect',
                 link: '/ripple-effect',
+              ),
+            ),
+            Positioned(
+              top: 2700,
+              left: 1950,
+              child: _DemoLink(
+                title: 'Image Filter',
+                link: '/image-filter',
               ),
             ),
           ],
