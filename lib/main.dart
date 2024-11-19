@@ -15,6 +15,7 @@ import 'package:flutter_practice/demos/hero_animation_demo.dart';
 import 'package:flutter_practice/demos/image_filter_demo.dart';
 import 'package:flutter_practice/demos/inherited_widget_demo.dart';
 import 'package:flutter_practice/demos/mix_demo.dart';
+import 'package:flutter_practice/demos/nested_nav_demo.dart';
 import 'package:flutter_practice/demos/pigeon_demo.dart';
 import 'package:flutter_practice/demos/play_sound_demo.dart';
 import 'package:flutter_practice/demos/ripple_effect_demo.dart';
@@ -148,6 +149,10 @@ final _router = GoRouter(
             path: 'shorebird',
             builder: (context, state) => const ShoreBirdDemo(),
           ),
+        GoRoute(
+          path: 'nested-nav',
+          builder: (context, state) => const NestedNavDemo(),
+        ),
       ],
     ),
   ],

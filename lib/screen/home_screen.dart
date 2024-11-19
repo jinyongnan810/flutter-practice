@@ -374,6 +374,15 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/image-filter',
               ),
             ),
+
+            Positioned(
+              top: 3000,
+              left: 2200,
+              child: _DemoLink(
+                title: 'Nested Navigation',
+                link: '/nested-nav',
+              ),
+            ),
           ],
         ),
       ),
