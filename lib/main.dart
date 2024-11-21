@@ -39,7 +39,7 @@ Future<void> main() async {
     // Don't log anything below warnings in production.
     Logger.root.level = Level.WARNING;
   }
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: "env");
   Logger.root.onRecord.listen((record) {
     debugPrint('${record.level.name}: ${record.time}: '
         '${record.loggerName}: '

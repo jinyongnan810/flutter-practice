@@ -73,7 +73,7 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
   @override
   bool get wantKeepAlive => true;
 
-  final _initialScale = 0.3;
+  final _initialScale = 0.5;
   @override
   void initState() {
     _transformationController = TransformationController();

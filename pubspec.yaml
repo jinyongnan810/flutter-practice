@@ -93,7 +93,7 @@ flutter:
     - assets/sfx/
     - assets/images/
     - assets/lotties/
-    - .env
+    - env
     - shorebird.yaml
 
   shaders:
