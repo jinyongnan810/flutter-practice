@@ -383,6 +383,14 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                 link: '/nested-nav',
               ),
             ),
+            Positioned(
+              top: 3100,
+              left: 2400,
+              child: _DemoLink(
+                title: 'Adaptive Scaffold',
+                link: '/adaptive-scaffold',
+              ),
+            ),
           ],
         ),
       ),

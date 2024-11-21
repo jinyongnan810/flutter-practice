@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:flutter_practice/color_schemes.g.dart';
+import 'package:flutter_practice/demos/adaptive_scaffold_demo.dart';
 import 'package:flutter_practice/demos/animations_demo.dart';
 import 'package:flutter_practice/demos/blur_when_scroll_demo.dart';
 import 'package:flutter_practice/demos/dart_test_demo.dart';
@@ -152,6 +153,10 @@ final _router = GoRouter(
         GoRoute(
           path: 'nested-nav',
           builder: (context, state) => const NestedNavDemo(),
+        ),
+        GoRoute(
+          path: 'adaptive-scaffold',
+          builder: (context, state) => const AdaptiveScaffoldDemo(),
         ),
       ],
     ),
