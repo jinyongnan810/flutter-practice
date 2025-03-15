@@ -5,6 +5,7 @@ import 'package:flutter_practice/components/animations/chained_animations.dart';
 import 'package:flutter_practice/components/animations/custom_painter_polygon_animation.dart';
 import 'package:flutter_practice/components/animations/threed_animation.dart';
 import 'package:flutter_practice/components/animations/tween_animation.dart';
+import 'package:flutter_practice/components/animations/tween_sequence_animation.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -45,7 +46,7 @@ class _AnimationsDemoState extends State<AnimationsDemo> {
         crossAxisCount: crossCount,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
-        children: const [
+        children: [
           _Item(
             title: 'AnimatedContainer with transforms',
             content: AnimatedContainerWithTransforms(),
@@ -69,6 +70,10 @@ class _AnimationsDemoState extends State<AnimationsDemo> {
           _Item(
             title: '3D animation',
             content: ThreedAnimation(),
+          ),
+          _Item(
+            title: 'Tween Sequence animation',
+            content: TweenSequenceAnimationExample(),
           ),
         ],
       ),
