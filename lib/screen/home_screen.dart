@@ -66,12 +66,9 @@ class _InteractiveViewTab extends StatefulWidget {
 }
 
 class __InteractiveViewTabState extends State<_InteractiveViewTab>
-    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late final TransformationController _transformationController;
   late final AnimationController _lottieAnimationController;
-  // seems not working with NavigationRail but works with TabBar
-  @override
-  bool get wantKeepAlive => true;
 
   final _initialScale = 0.4;
   @override
@@ -115,8 +112,6 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
     return InteractiveViewer(
       minScale: 0.1,
       maxScale: 10,

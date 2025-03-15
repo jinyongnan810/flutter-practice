@@ -38,21 +38,19 @@ class AnimatedContainerWithTransforms extends HookWidget {
         ],
       ),
     );
-    return Expanded(
-      child: LayoutBuilder(
-        builder: (context, constraint) {
-          final width = constraint.maxWidth;
-          final height = constraint.maxHeight;
-          return _AnimatedWidget(
-            controller: controller,
-            from: Offset(-width / 2, -height / 2),
-            to: Offset(width / 2 - ballSize / 2, height / 2 - ballSize / 2),
-            forwardingCurve: Curves.easeInToLinear,
-            reversingCurve: Curves.linearToEaseOut,
-            child: ball,
-          );
-        },
-      ),
+    return LayoutBuilder(
+      builder: (context, constraint) {
+        final width = constraint.maxWidth;
+        final height = constraint.maxHeight;
+        return _AnimatedWidget(
+          controller: controller,
+          from: Offset(-width / 2, -height / 2),
+          to: Offset(width / 2 - ballSize / 2, height / 2 - ballSize / 2),
+          forwardingCurve: Curves.easeInToLinear,
+          reversingCurve: Curves.linearToEaseOut,
+          child: ball,
+        );
+      },
     );
   }
 }
