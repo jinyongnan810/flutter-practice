@@ -4,6 +4,7 @@ import 'package:animated_loading_border/animated_loading_border.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
@@ -26,32 +27,36 @@ class HomeScreen extends StatefulWidget implements DemoWidget {
   Widget get icon => const FaIcon(FontAwesomeIcons.expand);
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  late final TabController _tabController;
-  @override
-  void initState() {
-    _tabController = TabController(length: 3, vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _tabController.dispose();
-  }
-
+class _HomeScreenState extends State<HomeScreen> {
+  bool _isLoading = true;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.white.withOpacity(0.5),
-          elevation: 0,
-          title: Text(widget.title),
-        ),
-        body: const _InteractiveViewTab(),
+    final content = Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.white.withOpacity(0.5),
+        elevation: 0,
+        title: Text(widget.title),
       ),
+      body: const _InteractiveViewTab(),
+    );
+    return Stack(
+      children: [
+        IgnorePointer(
+          ignoring: _isLoading,
+          child: content,
+        ),
+        if (_isLoading)
+          Positioned.fill(
+            child: _LoadingScreen(
+              onFinished: () {
+                setState(() {
+                  _isLoading = false;
+                });
+              },
+            ),
+          ),
+      ],
     );
   }
 }
@@ -420,5 +425,98 @@ class _DemoLink extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _LoadingScreen extends StatefulWidget {
+  const _LoadingScreen({required this.onFinished});
+  final VoidCallback onFinished;
+
+  @override
+  State<_LoadingScreen> createState() => _LoadingScreenState();
+}
+
+class _LoadingScreenState extends State<_LoadingScreen>
+    with SingleTickerProviderStateMixin {
+  late final _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 3),
+  );
+
+  late final _opacityAnimation = Tween<double>(begin: 0, end: 1).animate(
+    CurvedAnimation(
+      parent: _controller,
+      curve: Interval(0, 0.3, curve: Curves.easeInOut),
+    ),
+  );
+
+  late final _clipAnimation = Tween<double>(begin: 0, end: 5000).animate(
+    CurvedAnimation(
+      parent: _controller,
+      curve: Interval(0.5, 1, curve: Curves.easeInOut),
+    ),
+  );
+  @override
+  void initState() {
+    super.initState();
+    _controller.forward().whenComplete(() {
+      widget.onFinished();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: ClipPath(
+                clipper: _LoadingClipper(_clipAnimation.value),
+                child: Container(
+                  color: Colors.white,
+                  alignment: Alignment.center,
+                  child: Opacity(
+                    opacity: _opacityAnimation.value,
+                    child: SvgPicture.asset("assets/images/loading.svg"),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _LoadingClipper extends CustomClipper<Path> {
+  _LoadingClipper(this.width);
+  final double width;
+
+  @override
+  Path getClip(Size size) {
+    return Path()
+      // ..addOval(
+      //   Rect.fromCircle(
+      //     center: size.center(Offset.zero),
+      //     radius: width,
+      //   ),
+      // )
+      ..addRect(
+        Rect.fromCenter(
+          center: size.center(Offset.zero),
+          width: width,
+          height: width,
+        ),
+      )
+      ..addRect(Rect.fromLTWH(0, 0, size.width, size.height))
+      ..fillType = PathFillType.evenOdd;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
   }
 }
