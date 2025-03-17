@@ -220,14 +220,6 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
               ),
             ),
             Positioned(
-              top: 1850,
-              left: 2200,
-              child: _DemoLink(
-                title: 'Drag and Drop',
-                link: '/drag-and-drop',
-              ),
-            ),
-            Positioned(
               top: 1870,
               left: 2500,
               child: _DemoLink(
@@ -389,6 +381,15 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
               child: _DemoLink(
                 title: 'Adaptive Scaffold',
                 link: '/adaptive-scaffold',
+              ),
+            ),
+
+            Positioned(
+              top: 3200,
+              left: 2400,
+              child: _DemoLink(
+                title: 'Reorder List',
+                link: '/reorder-list',
               ),
             ),
           ],

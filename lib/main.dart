@@ -19,6 +19,7 @@ import 'package:flutter_practice/demos/mix_demo.dart';
 import 'package:flutter_practice/demos/nested_nav_demo.dart';
 import 'package:flutter_practice/demos/pigeon_demo.dart';
 import 'package:flutter_practice/demos/play_sound_demo.dart';
+import 'package:flutter_practice/demos/reorder_list_demo.dart';
 import 'package:flutter_practice/demos/ripple_effect_demo.dart';
 import 'package:flutter_practice/demos/shader_mask_demo.dart';
 import 'package:flutter_practice/demos/shorebird_demo.dart';
@@ -157,6 +158,10 @@ final _router = GoRouter(
         GoRoute(
           path: 'adaptive-scaffold',
           builder: (context, state) => const AdaptiveScaffoldDemo(),
+        ),
+        GoRoute(
+          path: 'reorder-list',
+          builder: (context, state) => ReOrderListDemo(),
         ),
       ],
     ),
