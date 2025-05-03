@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:animated_loading_border/animated_loading_border.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/components/text_with_gradient.dart';
 import 'package:flutter_practice/shared/demo_widget.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -150,9 +151,9 @@ class __InteractiveViewTabState extends State<_InteractiveViewTab>
                   decoration:
                       BoxDecoration(color: Colors.white.withOpacity(0.8)),
                   alignment: Alignment.center,
-                  child: const Text(
-                    'Flutter Practices',
-                    style: TextStyle(fontSize: 70),
+                  child: TextWithGradient(
+                    text: 'Flutter Practices',
+                    fontSize: 70,
                   ),
                 ),
               ),
